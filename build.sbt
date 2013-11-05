@@ -8,6 +8,7 @@ libraryDependencies ++= Seq(
   //cache,
   "org.mybatis" % "mybatis" % "3.1.1",
   "mysql" % "mysql-connector-java" % "5.1.18",
+  "org.springframework" % "spring-expression" % "3.2.0.RELEASE",          
   javaCore
 )     
 

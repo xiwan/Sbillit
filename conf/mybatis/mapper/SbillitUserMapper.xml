@@ -6,4 +6,8 @@
     <select id="findAllUsers" parameterType="int" resultType="SbillitUser">
         select * from `sbillit_user` where 1=1
     </select>
+    
+    <select id="findUserById" parameterType="int" resultType="SbillitUser">
+        select * from `sbillit_user` where id=#{value}
+    </select>
 </mapper>

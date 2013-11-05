@@ -6,7 +6,7 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias alias="SbillitUser" type="dao.SbillitUser" /> 
+		<typeAlias alias="SbillitUser" type="entity.SbillitUser" /> 
 	</typeAliases>
 	
 	<environments default="development">

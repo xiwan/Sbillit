@@ -1,6 +1,12 @@
-package dao;
+package entity;
 
-public class SbillitUser {
+import java.io.Serializable;
+
+public class SbillitUser implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String password;
 	private int point;
