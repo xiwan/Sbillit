@@ -26,7 +26,7 @@ public class Application extends Controller {
     	String nickname = sbillitUserDao.findAllUsers().get(0).getNickname();
     	nickname = sbillitUserDao.findUserById(1).getNickname();
     	sqlSession.close();
-    	System.out.println(helloService.hello());
+    	//System.out.println(helloService.hello());
     	return ok("Your new application is ready." + nickname);
     }
 
