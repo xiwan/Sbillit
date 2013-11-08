@@ -2,13 +2,19 @@ package controllers;
 
 import play.*;
 import play.mvc.*;
+import services.SbillitUserService;
 
-import views.html.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
 
 public class Application extends Controller {
+	
+	@Autowired
+	private SbillitUserService sbillitUserService;
 
-    public static Result index() {
-        return ok(index.render("Your new application is ready."));
+    public Result index() {
+    	System.out.println(sbillitUserService.findAllUsers());
+    	return ok("Your new application is ready.");
     }
 
 }
