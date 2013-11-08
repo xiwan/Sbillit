@@ -25,6 +25,11 @@
 	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
 	 </bean>
+	 
+	 <!-- scan for mapper interface files and let them be autowired  -->
+	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	  <property name="basePackage" value="mapper" />
+	 </bean>
 	
 	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	  <property name="dataSource" ref="dataSource" />
