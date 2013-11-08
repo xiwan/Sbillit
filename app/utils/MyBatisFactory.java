@@ -13,6 +13,8 @@ import play.Application;
 import play.Configuration;
 import play.Play;
 
+
+// this is an obsolete class
 public class MyBatisFactory {
 	private static MyBatisFactory instance;
 	private static String svrName = "default";
