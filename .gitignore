@@ -8,6 +8,7 @@ tmp
 dist
 /.idea
 /*.iml
+/lib
 /out
 /.idea_modules
 /.classpath
