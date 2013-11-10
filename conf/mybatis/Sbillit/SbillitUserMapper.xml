@@ -3,11 +3,27 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.SbillitUserMapper">
-    <select id="findAllUsers" parameterType="int" resultType="SbillitUser">
+ 	<resultMap id="sbillitUser" type="SbillitUser">
+      <result property="id" column="id"/>
+      <result property="password" column="password"/>
+      <result property="point" column="point"/>
+      <result property="banned" column="banned"/>
+      <result property="snsId" column="sns_id"/>
+      <result property="snsType" column="sns_type"/>
+      <result property="snsToken" column="sns_token"/>
+      <result property="nickname" column="nickname"/>
+      <result property="country" column="country"/>
+      <result property="city" column="city"/>
+      <result property="lastLoginAt" column="last_login_at"/>
+      <result property="createdAt" column="created_at"/>
+      <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+        
+    <select id="findAllUsers" parameterType="int" resultType="sbillitUser">
         select * from `sbillit_user` where 1=1
     </select>
     
-    <select id="findUserById" parameterType="map" resultType="SbillitUser">
+    <select id="findUserById" parameterType="map" resultType="sbillitUser">
         select * from `sbillit_user` where id=#{id}
     </select>
 </mapper>

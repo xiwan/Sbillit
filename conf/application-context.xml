@@ -6,38 +6,45 @@
          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<context:annotation-config />
-  	
+<!-- 	<context:annotation-config />
+	<context:property-placeholder location="properties/localhost.properties"/>
+	 -->
   	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
-         
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-	  <property name="driverClass" value="com.mysql.jdbc.Driver" />
-	  <property name="url" value="jdbc:mysql://localhost/sbillit?characterEncoding=UTF-8" />
-	  <property name="username" value="root" />
-	  <property name="password" value="" />
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:properties/localhost.properties</value>
+		</property>
+	</bean>
+            
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">	
+	  <property name="driverClass" value="${jdbc.driverClass}" />
+	  <property name="url" value="${jdbc.url}" />
+	  <property name="username" value="${jdbc.username}" />
+	  <property name="password" value="${jdbc.password}" />
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	  <property name="dataSource" ref="dataSource" />
-	  <property name="configLocation" value="mybatis/config.xml" />
+	  <property name="configLocation" value="classpath:mybatis/config.xml" />
 	 </bean>
 	 
-	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+<!-- 	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 	  <constructor-arg index="0" ref="sqlSessionFactory" />
-	 </bean>
+	 </bean> -->
 	 
 	 <!-- scan for mapper interface files and let them be autowired  -->
-	 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+<!-- 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 	  <property name="basePackage" value="mapper" />
-	 </bean>
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean> -->
 	
 	 <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	  <property name="dataSource" ref="dataSource" />
 	 </bean> 	
   	
-  	<import resource="application-controllers.xml"/>
-  	<import resource="application-services.xml"/>
-  	<import resource="application-dao.xml"/>
-  	<import resource="application-mapper.xml"/>
+  	<import resource="classpath:application-controllers.xml"/>
+  	<import resource="classpath:application-services.xml"/>
+  	<import resource="classpath:application-dao.xml"/>
+  	<import resource="classpath:application-mapper.xml"/>
 
 </beans>
