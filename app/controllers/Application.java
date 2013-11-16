@@ -13,7 +13,8 @@ public class Application extends Controller {
 	private SbillitUserService sbillitUserService;
 
     public Result index() {
-    	System.out.println(sbillitUserService.findAllUsers());
+    	//System.out.println(sbillitUserService.findAllUsers());
+    	System.out.println(sbillitUserService.findUserById(2).getNickname());
     	return ok("Your new application is ready.");
     }
 

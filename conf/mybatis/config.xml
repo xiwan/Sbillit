@@ -10,7 +10,7 @@
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mybatis/Sbillit/SbillitUserMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitUserMapper.xml"/>
     </mappers>
 
 </configuration>

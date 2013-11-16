@@ -16,7 +16,13 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	@Override
 	public List<SbillitUser> findAllUsers() {
 		// TODO Auto-generated method stub
-		return sbillitUserDao.findAllUsers();
+		return this.sbillitUserDao.findAllUsers();
+	}
+
+	@Override
+	public SbillitUser findUserById(int id) {
+		// TODO Auto-generated method stub
+		return this.sbillitUserDao.findUserById(id);
 	}
 
 

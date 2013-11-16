@@ -10,6 +10,6 @@ public interface SbillitUserDao {
 
 	public List<SbillitUser> findAllUsers();
 	
-	public SbillitUser findUserById(Map map);
+	public SbillitUser findUserById(int id);
 	
 }
