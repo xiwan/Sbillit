@@ -23,9 +23,9 @@ public class SbillitUserDaoImpl implements SbillitUserDao {
 	}
 
 	@Override
-	public SbillitUser findUserById(Map map) {
+	public SbillitUser findUserById(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return this.sbillitUserMapper.findUserById(id);
 	}
 
 }
