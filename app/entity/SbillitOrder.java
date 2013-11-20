@@ -7,7 +7,7 @@ public class SbillitOrder implements Serializable {
 	private int userId;
 	private int type;
 	private String title;
-	private float amount;
+	private double amount;
 	private int status;
 	private String description;
 	private String phone;
@@ -41,10 +41,10 @@ public class SbillitOrder implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public int getStatus() {

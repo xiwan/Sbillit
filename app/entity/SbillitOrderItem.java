@@ -6,7 +6,7 @@ public class SbillitOrderItem implements Serializable {
 	private int orderId;
 	private int itemId;
 	private int itemNum;
-	private float itemPrice;
+	private double itemPrice;
 	private String itemName;
 	private int createdAt;
 	private int updatedAt;
@@ -28,10 +28,10 @@ public class SbillitOrderItem implements Serializable {
 	public void setItemNum(int itemNum) {
 		this.itemNum = itemNum;
 	}
-	public float getItemPrice() {
+	public double getItemPrice() {
 		return itemPrice;
 	}
-	public void setItemPrice(float itemPrice) {
+	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 	public String getItemName() {

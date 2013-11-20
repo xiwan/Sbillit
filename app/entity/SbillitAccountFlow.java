@@ -11,7 +11,7 @@ public class SbillitAccountFlow implements Serializable {
 	private int id;
 	private int fromUserId;
 	private int toUserId;
-	private float amount;
+	private double amount;
 	private int created_at;
 	
 	public int getId() {
@@ -32,10 +32,10 @@ public class SbillitAccountFlow implements Serializable {
 	public void setToUserId(int toUserId) {
 		this.toUserId = toUserId;
 	}
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public int getCreated_at() {
