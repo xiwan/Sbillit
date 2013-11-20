@@ -11,7 +11,7 @@ public class SbillitAccountLog implements Serializable {
 	private int id;
 	private int cardNo;
 	private int status;
-	private float amount;
+	private double amount;
 	private int createdAt;
 	
 	public int getId() {
@@ -32,10 +32,10 @@ public class SbillitAccountLog implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public int getCreatedAt() {

@@ -6,7 +6,7 @@ public class SbillitDebt implements Serializable {
 
 	private int id;
 	private int userId;
-	private float amountDue;
+	private double amountDue;
 	private int status;
 	private int messageid;
 	private int createdAt;
@@ -23,10 +23,10 @@ public class SbillitDebt implements Serializable {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public float getAmountDue() {
+	public double getAmountDue() {
 		return amountDue;
 	}
-	public void setAmountDue(float amountDue) {
+	public void setAmountDue(double amountDue) {
 		this.amountDue = amountDue;
 	}
 	public int getStatus() {

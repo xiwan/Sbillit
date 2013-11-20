@@ -10,7 +10,7 @@ public class SbillitAccount implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private int userId;
-	private float balance; 
+	private double balance; 
 	private String card1No;
 	private String card2No;
 	private String card3No;
@@ -32,10 +32,10 @@ public class SbillitAccount implements Serializable{
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public float getBalance() {
+	public double getBalance() {
 		return balance;
 	}
-	public void setBalance(float balance) {
+	public void setBalance(double balance) {
 		this.balance = balance;
 	}
 	public String getCard1No() {

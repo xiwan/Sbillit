@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import utils.MyBatisFactory;
-
 import dao.SbillitUserDao;
 import entity.SbillitUser;
 

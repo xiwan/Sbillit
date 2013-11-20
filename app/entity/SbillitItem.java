@@ -5,8 +5,8 @@ import java.io.Serializable;
 public class SbillitItem implements Serializable {
 	private int id;
 	private int sellerId;
-	private float price;
-	private float discountPrice;
+	private double price;
+	private double discountPrice;
 	private String name;
 	private int createdAt;
 	private int udpatedAt;
@@ -22,16 +22,16 @@ public class SbillitItem implements Serializable {
 	public void setSellerId(int sellerId) {
 		this.sellerId = sellerId;
 	}
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
-	public float getDiscountPrice() {
+	public double getDiscountPrice() {
 		return discountPrice;
 	}
-	public void setDiscountPrice(float discountPrice) {
+	public void setDiscountPrice(double discountPrice) {
 		this.discountPrice = discountPrice;
 	}
 	public String getName() {
