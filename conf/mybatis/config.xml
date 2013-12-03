@@ -7,10 +7,12 @@
 	
 	<typeAliases>
 		<typeAlias alias="SbillitUser" type="entity.SbillitUser" /> 
+		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mapper/SbillitUserMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitOrderMapper.xml"/>
     </mappers>
 
 </configuration>

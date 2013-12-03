@@ -12,4 +12,9 @@
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	 </bean>
 	 
+	 <bean id="sbillitOrderMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mapper.SbillitOrderMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean>
+	 
 </beans>

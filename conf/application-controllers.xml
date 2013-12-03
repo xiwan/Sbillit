@@ -9,4 +9,6 @@
          
  	<bean id="application" class="controllers.Application"/>
  	<bean id="userModule" class="controllers.UserModule"/>   
+ 	<bean id="orderModule" class="controllers.OrderModule"/>   
+ 	
 </beans>

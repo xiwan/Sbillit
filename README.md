@@ -8,4 +8,6 @@ There are two different environments: local and production. In order to switch f
 ## API specification (ver 1):
 	# get user info
 	GET		/1/user/:id/info
-			
+
+	# get order info
+	GET		/1/order/:id/info			
