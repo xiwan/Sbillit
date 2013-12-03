@@ -6,12 +6,15 @@
 GET     /                           	@controllers.Application.index()
 
 ## User module
-# get user info
+# get user info by user id
 GET		/1/user/:id/info		@controllers.UserModule.info(id: Integer)
 
 ## Order module
-# get order info
+# get order info by order id
 GET		/1/order/:id/info		@controllers.OrderModule.info(id: Integer)
+# get history order info by user id
+GET		/1/order/:userid/history		@controllers.OrderModule.info(userid: Integer)
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
