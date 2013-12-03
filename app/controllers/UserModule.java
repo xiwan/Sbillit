@@ -2,6 +2,9 @@ package controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import entity.SbillitUser;
+
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import services.SbillitUserService;
@@ -11,8 +14,10 @@ public class UserModule extends Controller {
 	private SbillitUserService sbillitUserService;
 	
 	public Result info(int id) {
-		String userName = sbillitUserService.findUserById(id).getNickname();
-    	return ok("the username is : " +  userName);
+		SbillitUser user = sbillitUserService.findUserById(id);
+		//String userName = sbillitUserService.findUserById(id).getNickname();
+		//ObjectNode result = Json.newObject();
+    	return ok( Json.toJson(user) );
     }
 
 }
