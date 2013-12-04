@@ -8,6 +8,8 @@ GET     /                           	@controllers.Application.index()
 ## User module
 # get user info by user id
 GET		/1/user/:id/info		@controllers.UserModule.info(id: Integer)
+# user login, create session and identify login source, finally session id and user info
+GET    /1/user/login			@controllers.UserModule.login()
 
 ## Order module
 # get order info by order id

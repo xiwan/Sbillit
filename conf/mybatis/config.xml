@@ -5,13 +5,15 @@
 
 <configuration>
 	
-	<typeAliases>
-		<typeAlias alias="SbillitUser" type="entity.SbillitUser" /> 
+	<typeAliases>		
+		<typeAlias alias="SbillitUser" type="entity.SbillitUser" /> 	
+		<typeAlias alias="SbillitUserAuthtoken" type="entity.SbillitUserAuthtoken" /> 
 		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mapper/SbillitUserMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitUserAuthtokenMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitOrderMapper.xml"/>
     </mappers>
 

@@ -19,11 +19,11 @@
       <result property="updatedAt" column="updated_at"/>
     </resultMap>
         
-    <select id="findAllUsers" resultType="sbillitUser">
+    <select id="findAllUsers" resultMap="sbillitUser">
         select * from `sbillit_user` where 1=1
     </select>
     
-    <select id="findUserById" parameterType="int" resultType="sbillitUser">
+    <select id="findUserById" parameterType="int" resultMap="sbillitUser">
         select * from `sbillit_user` where id=#{value}
     </select>
     
