@@ -15,7 +15,12 @@
         SELECT user_id, authtoken, created_at, updated_at, expired_at 
         FROM sbillit_user_authtoken WHERE user_id = #{value}
     </select>
-    
+
+	<select id="getUserAuthtokenBySessionId" parameterType="String" resultMap="sbillitUserAuthtoken">
+        SELECT user_id, authtoken, created_at, updated_at, expired_at 
+        FROM sbillit_user_authtoken WHERE authtoken = #{value}
+    </select>
+       
     <insert id="insertUserAuthtoken" parameterType="sbillitUserAuthtoken">
     	INSERT INTO sbillit_user_authtoken (user_id, authtoken, created_at, updated_at, expired_at) 
     	VALUES (#{userId}, #{authtoken}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{expiredAt})    

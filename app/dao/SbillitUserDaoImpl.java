@@ -19,9 +19,16 @@ public class SbillitUserDaoImpl implements SbillitUserDao {
 	}
 
 	@Override
-	public SbillitUser findUserById(int id) {
+	public SbillitUser findUserById(long id) {
 		// TODO Auto-generated method stub
 		return this.sbillitUserMapper.findUserById(id);
+	}
+
+	@Override
+	public void insertUser(SbillitUser user) {
+		// TODO Auto-generated method stub
+		this.sbillitUserMapper.updateSeq();
+		this.sbillitUserMapper.insertUser(user);
 	}
 
 }

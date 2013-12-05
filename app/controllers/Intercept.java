@@ -24,12 +24,12 @@ public class Intercept extends Action.Simple {
 		String sessionId = ctx.request().getQueryString("sessionId");
 		if (sessionId == null){
 			// need to login again
-			ctx.session().put("sessionId", "need to login again");
+			ctx.session().put("sessionId", "");
 		}else{
 			// session check
 			String parpareReturn = null;
 			try {
-				parpareReturn = sbillitSessionService.sessionCheckAndHandle(Long.parseLong(sessionId));
+				parpareReturn = sbillitSessionService.sessionCheckAndHandle(sessionId);
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

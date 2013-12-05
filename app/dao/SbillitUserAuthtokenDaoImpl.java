@@ -16,6 +16,12 @@ public class SbillitUserAuthtokenDaoImpl implements SbillitUserAuthtokenDao {
 		// TODO Auto-generated method stub
 		return sbillitUserAuthtokenMapper.getUserAuthtokenByUserId(userId);
 	}
+	
+	@Override
+	public SbillitUserAuthtoken getUserAuthtokenBySessionId(String sessionId){
+		// TODO Auto-generated method stub
+		return sbillitUserAuthtokenMapper.getUserAuthtokenBySessionId(sessionId);
+	}
 
 	@Override
 	public void createUserAuthtoken(long userId, String authtoken, long expiredAt) {

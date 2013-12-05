@@ -10,6 +10,8 @@ public interface SbillitUserDao {
 
 	public List<SbillitUser> findAllUsers();
 	
-	public SbillitUser findUserById(int id);
+	public SbillitUser findUserById(long id);
+	
+	public void insertUser(SbillitUser user);
 	
 }

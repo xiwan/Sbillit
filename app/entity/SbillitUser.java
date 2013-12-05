@@ -7,24 +7,24 @@ public class SbillitUser implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private long id;
 	private String password;
-	private int point;
+	private long point;
 	private int banned;
-	private int snsId;
-	private int snsType;
+	private long inviteId;
+	private long snsId;
+	private long snsType;
 	private String snsToken;
 	private String nickname;
 	private String country;
 	private String city;
-	private int lastLoginAt;
-	private int createdAt;
-	private int updatedAt;
-	
-	public int getId() {
+	private long lastLoginAt;
+	private long createdAt;
+	private long updatedAt;
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getPassword() {
@@ -33,10 +33,10 @@ public class SbillitUser implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getPoint() {
+	public long getPoint() {
 		return point;
 	}
-	public void setPoint(int point) {
+	public void setPoint(long point) {
 		this.point = point;
 	}
 	public int getBanned() {
@@ -45,16 +45,22 @@ public class SbillitUser implements Serializable {
 	public void setBanned(int banned) {
 		this.banned = banned;
 	}
-	public int getSnsId() {
+	public long getInviteId() {
+		return inviteId;
+	}
+	public void setInviteId(long inviteId) {
+		this.inviteId = inviteId;
+	}
+	public long getSnsId() {
 		return snsId;
 	}
-	public void setSnsId(int snsId) {
+	public void setSnsId(long snsId) {
 		this.snsId = snsId;
 	}
-	public int getSnsType() {
+	public long getSnsType() {
 		return snsType;
 	}
-	public void setSnsType(int snsType) {
+	public void setSnsType(long snsType) {
 		this.snsType = snsType;
 	}
 	public String getSnsToken() {
@@ -81,22 +87,22 @@ public class SbillitUser implements Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public int getLastLoginAt() {
+	public long getLastLoginAt() {
 		return lastLoginAt;
 	}
-	public void setLastLoginAt(int lastLoginAt) {
+	public void setLastLoginAt(long lastLoginAt) {
 		this.lastLoginAt = lastLoginAt;
 	}
-	public int getCreatedAt() {
+	public long getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(int createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
-	public int getUpdatedAt() {
+	public long getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(int updatedAt) {
+	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	

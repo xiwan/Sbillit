@@ -33,7 +33,6 @@ public class Global extends GlobalSettings {
 	
 	@Override
 	public Action onRequest(Request request, Method actionMethod) {
-		
 		return super.onRequest(request, actionMethod);
 	}
 
