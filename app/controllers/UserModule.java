@@ -10,7 +10,10 @@ import entity.SbillitUserAuthtoken;
 
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http.Context;
+import play.mvc.Http.RequestBody;
 import play.mvc.Result;
+import play.mvc.With;
 import services.SbillitSessionService;
 import services.SbillitUserService;
 
@@ -21,20 +24,11 @@ public class UserModule extends Controller {
 	@Autowired
 	private SbillitSessionService sbillitSessionService;
 	
+	@With(Intercept.class)
 	public Result login(){
-		String sessionId = null;
-		try {
-			sessionId = sbillitSessionService.sessionCheckAndHandle(6);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// RequestBody body = request().body();
+		// parse the session id, if no session id, this user is a new one
+		String sessionId = session().get("sessionId");
 		return ok(sessionId);
 	}
 	

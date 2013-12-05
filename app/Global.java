@@ -2,6 +2,7 @@
 
 import java.lang.reflect.Method;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -9,10 +10,13 @@ import play.mvc.*;
 import play.mvc.Http.Request;
 import play.Application;
 import play.GlobalSettings;
+import services.SbillitSessionService;
 
 public class Global extends GlobalSettings {
 	
 	private static ApplicationContext ctx;
+	@Autowired
+	private SbillitSessionService sbillitSessionService;
 	
 	@Override
 	public void onStart(Application app){
@@ -29,8 +33,8 @@ public class Global extends GlobalSettings {
 	
 	@Override
 	public Action onRequest(Request request, Method actionMethod) {
-	   System.out.println("before each request..." + request.toString());
-	   return super.onRequest(request, actionMethod);
+		
+		return super.onRequest(request, actionMethod);
 	}
 
 

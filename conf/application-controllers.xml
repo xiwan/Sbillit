@@ -8,6 +8,8 @@
          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
          
  	<bean id="application" class="controllers.Application"/>
+ 	<bean id="intercept" class="controllers.Intercept"/>
+ 	
  	<bean id="userModule" class="controllers.UserModule"/>   
  	<bean id="orderModule" class="controllers.OrderModule"/>   
  	

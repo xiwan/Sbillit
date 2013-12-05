@@ -33,7 +33,6 @@ public class SbillitSessionServiceImpl implements SbillitSessionService {
 			return "expried";
 		}else if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_NORMAL) {
 			// normal, update session expire time
-			
 			AppProperties appProperties = new AppProperties();
 			DateUtil dateUtil = new DateUtil();
 			long currentTimestamp = dateUtil.GetCurrentTimeStamp();
@@ -41,7 +40,7 @@ public class SbillitSessionServiceImpl implements SbillitSessionService {
 			
 			SbillitUserAuthtoken userAuthtoken = sbillitUserAuthtokenDao.getUserAuthtokenByUserId(userId);
 			userAuthtoken.setExpiredAt(expiredAt);
-			sbillitUserAuthtokenDao.updateUserAuthtoken(null, expiredAt);
+			sbillitUserAuthtokenDao.updateUserAuthtoken(userAuthtoken);
 			return userAuthtoken.getAuthtoken();
 		}else if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_NOT_EXIST) {
 			// not exist, create a new session
@@ -62,7 +61,7 @@ public class SbillitSessionServiceImpl implements SbillitSessionService {
 	private long checkSessionStatus(long userId) {
 		// TODO Auto-generated method stub
 		SbillitUserAuthtoken userAuthtoken = sbillitUserAuthtokenDao.getUserAuthtokenByUserId(userId);
-		if (!userAuthtoken.equals(null)) {
+		if (userAuthtoken != null) {
 			DateUtil dateUtil = new DateUtil();
 			long expiredAt = userAuthtoken.getExpiredAt();
 			if (expiredAt < dateUtil.GetCurrentTimeStamp()) {

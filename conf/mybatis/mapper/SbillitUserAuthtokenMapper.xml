@@ -21,7 +21,7 @@
     	VALUES (#{userId}, #{authtoken}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{expiredAt})    
     </insert>
     
-    <update id="updateUserAuthtoken" parameterType="sbillitUserAuthtoken">
+    <update id="updateUserAuthtoken" parameterType="SbillitUserAuthtoken">
     	UPDATE sbillit_user_authtoken 
     	<set>
       		<if test="authtoken != null">

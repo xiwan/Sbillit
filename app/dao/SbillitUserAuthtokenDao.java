@@ -8,6 +8,6 @@ public interface SbillitUserAuthtokenDao {
 	
 	public void createUserAuthtoken(long userId, String authtoken, long expiredAt);
 	
-	public void updateUserAuthtoken(String authtoken, long expiredAt);
+	public void updateUserAuthtoken(SbillitUserAuthtoken userAuthtoken);
 
 }

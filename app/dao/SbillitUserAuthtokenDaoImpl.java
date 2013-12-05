@@ -28,14 +28,9 @@ public class SbillitUserAuthtokenDaoImpl implements SbillitUserAuthtokenDao {
 	}
 
 	@Override
-	public void updateUserAuthtoken(String authtoken, long expiredAt) {
+	public void updateUserAuthtoken(SbillitUserAuthtoken userAuthtoken) {
 		// TODO Auto-generated method stub
-		SbillitUserAuthtoken  sbillitUserAuthtoken = new SbillitUserAuthtoken();
-		if (authtoken != null && !authtoken.isEmpty()){
-			sbillitUserAuthtoken.setAuthtoken(authtoken);
-		}
-		sbillitUserAuthtoken.setExpiredAt(expiredAt);
-		sbillitUserAuthtokenMapper.updateUserAuthtoken(sbillitUserAuthtoken);
+		sbillitUserAuthtokenMapper.updateUserAuthtoken(userAuthtoken);
 	}
 
 
