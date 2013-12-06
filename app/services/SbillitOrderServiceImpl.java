@@ -3,6 +3,7 @@ package services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.SbillitOrderDao;
 import dao.SbillitUserAuthtokenDao;
@@ -30,6 +31,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	}
 
 	@Override
+	@Transactional
 	public List<SbillitOrder> findOrderHistory(long userId, String sessionId) {
 		// TODO Auto-generated method stub
 		SbillitUserAuthtoken user = sbillitUserAuthtokenDao.getUserAuthtokenByUserId(userId);

@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import entity.SbillitUser;
 import entity.SbillitUserAuthtoken;
 
@@ -16,6 +18,8 @@ import play.mvc.Result;
 import play.mvc.With;
 import services.SbillitSessionService;
 import services.SbillitUserService;
+import utils.Constant;
+import utils.JsonUtil;
 
 public class UserModule extends Controller {
 	@Autowired
@@ -29,6 +33,7 @@ public class UserModule extends Controller {
 		// RequestBody body = request().body();
 		// parse the session id, if no session id, this user is a new one
 		String sessionId = session().get("sessionId");
+		JsonNode js = null;
 		long lastId = 0;
 		if (sessionId == ""){
 			// register a new user and session
@@ -38,15 +43,25 @@ public class UserModule extends Controller {
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "NumberFormatException");
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "FileNotFoundException");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "IOException");
 			}
 		}
-		return ok(lastId + " " + sessionId);
+		
+		if (js != null) {
+			return badRequest(js);
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, sessionId);
+			return ok(js);			
+		}
+
 	}
 	
 	public Result info(int id) {

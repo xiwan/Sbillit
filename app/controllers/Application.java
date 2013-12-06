@@ -18,7 +18,7 @@ public class Application extends Controller {
     
     public Result autchCheck(){
     	String sessionId = session().get("sessionId");
-    	
+    
     	return ok("");
     }
 
