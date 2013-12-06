@@ -4,13 +4,38 @@
 
 
 <mapper namespace="mapper.SbillitOrderMapper">
+ 	<resultMap id="order" type="SbillitOrder">
+      <id property="id" column="id"/>
+      <result property="userId" column="user_id"/>
+      <result property="type" column="type"/>
+      <result property="title" column="title"/>
+      <result property="amount" column="amount"/>
+      <result property="status" column="status"/>
+      <result property="description" column="description"/>
+      <result property="phone" column="phone"/>
+      <result property="picture1" column="picture_1"/>
+      <result property="picture2" column="picture_2"/>
+      <result property="picture3" column="picture_3"/>
+      <result property="expiredAt" column="expired_at"/>
+      <result property="createdAt" column="created_at"/>
+      <result property="updatedAt" column="updated_at"/>
+    </resultMap>
 
-    <select id="findAllOrders" resultType="SbillitOrder">
-        select * from `sbillit_order` where 1=1
+    <select id="findAllOrders" resultMap="order">
+        SELECT * FROM sbillit_order WHERE 1=1
     </select>
     
-    <select id="findOrderbyId" parameterType="int" resultType="SbillitOrder">
-        select * from `sbillit_order` where id=#{value}
+    <select id="findOrderbyId" parameterType="int" resultMap="order">
+        SELECT * FROM sbillit_order WHERE id=#{value}
     </select>
-
+    
+    <select id="findOrderHistoryByUserId" parameterType="long" resultMap="order">
+    	SELECT * FROM sbillit_order WHERE user_id=#{value} ORDER BY created_at DESC;
+	</select>
+	
+  	<insert id="insertOrder" parameterType="SbillitOrder">
+		INSERT INTO sbillit_order (id, user_id, type, amount, status, description, phone picture_1, picture_2, picture_3, expired_at, created_at, udpated_at)
+		VALUES (#{id}, #{userId}, #{type}, #{amount}, #{status}, #{description}, #{phone}, #{picture1}, #{picture2}, #{picture3}, #{expiredAt}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+	</insert>  
+		
 </mapper>

@@ -30,7 +30,7 @@ public class SbillitSessionServiceImpl implements SbillitSessionService {
 		long sessionStatus = checkSessionStatus(sessionId);
 		if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_EXPIRED) {
 			// session expired, need to login again
-			return "expried";
+			return SbillitUserAuthtoken.AUTHTOKEN_EXPIRED+"";
 		}else if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_NORMAL) {
 			// normal, update session expire time
 			AppProperties appProperties = new AppProperties();
@@ -44,7 +44,7 @@ public class SbillitSessionServiceImpl implements SbillitSessionService {
 			return userAuthtoken.getAuthtoken();
 		}else if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_NOT_EXIST) {
 			// not exist, create a new session	
-			return "not exist";
+			return SbillitUserAuthtoken.AUTHTOKEN_NOT_EXIST+"";
 		}
 		return null;
 	}
@@ -52,7 +52,6 @@ public class SbillitSessionServiceImpl implements SbillitSessionService {
 	
 	private long checkSessionStatus(String sessionId) {
 		// TODO Auto-generated method stub
-		//SbillitUserAuthtoken userAuthtoken = sbillitUserAuthtokenDao.getUserAuthtokenByUserId(userId);
 		SbillitUserAuthtoken userAuthtoken = sbillitUserAuthtokenDao.getUserAuthtokenBySessionId(sessionId);
 		if (userAuthtoken != null) {
 			DateUtil dateUtil = new DateUtil();

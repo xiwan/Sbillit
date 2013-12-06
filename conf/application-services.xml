@@ -9,7 +9,6 @@
          
 	<bean id="sbillitUserService" class="services.SbillitUserServiceImpl"/>
 	<bean id="sbillitOrderService" class="services.SbillitOrderServiceImpl"/>
-	
 	<bean id="sbillitSessionService" class="services.SbillitSessionServiceImpl"/>
 	
 </beans>

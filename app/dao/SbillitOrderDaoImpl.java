@@ -25,4 +25,16 @@ public class SbillitOrderDaoImpl implements SbillitOrderDao {
 		return sbillitOrderMapper.findOrderbyId(id);
 	}
 
+	@Override
+	public List<SbillitOrder> findOrderHistoryByUserId(long userId) {
+		// TODO Auto-generated method stub
+		return sbillitOrderMapper.findOrderHistoryByUserId(userId);
+	}
+
+	@Override
+	public void createOrder(SbillitOrder order) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -15,7 +15,7 @@ GET    /1/user/login			@controllers.UserModule.login()
 # get order info by order id
 GET		/1/order/:id/info		@controllers.OrderModule.info(id: Integer)
 # get history order info by user id
-GET		/1/order/:userid/history		@controllers.OrderModule.info(userid: Integer)
+GET		/1/order/:userid/history		@controllers.OrderModule.history(userid: Long)
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -15,5 +15,11 @@ public class Application extends Controller {
     public Result index() {
     	return ok("Your new application is ready.");
     }
+    
+    public Result autchCheck(){
+    	String sessionId = session().get("sessionId");
+    	
+    	return ok("");
+    }
 
 }

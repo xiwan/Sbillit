@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="mapper.SbillitUserAuthtokenMapper">
-	<resultMap id="sbillitUserAuthtoken" type="SbillitUserAuthtoken">
+	<resultMap id="userAuthtoken" type="SbillitUserAuthtoken">
       <result property="userId" column="user_id"/>
       <result property="authtoken" column="authtoken"/>
       <result property="createdAt" column="created_at"/>
@@ -11,17 +11,17 @@
       <result property="expiredAt" column="expired_at"/>
     </resultMap>
 
-	<select id="getUserAuthtokenByUserId" parameterType="long" resultMap="sbillitUserAuthtoken">
+	<select id="getUserAuthtokenByUserId" parameterType="long" resultMap="userAuthtoken">
         SELECT user_id, authtoken, created_at, updated_at, expired_at 
         FROM sbillit_user_authtoken WHERE user_id = #{value}
     </select>
 
-	<select id="getUserAuthtokenBySessionId" parameterType="String" resultMap="sbillitUserAuthtoken">
+	<select id="getUserAuthtokenBySessionId" parameterType="String" resultMap="userAuthtoken">
         SELECT user_id, authtoken, created_at, updated_at, expired_at 
         FROM sbillit_user_authtoken WHERE authtoken = #{value}
     </select>
        
-    <insert id="insertUserAuthtoken" parameterType="sbillitUserAuthtoken">
+    <insert id="insertUserAuthtoken" parameterType="SbillitUserAuthtoken">
     	INSERT INTO sbillit_user_authtoken (user_id, authtoken, created_at, updated_at, expired_at) 
     	VALUES (#{userId}, #{authtoken}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{expiredAt})    
     </insert>

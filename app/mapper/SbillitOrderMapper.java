@@ -8,6 +8,10 @@ public interface SbillitOrderMapper {
 
 	public List<SbillitOrder> findAllOrders();
 	
-	public SbillitOrder findOrderbyId(int id);	
+	public SbillitOrder findOrderbyId(int id);
+	
+	public List<SbillitOrder> findOrderHistoryByUserId(long userId);
+	
+	public void insertOrder(SbillitOrder order);
 	
 }
