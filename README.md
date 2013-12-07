@@ -5,37 +5,36 @@ This is [play!](http://www.playframework.com/) based project.
 
 ### API specification (ver 1):
 		
-###### 	POST 	/1/user/login
-	user login, create session and identify login source, finally return session id and user info
+###### user login, create session and identify login source, finally return session id and user info
+	POST 	/user/login	
 	_REQUEST_		postData={jsonObject}
 	_RESPONSE_		{sessionId:xxx, [profile:xxx]}
 	
-###### GET		/1/user/:id/info
-	get user info	
+###### get user info
+	GET		/user/:id/info
 		
-###### GET		/1/order/:id/info	
-	get order info (session check)
+###### get order info (session check)
+	GET		/order/:id/info	
 		
-###### GET		/1/order/:userid/history
-	get history order info by user id
+###### get history order info by user id
+	GET		/order/:userid/history
 	_RESPONSE_		{orderList}
 	
-###### POST    /1/order/quick
-	quick order create
+###### quick order create
+	POST    		/order/quick
 	_REQUEST_		postData={totalNumber, memberArray, orderCurrency}
 	_RESPONSE_		{totalNumber, memberArray, orderCurrency, orderImagePath, orderID}
 	
-##### POST 	/1/image/upload
-	order image upload
+##### order image upload
+	POST 			/image/upload
 	_REQUEST_		postData={orderId, image}
 	_RESPONSE_		{status}
 	
-
 ### NOTE:
 * To finish a successful request and response cycle, **sessionId=xxx** is required.
 * A decent response formatted as {code: xxx, body:{jsonObj}}
 * There are two different environments: local and production. In order to switch from one to one, you should comment out the correct location tag in spring xml.
-* 
+* Error code tables:	
 	| ERROR 	       		| Code          | 
 	| ---------------------	|:-------------:| 
 	| ERROR_INTERNAL     	| 500 | 
