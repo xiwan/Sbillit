@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.Map;
+
 import play.*;
 import play.mvc.*;
 import services.SbillitUserService;
@@ -18,8 +20,13 @@ public class Application extends Controller {
     
     public Result autchCheck(){
     	String sessionId = session().get("sessionId");
-    
+    	
     	return ok("");
+    }
+    
+    public String parseParam(String param){
+    	Map<String, String[]> values = request().body().asFormUrlEncoded();
+    	return values.get(param)[0];
     }
 
 }

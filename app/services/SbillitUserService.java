@@ -11,6 +11,6 @@ public interface SbillitUserService {
 	public SbillitUser findUserById(int id);
 	
 	public long createUser(String password, long point, int banned,
-			long inviteId, long snsId, int snsType, String nickname);
+			long inviteId, String snsId, int snsType, String nickname);
 
 }

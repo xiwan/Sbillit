@@ -21,7 +21,7 @@ public class JsonUtil {
         return Json.toJson(new JsonUtil(code, body));
     }
 	
-	public static JsonNode fromJson(){
-		return null;
+	public static JsonNode fromJson(String jsonStr){
+		return Json.parse(jsonStr);
 	}
 }

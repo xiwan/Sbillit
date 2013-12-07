@@ -28,8 +28,8 @@
     </select>
     
     <insert id="insertUser" parameterType="SbillitUser">
-    	INSERT INTO sbillit_user (id, password, point, banned, sns_id, sns_type, sns_token, nickname, last_login_at, created_at, updated_at) 
-    	VALUES (#{id}, #{password}, #{point}, #{banned}, #{snsId}, #{snsType}, #{snsToken}, #{nickname}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
+    	INSERT INTO sbillit_user (id, password, point, banned, sns_type, sns_token, nickname, last_login_at, created_at, updated_at) 
+    	VALUES (#{id}, #{password}, #{point}, #{banned}, #{snsType}, #{snsToken}, #{nickname}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
     <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
 	   SELECT id FROM seq_user
 	</selectKey>

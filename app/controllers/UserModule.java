@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import entity.SbillitUser;
 import entity.SbillitUserAuthtoken;
 
+import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.Context;
@@ -21,7 +23,7 @@ import services.SbillitUserService;
 import utils.Constant;
 import utils.JsonUtil;
 
-public class UserModule extends Controller {
+public class UserModule extends Application {
 	@Autowired
 	private SbillitUserService sbillitUserService;
 	
@@ -30,14 +32,25 @@ public class UserModule extends Controller {
 	
 	@With(Intercept.class)
 	public Result login(){
-		// RequestBody body = request().body();
+
+		String postData = super.parseParam("postData");
+		Logger.debug(postData);
+		
+		String password = "password";
+		long point = 0; 
+		int banned = 0;
+		long inviteId = 0; 
+		String snsToken = ""; 
+		int snsType = 1;
+		String nickname = "nickname";
+		
 		// parse the session id, if no session id, this user is a new one
 		String sessionId = session().get("sessionId");
 		JsonNode js = null;
 		long lastId = 0;
 		if (sessionId == ""){
 			// register a new user and session
-			lastId = sbillitUserService.createUser("password", 0, 0, 0, 0, 0, "nickname");
+			lastId = sbillitUserService.createUser(password, point, banned, inviteId, snsToken, snsType, nickname);
 			try {
 				sessionId = sbillitSessionService.createSession(lastId);
 			} catch (NumberFormatException e) {

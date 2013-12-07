@@ -17,6 +17,7 @@ import play.mvc.Action;
 import play.mvc.Results;
 import play.mvc.SimpleResult;
 import play.mvc.Http.Context;
+import play.mvc.Http.RequestBody;
 import services.SbillitSessionService;
 import utils.Constant;
 import utils.JsonUtil;
@@ -36,9 +37,10 @@ public class Intercept extends Action.Simple {
 		JsonNode js = null;
 		if (sessionId == null){
 			// need to login again
-			ctx.session().put("sessionId", "");
+			
 			if (uri.indexOf("/user/login") != -1){
-			    js = JsonUtil.toJson(Constant.ERROR_AUTH_NO, "NeedSession");
+			    //js = JsonUtil.toJson(Constant.ERROR_AUTH_NO, "NeedSession");
+				ctx.session().put("sessionId", "");
 			}else{
 				js = JsonUtil.toJson(Constant.ERROR_BAD_REQUEST, "BadRequest");
 			}

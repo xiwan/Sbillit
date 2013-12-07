@@ -17,7 +17,7 @@ import services.SbillitOrderService;
 import utils.Constant;
 import utils.JsonUtil;
 
-public class OrderModule extends Controller {
+public class OrderModule extends Application {
 	@Autowired
 	private SbillitOrderService sbillitOrderService;
 	
