@@ -8,7 +8,7 @@ public interface SbillitOrderDao {
 	
 	public List<SbillitOrder> findAllOrders();
 	
-	public SbillitOrder findOrderbyId(int id);
+	public SbillitOrder findOrderbyId(long id);
 	
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId);
 	

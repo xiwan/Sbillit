@@ -4,78 +4,91 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
-import utils.AppProperties;
+import utils.Constant;
 import utils.DateUtil;
 import utils.Md5Util;
 
-import dao.SbillitUserAuthtokenDao;
-import entity.SbillitUserAuthtoken;
+import dao.SbillitUserSessionDao;
+import entity.SbillitUserSession;
 
 public class SbillitSessionServiceImpl implements SbillitSessionService {
 	
 	private static String salt = "MONKEY_TYPE!@#$%";
 	
 	@Autowired
-	private SbillitUserAuthtokenDao sbillitUserAuthtokenDao;
+	private SbillitUserSessionDao userSessionDao;
 	
 	@Override
-	public SbillitUserAuthtoken getUserAuthtokenByUserId(long userId){
-		return sbillitUserAuthtokenDao.getUserAuthtokenByUserId(userId);
-	}
-
-	@Override
-	public String sessionCheckAndHandle(String sessionId) throws NumberFormatException, FileNotFoundException, IOException {
+	public SbillitUserSession getUserSessionByUserId(long userId){
 		// TODO Auto-generated method stub
-		long sessionStatus = checkSessionStatus(sessionId);
-		if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_EXPIRED) {
-			// session expired, need to login again
-			return SbillitUserAuthtoken.AUTHTOKEN_EXPIRED+"";
-		}else if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_NORMAL) {
-			// normal, update session expire time
-			AppProperties appProperties = new AppProperties();
-			DateUtil dateUtil = new DateUtil();
-			long currentTimestamp = dateUtil.GetCurrentTimeStamp();
-			long expiredAt = currentTimestamp + Long.parseLong(appProperties.getPropertyValue("session.endure"));
-			
-			SbillitUserAuthtoken userAuthtoken = sbillitUserAuthtokenDao.getUserAuthtokenBySessionId(sessionId);
-			userAuthtoken.setExpiredAt(expiredAt);
-			sbillitUserAuthtokenDao.updateUserAuthtoken(userAuthtoken);
-			return userAuthtoken.getAuthtoken();
-		}else if (sessionStatus == SbillitUserAuthtoken.AUTHTOKEN_NOT_EXIST) {
-			// not exist, create a new session	
-			return SbillitUserAuthtoken.AUTHTOKEN_NOT_EXIST+"";
-		}
-		return null;
+		return userSessionDao.getUserSessionByUserId(userId);
 	}
-
 	
-	private long checkSessionStatus(String sessionId) {
-		// TODO Auto-generated method stub
-		SbillitUserAuthtoken userAuthtoken = sbillitUserAuthtokenDao.getUserAuthtokenBySessionId(sessionId);
-		if (userAuthtoken != null) {
-			DateUtil dateUtil = new DateUtil();
-			long expiredAt = userAuthtoken.getExpiredAt();
-			if (expiredAt < dateUtil.GetCurrentTimeStamp()) {
-				return SbillitUserAuthtoken.AUTHTOKEN_EXPIRED;
-			}
-			return SbillitUserAuthtoken.AUTHTOKEN_NORMAL;
-		}
-		return SbillitUserAuthtoken.AUTHTOKEN_NOT_EXIST;	
-	}
-
 	@Override
-	public String createSession(long userId) throws NumberFormatException, FileNotFoundException, IOException {
+	public SbillitUserSession getUserSessionBySession(String session) {
 		// TODO Auto-generated method stub
-		AppProperties appProperties = new AppProperties();
-		DateUtil dateUtil = new DateUtil();
-		long currentTimestamp = dateUtil.GetCurrentTimeStamp();
-		long expiredAt = currentTimestamp + Long.parseLong(appProperties.getPropertyValue("session.endure"));
+		return userSessionDao.getUserSessionBySession(session);
+	}
+	
+	@Override
+	public String createSession(long userId) {
+		// TODO Auto-generated method stub
+		SbillitUserSession userSession = userSessionDao.getUserSessionByUserId(userId);
+		String session = null;
 		
-		Long currentTimestampLong = new Long(currentTimestamp);
-		String authtoken = Md5Util.MD5Encode( currentTimestampLong.toString() + salt );
-		sbillitUserAuthtokenDao.createUserAuthtoken(userId, authtoken, expiredAt);
-		return authtoken;
+		if (userSession == null){
+			long currentTimestamp = DateUtil.GetCurrentTimeStamp();
+			long expiredAt = DateUtil.getExpiredTimeFromNow("session.endure");
+			
+			Long currentTimestampLong = new Long(currentTimestamp);
+			session = Md5Util.MD5Encode( currentTimestampLong.toString() + salt );
+			userSessionDao.createUserSession(userId, session, expiredAt);
+		}else {
+			long expiredAt = DateUtil.getExpiredTimeFromNow("session.endure");
+			userSession.setExpiredAt(expiredAt);
+			userSessionDao.updateUserSession(userSession);
+			session = userSession.getSession();
+		}
+		return session;
 	}
+
+	@Override
+	@Transactional
+	public String sessionCheckAndHandle(String session) throws NumberFormatException, FileNotFoundException, IOException {
+		// TODO Auto-generated method stub
+		String sessionStatus = checkSessionStatus(session);
+		String returnStr = null;
+		if (sessionStatus == Constant.SESSION_NORMAL){
+			long expiredAt = DateUtil.getExpiredTimeFromNow("session.endure");
+			
+			SbillitUserSession userSession = userSessionDao.getUserSessionBySession(session);
+			userSession.setExpiredAt(expiredAt);
+			userSessionDao.updateUserSession(userSession);
+			returnStr = userSession.getSession();
+		}else {
+			returnStr = sessionStatus;
+		}
+		return returnStr;
+	}
+
+	private String checkSessionStatus(String session) {
+		// TODO Auto-generated method stub
+		SbillitUserSession userSession = userSessionDao.getUserSessionBySession(session);
+		String returnStr = null;
+		if (userSession == null) {
+			returnStr = Constant.SESSION_NOT_EXIST;	
+		}else {
+			long expiredAt = userSession.getExpiredAt();
+			if (expiredAt < DateUtil.GetCurrentTimeStamp()) {
+				returnStr = Constant.SESSION_EXPIRED;
+			}else {
+				returnStr = Constant.SESSION_NORMAL;
+			}
+		}
+		return returnStr;
+	}
+
 
 }

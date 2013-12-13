@@ -3,36 +3,37 @@ package entity;
 import java.io.Serializable;
 
 public class SbillitOrder implements Serializable {
-	private int id;
-	private int userId;
-	private int type;
+	private long id;
+	private long userId;
+	private long type;
 	private String title;
 	private double amount;
-	private int status;
+	private long status;
 	private String description;
 	private String phone;
 	private String picture1;
 	private String picture2;
 	private String picture3;
-	private int expiredAt;
-	private int createdAt;
-	private int updatedAt;
-	public int getId() {
+	private long expiredAt;
+	private long createdAt;
+	private long updatedAt;
+	
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public int getType() {
+	public long getType() {
 		return type;
 	}
-	public void setType(int type) {
+	public void setType(long type) {
 		this.type = type;
 	}
 	public String getTitle() {
@@ -47,10 +48,10 @@ public class SbillitOrder implements Serializable {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public int getStatus() {
+	public long getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(long status) {
 		this.status = status;
 	}
 	public String getDescription() {
@@ -83,22 +84,22 @@ public class SbillitOrder implements Serializable {
 	public void setPicture3(String picture3) {
 		this.picture3 = picture3;
 	}
-	public int getExpiredAt() {
+	public long getExpiredAt() {
 		return expiredAt;
 	}
-	public void setExpiredAt(int expiredAt) {
+	public void setExpiredAt(long expiredAt) {
 		this.expiredAt = expiredAt;
 	}
-	public int getCreatedAt() {
+	public long getCreatedAt() {
 		return createdAt;
 	}
-	public void setCreatedAt(int createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
 	}
-	public int getUpdatedAt() {
+	public long getUpdatedAt() {
 		return updatedAt;
 	}
-	public void setUpdatedAt(int updatedAt) {
+	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	

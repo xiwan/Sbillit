@@ -7,15 +7,22 @@ GET     /                           	@controllers.Application.index()
 
 ## User module
 # get user info by user id
-GET		/1/user/:id/info		@controllers.UserModule.info(id: Integer)
+GET		/1/user/:userid/info			@controllers.ModuleUser.info(userid: Long)
+# user register
+POST 	/1/user/register				@controllers.ModuleUser.register()
 # user login, create session and identify login source, finally session id and user info
-POST    /1/user/login			@controllers.UserModule.login()
+POST    /1/user/login					@controllers.ModuleUser.login()
+
 
 ## Order module
 # get order info by order id
-GET		/1/order/:id/info		@controllers.OrderModule.info(id: Integer)
+GET		/1/order/:orderid/info			@controllers.ModuleOrder.info(orderid: Long)
 # get history order info by user id
-GET		/1/order/:userid/history		@controllers.OrderModule.history(userid: Long)
+GET		/1/order/:userid/history		@controllers.ModuleOrder.history(userid: Long)
+# create order
+POST	/1/order/create					@controllers.ModuleOrder.create()
+# quick order
+POST	/1/order/quick					@controllers.ModuleOrder.quick()
 
 
 # Map static resources from the /public folder to the /assets URL path

@@ -7,31 +7,41 @@ public class SbillitUser implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	// table columns
 	private long id;
-	private String password;
+	private long phone;
+	private long banned;
 	private long point;
-	private int banned;
+	private String smsToken;
+	private long smsFlag;
+	private long smsExpiredAt;
 	private long inviteId;
-	private long snsId;
-	private long snsType;
-	private String snsToken;
 	private String nickname;
+	private String password;
 	private String country;
 	private String city;
-	private long lastLoginAt;
 	private long createdAt;
 	private long updatedAt;
+	// pending
+	private String session;
+	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getPassword() {
-		return password;
+	public long getPhone() {
+		return phone;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPhone(long phone) {
+		this.phone = phone;
+	}
+	public long getBanned() {
+		return banned;
+	}
+	public void setBanned(long banned) {
+		this.banned = banned;
 	}
 	public long getPoint() {
 		return point;
@@ -39,11 +49,23 @@ public class SbillitUser implements Serializable {
 	public void setPoint(long point) {
 		this.point = point;
 	}
-	public int getBanned() {
-		return banned;
+	public String getSmsToken() {
+		return smsToken;
 	}
-	public void setBanned(int banned) {
-		this.banned = banned;
+	public void setSmsToken(String smsToken) {
+		this.smsToken = smsToken;
+	}
+	public long getSmsFlag() {
+		return smsFlag;
+	}
+	public void setSmsFlag(long smsFlag) {
+		this.smsFlag = smsFlag;
+	}
+	public long getSmsExpiredAt() {
+		return smsExpiredAt;
+	}
+	public void setSmsExpiredAt(long smsExpiredAt) {
+		this.smsExpiredAt = smsExpiredAt;
 	}
 	public long getInviteId() {
 		return inviteId;
@@ -51,29 +73,17 @@ public class SbillitUser implements Serializable {
 	public void setInviteId(long inviteId) {
 		this.inviteId = inviteId;
 	}
-	public long getSnsId() {
-		return snsId;
-	}
-	public void setSnsId(long snsId) {
-		this.snsId = snsId;
-	}
-	public long getSnsType() {
-		return snsType;
-	}
-	public void setSnsType(long snsType) {
-		this.snsType = snsType;
-	}
-	public String getSnsToken() {
-		return snsToken;
-	}
-	public void setSnsToken(String snsToken) {
-		this.snsToken = snsToken;
-	}
 	public String getNickname() {
 		return nickname;
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getCountry() {
 		return country;
@@ -87,12 +97,6 @@ public class SbillitUser implements Serializable {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public long getLastLoginAt() {
-		return lastLoginAt;
-	}
-	public void setLastLoginAt(long lastLoginAt) {
-		this.lastLoginAt = lastLoginAt;
-	}
 	public long getCreatedAt() {
 		return createdAt;
 	}
@@ -105,6 +109,14 @@ public class SbillitUser implements Serializable {
 	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	public String getSession() {
+		return session;
+	}
+	public void setSession(String session) {
+		this.session = session;
+	}
+	
+	
 	
 	
 }

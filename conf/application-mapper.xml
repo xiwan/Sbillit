@@ -12,8 +12,8 @@
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	 </bean>
 	 
-	 <bean id="sbillitUserAuthtokenMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-	  <property name="mapperInterface" value="mapper.SbillitUserAuthtokenMapper" />
+	 <bean id="sbillitUserSessionMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mapper.SbillitUserSessionMapper" />
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	 </bean>
 	 

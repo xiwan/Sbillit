@@ -38,7 +38,7 @@ public class Md5Util {
 	    try {
 	      resultString=new String(origin);
 	      MessageDigest md = MessageDigest.getInstance("MD5");
-	      resultString=byteArrayToHexString(md.digest(resultString.getBytes()));
+	      resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
 	    }
 	    catch (Exception ex) {
 	      ex.printStackTrace();

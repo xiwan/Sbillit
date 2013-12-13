@@ -1,22 +1,26 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import utils.AppProperties;
+import utils.DateUtil;
+
 import dao.SbillitOrderDao;
-import dao.SbillitUserAuthtokenDao;
+import dao.SbillitUserSessionDao;
 
 import entity.SbillitOrder;
 import entity.SbillitUser;
-import entity.SbillitUserAuthtoken;
+import entity.SbillitUserSession;
 
 public class SbillitOrderServiceImpl implements SbillitOrderService {
 	@Autowired
 	private SbillitOrderDao sbillitOrderDao;
 	@Autowired
-	private SbillitUserAuthtokenDao sbillitUserAuthtokenDao;
+	private SbillitUserSessionDao sbillitUserSessionDao;
 	
 	@Override
 	public List<SbillitOrder> findAllOrders() {
@@ -25,21 +29,44 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	}
 
 	@Override
-	public SbillitOrder findOrderbyId(int id) {
+	public SbillitOrder findOrderbyId(long id) {
 		// TODO Auto-generated method stub
 		return sbillitOrderDao.findOrderbyId(id);
 	}
 
 	@Override
 	@Transactional
-	public List<SbillitOrder> findOrderHistory(long userId, String sessionId) {
+	public List<SbillitOrder> findOrderHistory(long userId, String session) {
 		// TODO Auto-generated method stub
-		SbillitUserAuthtoken user = sbillitUserAuthtokenDao.getUserAuthtokenByUserId(userId);
-		if (user.getAuthtoken().equals(sessionId)){
-			return sbillitOrderDao.findOrderHistoryByUserId(userId);
-		}else {
-			return null;
-		}	
+		SbillitUserSession userSession = sbillitUserSessionDao.getUserSessionByUserId(userId);
+		List<SbillitOrder> orderList = new ArrayList<SbillitOrder>();
+		if (userSession.getSession().equals(session)){
+			orderList = sbillitOrderDao.findOrderHistoryByUserId(userId);
+		}
+		return orderList;
+	}
+
+	@Override
+	public long createOrder() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public SbillitOrder quickOrder(long userId, float amount) {
+		// TODO Auto-generated method stub
+		long expiredAt = DateUtil.getExpiredTimeFromNow("order.endure");
+		
+		SbillitOrder order = new SbillitOrder();
+		order.setUserId(userId);
+		order.setType(0l);
+		order.setTitle("quick create");
+		order.setAmount(amount);
+		order.setStatus(1);
+		order.setExpiredAt(expiredAt);
+		sbillitOrderDao.createOrder(order);
+		sbillitOrderDao.findOrderbyId(order.getId());
+		return order;
 	}
 
 }

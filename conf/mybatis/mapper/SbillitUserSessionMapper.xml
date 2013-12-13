@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.SbillitUserSessionMapper">
+	<resultMap id="userSession" type="SbillitUserSession">
+      <result property="userId" column="user_id"/>
+      <result property="session" column="session"/>
+      <result property="createdAt" column="created_at"/>
+      <result property="updatedAt" column="updated_at"/>
+      <result property="expiredAt" column="expired_at"/>
+    </resultMap>
+
+	<select id="getUserSessionByUserId" parameterType="long" resultMap="userSession">
+        SELECT 
+        	user_id, session, created_at, updated_at, expired_at 
+        FROM 
+        	sbillit_user_session 
+        WHERE user_id = #{value}
+    </select>
+
+	<select id="getUserSessionBySession" parameterType="String" resultMap="userSession">
+        SELECT 
+        	user_id, session, created_at, updated_at, expired_at 
+        FROM 
+        	sbillit_user_session 
+        WHERE session = #{value}
+    </select>
+       
+    <insert id="insertUserSession" parameterType="SbillitUserSession">
+    	INSERT INTO sbillit_user_session 
+    	(user_id, session, created_at, updated_at, expired_at) 
+    	VALUES 
+    	(#{userId}, #{session}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), #{expiredAt})    
+    </insert>
+    
+    <update id="updateUserSession" parameterType="SbillitUserSession">
+    	UPDATE sbillit_user_session 
+    	<set>
+      		<if test="session != null">
+      			session = #{session}, 
+      		</if>
+      		updated_at = UNIX_TIMESTAMP(), 
+      		expired_at = #{expiredAt}
+      	</set>
+    	WHERE 
+    		user_id = #{userId}
+    </update>
+
+</mapper>

@@ -1,5 +1,7 @@
 package utils;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Date;
 
 public class DateUtil {
@@ -16,8 +18,21 @@ public class DateUtil {
 	public static final String MARK_TODAY_TRADE = "tt";
 	public static final String MARK_LAST_THREE_MONTH = "lm3";
 	
-	public long GetCurrentTimeStamp(){
+	public static long GetCurrentTimeStamp(){
 		return System.currentTimeMillis()/1000;
+	}
+	
+	public static long getExpiredTimeFromNow(String key){
+		long currentTimestamp = DateUtil.GetCurrentTimeStamp();
+		long expiredTimestamp = 0l;
+		try {
+			expiredTimestamp = currentTimestamp + 
+					Long.parseLong(AppProperties.getPropertyValue(key));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return expiredTimestamp;
 	}
 
 }

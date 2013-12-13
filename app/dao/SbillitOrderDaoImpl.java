@@ -20,7 +20,7 @@ public class SbillitOrderDaoImpl implements SbillitOrderDao {
 	}
 
 	@Override
-	public SbillitOrder findOrderbyId(int id) {
+	public SbillitOrder findOrderbyId(long id) {
 		// TODO Auto-generated method stub
 		return sbillitOrderMapper.findOrderbyId(id);
 	}
@@ -34,7 +34,8 @@ public class SbillitOrderDaoImpl implements SbillitOrderDao {
 	@Override
 	public void createOrder(SbillitOrder order) {
 		// TODO Auto-generated method stub
-		
+		this.sbillitOrderMapper.updateSeq();
+		this.sbillitOrderMapper.insertOrder(order);
 	}
 
 }

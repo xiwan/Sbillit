@@ -2,29 +2,24 @@ package entity;
 
 import java.io.Serializable;
 
-public class SbillitUserAuthtoken implements Serializable {
+public class SbillitUserSession implements Serializable {
 	
-	public static long AUTHTOKEN_NOT_EXIST = 0l;
-	public static long AUTHTOKEN_EXPIRED = 1l;
-	public static long AUTHTOKEN_NORMAL = 2l;
-
 	private long userId;
-	private String authtoken;
+	private String session;
 	private long createdAt;
 	private long updatedAt;
 	private long expiredAt;
-	
 	public long getUserId() {
 		return userId;
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-	public String getAuthtoken() {
-		return authtoken;
+	public String getSession() {
+		return session;
 	}
-	public void setAuthtoken(String authtoken) {
-		this.authtoken = authtoken;
+	public void setSession(String session) {
+		this.session = session;
 	}
 	public long getCreatedAt() {
 		return createdAt;
@@ -46,5 +41,5 @@ public class SbillitUserAuthtoken implements Serializable {
 	}
 	
 	
-	
+
 }

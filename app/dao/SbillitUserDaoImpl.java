@@ -10,25 +10,38 @@ import entity.SbillitUser;
 
 public class SbillitUserDaoImpl implements SbillitUserDao {
 	@Autowired
-	private SbillitUserMapper sbillitUserMapper;
+	private SbillitUserMapper userMapper;
 
 	@Override
 	public List<SbillitUser> findAllUsers() {
 		// TODO Auto-generated method stub		
-		return this.sbillitUserMapper.findAllUsers();
+		return this.userMapper.findAllUsers();
 	}
 
 	@Override
 	public SbillitUser findUserById(long id) {
 		// TODO Auto-generated method stub
-		return this.sbillitUserMapper.findUserById(id);
+		return this.userMapper.findUserById(id);
 	}
 
 	@Override
 	public void insertUser(SbillitUser user) {
 		// TODO Auto-generated method stub
-		this.sbillitUserMapper.updateSeq();
-		this.sbillitUserMapper.insertUser(user);
+		this.userMapper.updateSeq();
+		this.userMapper.insertUser(user);
 	}
+
+	@Override
+	public List<SbillitUser> findeUserByPhone(long phone) {
+		// TODO Auto-generated method stub
+		return userMapper.findUserByPhone(phone);
+	}
+
+	@Override
+	public void saveUser (SbillitUser user) {
+		// TODO Auto-generated method stub
+		userMapper.updateUser(user);
+	}
+
 
 }

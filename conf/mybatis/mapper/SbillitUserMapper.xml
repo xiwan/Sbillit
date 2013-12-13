@@ -5,16 +5,17 @@
 <mapper namespace="mapper.SbillitUserMapper">
  	<resultMap id="user" type="SbillitUser">
       <id property="id" column="id"/>
-      <result property="password" column="password"/>
-      <result property="point" column="point"/>
+      <result property="phone" column="phone"/>
       <result property="banned" column="banned"/>
-      <result property="snsId" column="sns_id"/>
-      <result property="snsType" column="sns_type"/>
-      <result property="snsToken" column="sns_token"/>
+      <result property="point" column="point"/>
+      <result property="smsToken" column="sms_token"/>
+      <result property="smsFlag" column="sms_flag"/>
+      <result property="smsExpiredAt" column="sms_expired_at"/>
+      <result property="inviteId" column="invite_id"/>
       <result property="nickname" column="nickname"/>
+      <result property="password" column="password"/>
       <result property="country" column="country"/>
       <result property="city" column="city"/>
-      <result property="lastLoginAt" column="last_login_at"/>
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
     </resultMap>
@@ -27,9 +28,26 @@
         SELECT * FROM sbillit_user WHERE id=#{value}
     </select>
     
+    <select id="findUserByPhone" parameterType="long" resultMap="user">
+ 		SELECT * FROM sbillit_user WHERE phone = #{value}   
+    </select>
+    
+    <update id="updateUser" parameterType="SbillitUser">
+    	UPDATE sbillit_user
+		<set>
+      		<if test="smsFlag != null">
+      			sms_flag = #{smsFlag}, 
+      		</if>
+      		updated_at = UNIX_TIMESTAMP()
+      	</set>
+    	WHERE id = #{id}
+    </update>
+    
     <insert id="insertUser" parameterType="SbillitUser">
-    	INSERT INTO sbillit_user (id, password, point, banned, sns_type, sns_token, nickname, last_login_at, created_at, updated_at) 
-    	VALUES (#{id}, #{password}, #{point}, #{banned}, #{snsType}, #{snsToken}, #{nickname}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
+    	INSERT INTO sbillit_user 
+    	(id, phone, banned, sms_token, sms_flag, sms_expired_at, nickname, created_at, updated_at) 
+    	VALUES 
+    	(#{id}, #{phone}, #{banned}, #{smsToken}, #{smsFlag}, #{smsExpiredAt}, #{nickname}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
     <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
 	   SELECT id FROM seq_user
 	</selectKey>

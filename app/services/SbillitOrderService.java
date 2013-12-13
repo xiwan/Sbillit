@@ -7,7 +7,11 @@ import entity.SbillitOrder;
 public interface SbillitOrderService {
 	public List<SbillitOrder> findAllOrders();
 	
-	public SbillitOrder findOrderbyId(int id);
+	public SbillitOrder findOrderbyId(long id);
 	
-	public List<SbillitOrder> findOrderHistory(long userId, String sessionId);
+	public List<SbillitOrder> findOrderHistory(long userId, String session);
+	
+	public long createOrder();
+	
+	public SbillitOrder quickOrder(long userId, float amount);
 }

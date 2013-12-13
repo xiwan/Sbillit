@@ -10,6 +10,10 @@ public interface SbillitUserMapper {
 	
 	public SbillitUser findUserById(long id);
 	
+	public List<SbillitUser> findUserByPhone(long phone);
+	
+	public void updateUser(SbillitUser user);
+	
 	public void insertUser(SbillitUser user);
 	
 	public void updateSeq();

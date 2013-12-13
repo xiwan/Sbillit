@@ -34,8 +34,14 @@
 	</select>
 	
   	<insert id="insertOrder" parameterType="SbillitOrder">
-		INSERT INTO sbillit_order (id, user_id, type, amount, status, description, phone picture_1, picture_2, picture_3, expired_at, created_at, udpated_at)
+		INSERT INTO sbillit_order (id, user_id, type, amount, status, description, phone, picture_1, picture_2, picture_3, expired_at, created_at, updated_at)
 		VALUES (#{id}, #{userId}, #{type}, #{amount}, #{status}, #{description}, #{phone}, #{picture1}, #{picture2}, #{picture3}, #{expiredAt}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+    <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
+	   SELECT id FROM seq_order
+	</selectKey>
 	</insert>  
-		
+
+    <update id="updateSeq">
+    	UPDATE seq_order SET id=id+1;
+    </update>		
 </mapper>
