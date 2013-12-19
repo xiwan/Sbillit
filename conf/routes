@@ -7,7 +7,7 @@ GET     /                           	@controllers.Application.index()
 
 ## User module
 # get user info by user id
-GET		/1/user/:userid/info			@controllers.ModuleUser.info(userid: Long)
+GET		/1/user/info			@controllers.ModuleUser.info()
 # user register
 POST 	/1/user/register				@controllers.ModuleUser.register()
 # user login, create session and identify login source, finally session id and user info

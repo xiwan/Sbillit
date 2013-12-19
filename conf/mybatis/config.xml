@@ -10,6 +10,7 @@
 		<typeAlias alias="SbillitUserSession" type="entity.SbillitUserSession" /> 
 		
 		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
+		<typeAlias alias="SbillitOrderShare" type="entity.SbillitOrderShare" /> 
 	</typeAliases>
 	
 	<mappers>

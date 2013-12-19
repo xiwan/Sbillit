@@ -1,5 +1,6 @@
 package controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,15 +50,22 @@ public class ModuleOrder extends Application {
 		
 		return ok("");
 	}
-	
+
 	@With(Intercept.class)
 	public Result quick(){
 		long userId = super.getUserBySessionId();
 		JsonNode postDataJson = super.parseParamJson("postData");
-//		postDataJson.get("totalNumber").toString();
-//		postDataJson.get("memberArray").toString();
-//		postDataJson.get("orderCurrency").toString();
-		SbillitOrder order = sbillitOrderService.quickOrder(userId, 10.01f);
+		
+		Float totalNumber = Float.parseFloat(postDataJson.get("totalNumber").toString());
+		JsonNode userArray = postDataJson.get("userArray");
+		String CNY = postDataJson.get("orderCurrency").toString();
+		
+		// parse the userArray to generate userId list
+		List<Long> userIdList = new ArrayList<Long> ();
+		userIdList.add(1l);
+		userIdList.add(2l);
+		
+		SbillitOrder order = sbillitOrderService.quickOrder(userId, userIdList, totalNumber);
 		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, order);
 		return ok(js);
 	}

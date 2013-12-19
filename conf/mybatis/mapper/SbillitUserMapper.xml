@@ -35,8 +35,14 @@
     <update id="updateUser" parameterType="SbillitUser">
     	UPDATE sbillit_user
 		<set>
+			<if test="smsToken != null">
+      			sms_token = #{smsToken}, 
+      		</if>
       		<if test="smsFlag != null">
       			sms_flag = #{smsFlag}, 
+      		</if>
+      		<if test="smsExpiredAt != null">
+      			sms_expired_at = #{smsExpiredAt}, 
       		</if>
       		updated_at = UNIX_TIMESTAMP()
       	</set>

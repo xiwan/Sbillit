@@ -3,6 +3,7 @@ package mapper;
 import java.util.List;
 
 import entity.SbillitOrder;
+import entity.SbillitOrderShare;
 
 public interface SbillitOrderMapper {
 
@@ -15,5 +16,9 @@ public interface SbillitOrderMapper {
 	public void insertOrder(SbillitOrder order);
 	
 	public void updateSeq();
+	
+	public void insertOrderShare(SbillitOrderShare orderShare);
+	
+	public void updateOrderShare(SbillitOrderShare orderShare);
 	
 }

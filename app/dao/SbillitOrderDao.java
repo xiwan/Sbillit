@@ -13,5 +13,9 @@ public interface SbillitOrderDao {
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId);
 	
 	public void createOrder(SbillitOrder order);
+	
+	public void createOrderShare(Long orderId, Long userId, Integer status);
+	
+	public void updateOrderShare(Long orderId, Long userId, Integer status);
 
 }

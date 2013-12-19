@@ -7,6 +7,7 @@ import mapper.SbillitOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import entity.SbillitOrder;
+import entity.SbillitOrderShare;
 
 public class SbillitOrderDaoImpl implements SbillitOrderDao {
 	
@@ -36,6 +37,26 @@ public class SbillitOrderDaoImpl implements SbillitOrderDao {
 		// TODO Auto-generated method stub
 		this.sbillitOrderMapper.updateSeq();
 		this.sbillitOrderMapper.insertOrder(order);
+	}
+
+	@Override
+	public void createOrderShare(Long orderId, Long userId, Integer status) {
+		// TODO Auto-generated method stub	
+		SbillitOrderShare orderShare = new SbillitOrderShare();
+		orderShare.setOrderId(orderId);
+		orderShare.setUserId(userId);
+		orderShare.setStatus(status);
+		this.sbillitOrderMapper.instertOrderShare(orderShare);		
+	}
+
+	@Override
+	public void updateOrderShare(Long orderId, Long userId, Integer status) {
+		// TODO Auto-generated method stub
+		SbillitOrderShare orderShare = new SbillitOrderShare();
+		orderShare.setOrderId(orderId);
+		orderShare.setUserId(userId);
+		orderShare.setStatus(status);
+		this.sbillitOrderMapper.updateOrderShare(orderShare);	
 	}
 
 }

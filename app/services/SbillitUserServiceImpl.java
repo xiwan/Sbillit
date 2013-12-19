@@ -39,15 +39,28 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	@Override
 	public String createNewUserAndAssignSmsToken(long phone, String nickname) {
 		// TODO Auto-generated method stub
+		
 		long smsExpiredAt = DateUtil.getExpiredTimeFromNow("sms.endure");
 		String smsToken = RamNumUtil.Instance().getRandom();
 		
-		SbillitUser user = new SbillitUser();
-		user.setPhone(phone);
-		user.setSmsToken(smsToken);
-		user.setSmsExpiredAt(smsExpiredAt);
-		user.setNickname(nickname);
-		this.UserDao.insertUser(user);
+		List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
+		if (userList == null || userList.size() == 0) {
+			SbillitUser user = new SbillitUser();
+			user.setPhone(phone);
+			user.setSmsToken(smsToken);
+			user.setSmsExpiredAt(smsExpiredAt);
+			user.setNickname(nickname);
+			this.UserDao.insertUser(user);
+		}else {
+			if (userList.size() == 1){
+				SbillitUser user = userList.get(0);
+				user.setSmsToken(smsToken);
+				user.setSmsExpiredAt(smsExpiredAt);
+				this.UserDao.saveUser(user);
+			}else{
+				return Constant.USER_PHONE_DUPLICATE;
+			}
+		}
 		return smsToken;
 	}
 
@@ -57,7 +70,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
 		SbillitUser user = new SbillitUser();
 		Map<String, SbillitUser> returnMap = new HashMap<String, SbillitUser>();
-		if (userList == null) {
+		if (userList == null || userList.size() == 0) {
 			returnMap.put(Constant.USER_PHONE_NOT_EXIST, user);
 		}else {
 			if (userList.size()>1){

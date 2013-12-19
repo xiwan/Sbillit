@@ -30,16 +30,29 @@ public class ModuleUser extends Application {
 	@Autowired
 	private SbillitSessionService sbillitSessionService;
 	
+	@With(Intercept.class)
+	public Result info() {
+		long userId = super.getUserBySessionId();
+		SbillitUser user = sbillitUserService.findUserById(userId);		
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, user);
+    	return ok( Json.toJson(js) );
+    }
+	
 	public Result register(){
 		// store the phone number and assign it with an expiring smsToken
 		JsonNode postDataJson = super.parseParamJson("postData");
-		//String phone = postDataJson.get("phone").toString();
-		long phone = 0l;
-		String nickname = postDataJson.get("phone").toString();
+		String phone = JsonUtil.stripQuot(postDataJson.get("phone").toString());
+		String nickname = phone;
 		
-		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
+		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(Long.parseLong(phone), nickname);
+		
+		// should use sms sender
 		
 		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
+		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "");
+		}
+			
 		return ok(js);
 	}
 	
@@ -50,9 +63,9 @@ public class ModuleUser extends Application {
 		// token should be valid, and match with last registered token
 
 		JsonNode postDataJson = super.parseParamJson("postData");	
-		String smsToken = postDataJson.get("token").toString(); 
-		//String phone = postDataJson.get("phone").toString();
-		long phone = 1l;
+		String smsToken = JsonUtil.stripQuot(postDataJson.get("token").toString()); 
+		long phone = Long.parseLong(JsonUtil.stripQuot(postDataJson.get("phone").toString()));
+		//long phone = 1l;
 		
 		JsonNode js = null;
 		// register a new user and session
@@ -80,10 +93,6 @@ public class ModuleUser extends Application {
 		}
 		return ok(js);
 	}
-	
-	public Result info(Long id) {
-		SbillitUser user = sbillitUserService.findUserById(id);
-    	return ok( Json.toJson(user) );
-    }
+
 
 }

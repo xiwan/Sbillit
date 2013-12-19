@@ -53,7 +53,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	}
 
 	@Override
-	public SbillitOrder quickOrder(long userId, float amount) {
+	@Transactional
+	public SbillitOrder quickOrder(long userId, List<Long> userIdList, float amount) {
 		// TODO Auto-generated method stub
 		long expiredAt = DateUtil.getExpiredTimeFromNow("order.endure");
 		
@@ -65,7 +66,14 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		order.setStatus(1);
 		order.setExpiredAt(expiredAt);
 		sbillitOrderDao.createOrder(order);
+		
+		long orderId = order.getId();
 		sbillitOrderDao.findOrderbyId(order.getId());
+		
+		for (Long uid: userIdList) {
+			sbillitOrderDao.createOrderShare(orderId, uid, 0);
+		}	
+		
 		return order;
 	}
 

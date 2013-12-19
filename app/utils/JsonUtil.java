@@ -18,10 +18,15 @@ public class JsonUtil {
 	}
 	
 	public static JsonNode toJson(long code, Object body) {
+		
         return Json.toJson(new JsonUtil(code, body));
     }
 	
 	public static JsonNode fromJson(String jsonStr){
 		return Json.parse(jsonStr);
+	}
+	
+	public static String stripQuot(String str){
+		return str.replace("\"", "");
 	}
 }

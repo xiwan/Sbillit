@@ -20,6 +20,14 @@
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
     </resultMap>
+    
+    <resultMap id="orderShare" type="SbillitOrderShare">
+      <result property="orderId" column="order_id"/>
+      <result property="userId" column="user_id"/>
+      <result property="status" column="status" />
+      <result property="createdAt" column="created_at"/>
+      <result property="updatedAt" column="updated_at"/>
+    </resultMap>
 
     <select id="findAllOrders" resultMap="order">
         SELECT * FROM sbillit_order WHERE 1=1
@@ -43,5 +51,17 @@
 
     <update id="updateSeq">
     	UPDATE seq_order SET id=id+1;
-    </update>		
+    </update>	
+    
+    <insert id="insertOrderShare" parameterType="SbillitOrderShare">
+    	INSERT INTO sbillit_order_share (order_id, user_id, status, created_at, updated_at)
+    	VALUES (#{orderId}, #{userId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+    </insert>
+    
+    <update id="updateOrderShare" parameterType="SbillitOrderShare">
+    	UPDATE sbillit_order_share
+		SET status = #{status}, updated_at = UNIX_TIMESTAMP()
+    	WHERE order_id = #{orderId} AND user_id = #{userId}	
+    </update>
+    	
 </mapper>

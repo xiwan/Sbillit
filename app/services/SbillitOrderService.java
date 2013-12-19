@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import entity.SbillitOrder;
@@ -13,5 +14,5 @@ public interface SbillitOrderService {
 	
 	public long createOrder();
 	
-	public SbillitOrder quickOrder(long userId, float amount);
+	public SbillitOrder quickOrder(long userId, List<Long> userIdList, float amount);
 }
