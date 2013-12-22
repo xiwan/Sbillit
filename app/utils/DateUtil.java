@@ -27,7 +27,7 @@ public class DateUtil {
 		long expiredTimestamp = 0l;
 		try {
 			expiredTimestamp = currentTimestamp + 
-					Long.parseLong(AppProperties.getPropertyValue(key));
+					Long.parseLong(AppProp.getPropertyValue(key));
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

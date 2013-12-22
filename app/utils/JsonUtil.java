@@ -18,7 +18,6 @@ public class JsonUtil {
 	}
 	
 	public static JsonNode toJson(long code, Object body) {
-		
         return Json.toJson(new JsonUtil(code, body));
     }
 	

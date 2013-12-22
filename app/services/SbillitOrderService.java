@@ -2,6 +2,9 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import entity.SbillitOrder;
 
@@ -14,5 +17,7 @@ public interface SbillitOrderService {
 	
 	public long createOrder();
 	
-	public SbillitOrder quickOrder(long userId, List<Long> userIdList, float amount);
+	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode friendsArray, JsonNode contactsArray, Double amount);
+	
+	public Map<Long, String> uploadFile(long orderId, String filePath);
 }

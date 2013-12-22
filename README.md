@@ -26,7 +26,7 @@ This is [play!](http://www.playframework.com/) based project.
 	_RESPONSE_		{totalNumber, memberArray, orderCurrency, orderImagePath, orderID}
 	
 ##### order image upload
-	POST 			/image/upload
+	POST 			/order/upload
 	_REQUEST_		postData={orderId, image}
 	_RESPONSE_		{status}
 	

@@ -19,7 +19,7 @@ import play.mvc.Result;
 import play.mvc.With;
 import services.SbillitSessionService;
 import services.SbillitUserService;
-import utils.AppProperties;
+import utils.AppProp;
 import utils.Constant;
 import utils.JsonUtil;
 
@@ -41,10 +41,10 @@ public class ModuleUser extends Application {
 	public Result register(){
 		// store the phone number and assign it with an expiring smsToken
 		JsonNode postDataJson = super.parseParamJson("postData");
-		String phone = JsonUtil.stripQuot(postDataJson.get("phone").toString());
-		String nickname = phone;
+		Long phone = postDataJson.get("phone").asLong();
+		String nickname = phone.toString();
 		
-		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(Long.parseLong(phone), nickname);
+		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
 		
 		// should use sms sender
 		
@@ -63,8 +63,8 @@ public class ModuleUser extends Application {
 		// token should be valid, and match with last registered token
 
 		JsonNode postDataJson = super.parseParamJson("postData");	
-		String smsToken = JsonUtil.stripQuot(postDataJson.get("token").toString()); 
-		long phone = Long.parseLong(JsonUtil.stripQuot(postDataJson.get("phone").toString()));
+		String smsToken = postDataJson.get("token").asText(); 
+		long phone = postDataJson.get("phone").asLong();
 		//long phone = 1l;
 		
 		JsonNode js = null;
@@ -89,7 +89,7 @@ public class ModuleUser extends Application {
 			if (returnMap.get(Constant.USER_SMSTOKEN_NOT_MATCH) != null) {
 				key = Constant.USER_SMSTOKEN_NOT_MATCH;
 			}
-			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProperties.getPropertyi18n(key));
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(key));
 		}
 		return ok(js);
 	}

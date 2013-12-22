@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 public class SbillitOrderShare implements Serializable {
 	private Long orderId;
+	private String phone;
 	private Long userId;
 	private Integer status;
 	private Long createdAt;
 	private Long updatedAt;
+	
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -37,6 +39,12 @@ public class SbillitOrderShare implements Serializable {
 	}
 	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 	

@@ -17,7 +17,7 @@ import play.mvc.SimpleResult;
 import play.mvc.Http.Context;
 import play.mvc.Http.RequestBody;
 import services.SbillitSessionService;
-import utils.AppProperties;
+import utils.AppProp;
 import utils.Constant;
 import utils.JsonUtil;
 
@@ -32,7 +32,6 @@ public class Intercept extends Action.Simple {
 		// TODO Auto-generated method stub
 		// each request should come with a session id
 		String session = ctx.request().getQueryString("session");
-		//String uri = ctx.request().uri();
 		JsonNode js = null;
 		if (session == null){
 			// need to login again
@@ -42,10 +41,10 @@ public class Intercept extends Action.Simple {
 			String parpareReturn = sbillitSessionService.sessionCheckAndHandle(session);
 			if (parpareReturn.equals( Constant.SESSION_EXPIRED )){
 				js = JsonUtil.toJson(Constant.ERROR_SESSION_EXPIRED, 
-						AppProperties.getPropertyi18n(Constant.SESSION_EXPIRED));
+						AppProp.getPropertyi18n(Constant.SESSION_EXPIRED));
 			}else if (parpareReturn.equals( Constant.SESSION_NOT_EXIST )){
 				js = JsonUtil.toJson(Constant.ERROR_SESSION_EXPIRED, 
-						AppProperties.getPropertyi18n(Constant.SESSION_NOT_EXIST));
+						AppProp.getPropertyi18n(Constant.SESSION_NOT_EXIST));
 			}
 
 			ctx.session().put("session", parpareReturn);

@@ -10,7 +10,7 @@ public class SbillitOrder implements Serializable {
 	private double amount;
 	private long status;
 	private String description;
-	private String phone;
+	private String storePhone;
 	private String picture1;
 	private String picture2;
 	private String picture3;
@@ -60,12 +60,6 @@ public class SbillitOrder implements Serializable {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
 	public String getPicture1() {
 		return picture1;
 	}
@@ -101,6 +95,12 @@ public class SbillitOrder implements Serializable {
 	}
 	public void setUpdatedAt(long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public String getStorePhone() {
+		return storePhone;
+	}
+	public void setStorePhone(String storePhone) {
+		this.storePhone = storePhone;
 	}
 	
 	

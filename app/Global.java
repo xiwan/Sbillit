@@ -10,6 +10,7 @@ import play.mvc.*;
 import play.mvc.Http.Request;
 import play.Application;
 import play.GlobalSettings;
+import play.Logger;
 import services.SbillitSessionService;
 
 public class Global extends GlobalSettings {
@@ -33,6 +34,8 @@ public class Global extends GlobalSettings {
 	
 	@Override
 	public Action onRequest(Request request, Method actionMethod) {
+		String uri = request.uri();
+		Logger.info(uri);
 		return super.onRequest(request, actionMethod);
 	}
 

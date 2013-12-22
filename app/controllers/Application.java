@@ -49,5 +49,10 @@ public class Application extends Controller {
     	Map<String, String[]> values = request().body().asFormUrlEncoded();
     	return Json.parse(values.get(param)[0]);
     }
+    
+//    public static void main(String[] args){
+//    	JsonNode js = Json.parse("{\"phone\":\"13818180795\"}");
+//    	System.out.println(js.findValue("phone").asLong());
+//    }
 
 }

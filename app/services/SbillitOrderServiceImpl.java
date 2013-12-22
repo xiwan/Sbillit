@@ -1,12 +1,17 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import utils.AppProperties;
+import com.fasterxml.jackson.databind.JsonNode;
+
+import utils.AppProp;
+import utils.Constant;
 import utils.DateUtil;
 
 import dao.SbillitOrderDao;
@@ -53,28 +58,66 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	}
 
 	@Override
-	@Transactional
-	public SbillitOrder quickOrder(long userId, List<Long> userIdList, float amount) {
-		// TODO Auto-generated method stub
+	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode friendsArray, JsonNode contactsArray, Double amount) {
+		// TODO Auto-generated method stub		
 		long expiredAt = DateUtil.getExpiredTimeFromNow("order.endure");
 		
 		SbillitOrder order = new SbillitOrder();
-		order.setUserId(userId);
-		order.setType(0l);
-		order.setTitle("quick create");
+		order.setUserId(ownerId);
+		order.setType(Constant.ORDER_TYPE_QUICK);
+		order.setTitle(orderTitle);
 		order.setAmount(amount);
-		order.setStatus(1);
+		order.setStatus(Constant.ORDER_SHARED);
 		order.setExpiredAt(expiredAt);
 		sbillitOrderDao.createOrder(order);
 		
 		long orderId = order.getId();
-		sbillitOrderDao.findOrderbyId(order.getId());
 		
-		for (Long uid: userIdList) {
-			sbillitOrderDao.createOrderShare(orderId, uid, 0);
-		}	
+		// create order share records		
+ 		// duplication check point make sure the fa and ca dont share same phonenumber
+		if (friendsArray.isArray()){
+			for (JsonNode fa: friendsArray) {
+				String phone = fa.get("phoneNumber").asText();
+				Long userId = fa.get("userID").asLong();
+				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_NA);
+			}			
+		}else {
+			
+		}
 		
+		if (contactsArray.isArray()){
+			for (JsonNode ca: contactsArray) {
+				String phone = ca.get("phoneNumber").asText();
+				sbillitOrderDao.createOrderShare(orderId, phone, 0l, Constant.ORDER_SHARE_NA);			
+			}			
+		}else  {
+			
+		}
+
+		//sbillitOrderDao.findOrderbyId(order.getId());
 		return order;
+	}
+
+	@Override
+	public Map<Long, String> uploadFile(long orderId, String filePath) {
+		// TODO Auto-generated method stub
+		SbillitOrder order = sbillitOrderDao.findOrderbyId(orderId);
+		Map<Long, String> returnMap = new HashMap<Long, String>();
+		if (order == null) {
+			returnMap.put(Constant.ERROR_INTERNAL, Constant.ORDER_IMAGE_UPLOAD_FAILED_NO_ORDER);
+		}else {
+			returnMap.put(Constant.ERROR_FREE, Constant.ORDER_IMAGE_UPLOAD_SUCCESS);
+			if (order.getPicture1() == null){
+				sbillitOrderDao.updateOrder(orderId, null, filePath, null, null);
+			}else if (order.getPicture2() == null){
+				sbillitOrderDao.updateOrder(orderId, null, null, filePath, null);
+			}else if (order.getPicture3() == null){
+				sbillitOrderDao.updateOrder(orderId, null, null, null, filePath);
+			}else {
+				returnMap.put(Constant.ERROR_INTERNAL, Constant.ORDER_IMAGE_UPLOAD_FAILED_MAX);
+			}
+		}
+		return returnMap;
 	}
 
 }

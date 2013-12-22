@@ -12,7 +12,7 @@
       <result property="amount" column="amount"/>
       <result property="status" column="status"/>
       <result property="description" column="description"/>
-      <result property="phone" column="phone"/>
+      <result property="storePhone" column="store_phone"/>
       <result property="picture1" column="picture_1"/>
       <result property="picture2" column="picture_2"/>
       <result property="picture3" column="picture_3"/>
@@ -23,6 +23,7 @@
     
     <resultMap id="orderShare" type="SbillitOrderShare">
       <result property="orderId" column="order_id"/>
+      <result property="phone" column="phone"/>
       <result property="userId" column="user_id"/>
       <result property="status" column="status" />
       <result property="createdAt" column="created_at"/>
@@ -42,8 +43,8 @@
 	</select>
 	
   	<insert id="insertOrder" parameterType="SbillitOrder">
-		INSERT INTO sbillit_order (id, user_id, type, amount, status, description, phone, picture_1, picture_2, picture_3, expired_at, created_at, updated_at)
-		VALUES (#{id}, #{userId}, #{type}, #{amount}, #{status}, #{description}, #{phone}, #{picture1}, #{picture2}, #{picture3}, #{expiredAt}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+		INSERT INTO sbillit_order (id, user_id, type, amount, status, description, store_phone, picture_1, picture_2, picture_3, expired_at, created_at, updated_at)
+		VALUES (#{id}, #{userId}, #{type}, #{amount}, #{status}, #{description}, #{storePhone}, #{picture1}, #{picture2}, #{picture3}, #{expiredAt}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
     <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
 	   SELECT id FROM seq_order
 	</selectKey>
@@ -54,14 +55,40 @@
     </update>	
     
     <insert id="insertOrderShare" parameterType="SbillitOrderShare">
-    	INSERT INTO sbillit_order_share (order_id, user_id, status, created_at, updated_at)
-    	VALUES (#{orderId}, #{userId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+    	INSERT INTO sbillit_order_share (order_id, phone, user_id, status, created_at, updated_at)
+    	VALUES (#{orderId}, #{phone}, #{userId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
     </insert>
     
-    <update id="updateOrderShare" parameterType="SbillitOrderShare">
-    	UPDATE sbillit_order_share
-		SET status = #{status}, updated_at = UNIX_TIMESTAMP()
-    	WHERE order_id = #{orderId} AND user_id = #{userId}	
+    <update id="updateOrder" parameterType="java.util.HashMap">
+    UPDATE sbillit_order 
+    <set>
+        <if test="status != null">
+    		status = #{status}, 
+    	</if>
+    	<if test="picture1 != null">
+    		picture_1 = #{picture1}, 
+    	</if>
+    	<if test="picture2 != null">
+    		picture_2 = #{picture1}, 
+    	</if>
+    	<if test="picture3 != null">
+    		picture_3 = #{picture1}, 
+    	</if>
+    	updated_at = UNIX_TIMESTAMP()
+    </set>
+    WHERE id = #{orderId} 
+    </update>
+    
+    <update id="updateOrderShare" parameterType="java.util.HashMap">
+    	UPDATE sbillit_order_share 
+    	<set>
+    	<if test="status != null">
+    		status = #{status}, 
+    	</if>
+    	updated_at = UNIX_TIMESTAMP()
+    	</set>
+    	WHERE 
+    		order_id = #{orderId} AND phone = #{phone}	
     </update>
     	
 </mapper>
