@@ -41,8 +41,8 @@ public class ModuleUser extends Application {
 	public Result register(){
 		// store the phone number and assign it with an expiring smsToken
 		JsonNode postDataJson = super.parseParamJson("postData");
-		Long phone = postDataJson.get("phone").asLong();
-		String nickname = phone.toString();
+		String phone = postDataJson.get("phone").asText();
+		String nickname = phone;
 		
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
 		
@@ -64,8 +64,7 @@ public class ModuleUser extends Application {
 
 		JsonNode postDataJson = super.parseParamJson("postData");	
 		String smsToken = postDataJson.get("token").asText(); 
-		long phone = postDataJson.get("phone").asLong();
-		//long phone = 1l;
+		String phone = postDataJson.get("phone").asText();
 		
 		JsonNode js = null;
 		// register a new user and session

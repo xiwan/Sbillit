@@ -32,7 +32,7 @@ public class SbillitUserDaoImpl implements SbillitUserDao {
 	}
 
 	@Override
-	public List<SbillitUser> findeUserByPhone(long phone) {
+	public List<SbillitUser> findeUserByPhone(String phone) {
 		// TODO Auto-generated method stub
 		return userMapper.findUserByPhone(phone);
 	}

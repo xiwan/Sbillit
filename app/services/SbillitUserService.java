@@ -11,9 +11,9 @@ public interface SbillitUserService {
 	
 	public SbillitUser findUserById(long id);
 	
-	public String createNewUserAndAssignSmsToken (long phone, String nickname);
+	public String createNewUserAndAssignSmsToken (String phone, String nickname);
 	
-	public Map completeNewUserRegister(long phone, String smsToken);
+	public Map completeNewUserRegister(String phone, String smsToken);
 	
 
 }

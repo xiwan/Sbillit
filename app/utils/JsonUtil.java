@@ -24,8 +24,5 @@ public class JsonUtil {
 	public static JsonNode fromJson(String jsonStr){
 		return Json.parse(jsonStr);
 	}
-	
-	public static String stripQuot(String str){
-		return str.replace("\"", "");
-	}
+
 }

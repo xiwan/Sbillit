@@ -23,6 +23,7 @@ import play.mvc.With;
 import services.SbillitOrderService;
 import utils.AppProp;
 import utils.Constant;
+import utils.DateUtil;
 import utils.FileUtil;
 import utils.JsonUtil;
 
@@ -83,9 +84,8 @@ public class ModuleOrder extends Application {
 		    String contentType = picture.getContentType(); 
 		    File file = picture.getFile(); 
 		    String tempFilePath = file.getPath();
-		    Logger.debug(tempFilePath);
-		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/" + orderId + "-" +fileName;
-		    //file.renameTo(new File(newFilePath));
+		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/" + orderId + 
+					"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
 		    FileUtil.move(tempFilePath, newFilePath);
 		    
 		    Map<Long, String> returnMap = sbillitOrderService.uploadFile(orderId, newFilePath);
@@ -107,10 +107,9 @@ public class ModuleOrder extends Application {
 		RawBuffer buf = body.asRaw();
 		File file = buf.asFile();
 		String tempFilePath = file.getPath();
-		 Logger.debug(tempFilePath);
 		String fileName = file.getName();
-		String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/" + orderId + "-" +fileName;
-		//file.renameTo(new File(newFilePath));
+		String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/" + orderId + 
+				"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
 		FileUtil.move(tempFilePath, newFilePath);
 		JsonNode js = null;
 		Map<Long, String> returnMap = sbillitOrderService.uploadFile(orderId, newFilePath);	

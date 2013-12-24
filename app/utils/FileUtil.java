@@ -15,8 +15,8 @@ public class FileUtil {
 	 
 	    	try{
 	 
-	    	    File afile =new File(from);
-	    	    File bfile =new File(to);
+	    	    File afile = new File(from);
+	    	    File bfile = new File(to);
 	 
 	    	    inStream = new FileInputStream(afile);
 	    	    outStream = new FileOutputStream(bfile);

@@ -37,7 +37,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	}
 
 	@Override
-	public String createNewUserAndAssignSmsToken(long phone, String nickname) {
+	public String createNewUserAndAssignSmsToken(String phone, String nickname) {
 		// TODO Auto-generated method stub
 		
 		long smsExpiredAt = DateUtil.getExpiredTimeFromNow("sms.endure");
@@ -65,7 +65,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	}
 
 	@Override
-	public Map completeNewUserRegister(long phone, String smsToken) {
+	public Map completeNewUserRegister(String phone, String smsToken) {
 		// TODO Auto-generated method stub
 		List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
 		SbillitUser user = new SbillitUser();

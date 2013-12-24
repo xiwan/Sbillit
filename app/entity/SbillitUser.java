@@ -9,7 +9,7 @@ public class SbillitUser implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// table columns
 	private long id;
-	private long phone;
+	private String phone;
 	private long banned;
 	private long point;
 	private String smsToken;
@@ -31,10 +31,10 @@ public class SbillitUser implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public long getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public long getBanned() {

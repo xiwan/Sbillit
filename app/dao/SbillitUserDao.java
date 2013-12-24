@@ -12,7 +12,7 @@ public interface SbillitUserDao {
 	
 	public SbillitUser findUserById(long id);
 	
-	public List<SbillitUser> findeUserByPhone(long phone);
+	public List<SbillitUser> findeUserByPhone(String phone);
 	
 	public void insertUser(SbillitUser user);
 	

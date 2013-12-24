@@ -10,7 +10,7 @@ public interface SbillitUserMapper {
 	
 	public SbillitUser findUserById(long id);
 	
-	public List<SbillitUser> findUserByPhone(long phone);
+	public List<SbillitUser> findUserByPhone(String phone);
 	
 	public void updateUser(SbillitUser user);
 	

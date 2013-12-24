@@ -28,7 +28,7 @@
         SELECT * FROM sbillit_user WHERE id=#{value}
     </select>
     
-    <select id="findUserByPhone" parameterType="long" resultMap="user">
+    <select id="findUserByPhone" parameterType="String" resultMap="user">
  		SELECT * FROM sbillit_user WHERE phone = #{value}   
     </select>
     
