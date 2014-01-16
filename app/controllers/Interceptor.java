@@ -22,7 +22,7 @@ import utils.Constant;
 import utils.JsonUtil;
 
 
-public class Intercept extends Action.Simple {
+public class Interceptor extends Action.Simple {
 	
 	@Autowired
 	private SbillitSessionService sbillitSessionService;

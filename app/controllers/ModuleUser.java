@@ -23,14 +23,14 @@ import utils.AppProp;
 import utils.Constant;
 import utils.JsonUtil;
 
-public class ModuleUser extends Application {
+public class ModuleUser extends Filter {
 	@Autowired
 	private SbillitUserService sbillitUserService;
 	
 	@Autowired
 	private SbillitSessionService sbillitSessionService;
 	
-	@With(Intercept.class)
+	@With(Interceptor.class)
 	public Result info() {
 		long userId = super.getUserBySessionId();
 		SbillitUser user = sbillitUserService.findUserById(userId);		

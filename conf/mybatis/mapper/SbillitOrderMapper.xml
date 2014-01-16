@@ -29,6 +29,16 @@
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
     </resultMap>
+    
+    <resultMap id="orderItem" type="SbillitOrderItem">
+      <result property="orderId" column="order_id"/>
+      <result property="userId" column="user_id"/>
+      <result property="itemNum" column="item_num"/>
+      <result property="itemPrice" column="item_price" />
+      <result property="itemName" column="item_name" />
+      <result property="createdAt" column="created_at"/>
+      <result property="updatedAt" column="updated_at"/>
+    </resultMap>
 
     <select id="findAllOrders" resultMap="order">
         SELECT * FROM sbillit_order WHERE 1=1
@@ -90,5 +100,10 @@
     	WHERE 
     		order_id = #{orderId} AND phone = #{phone}	
     </update>
+    
+    <insert id="insertOrderItem" parameterType="SbillitOrderItem"> 
+    	INSERT INTO sbillit_order_item (order_id, user_id, item_num, item_price, item_name, created_at, updated_at)
+    	VALUES (#{orderId}, #{userId}, #{itemNum}, #{itemPrice}, #{itemName}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+    </insert>
     	
 </mapper>

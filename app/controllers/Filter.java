@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import entity.SbillitUserSession;
 
 
-public class Application extends Controller {
+public class Filter extends Controller {
 	
 	@Autowired
 	private SbillitUserService sbillitUserService;

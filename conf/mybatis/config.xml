@@ -11,6 +11,7 @@
 		
 		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
 		<typeAlias alias="SbillitOrderShare" type="entity.SbillitOrderShare" /> 
+		<typeAlias alias="SbillitOrderItem" type="entity.SbillitOrderItem" /> 
 	</typeAliases>
 	
 	<mappers>

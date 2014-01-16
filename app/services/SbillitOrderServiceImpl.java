@@ -50,12 +50,51 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		}
 		return orderList;
 	}
+	
 
 	@Override
-	public long createOrder() {
+	public long createOrder(long ownerId, JsonNode orderShareArry, JsonNode orderItemArray,
+			JsonNode orderCreator, String orderImagePath, String orderComments,
+			String orderTitle, Double amount) {
 		// TODO Auto-generated method stub
-		return 0;
+		long expiredAt = DateUtil.getExpiredTimeFromNow("order.endure");
+		SbillitOrder order = new SbillitOrder();
+		order.setUserId(ownerId);
+		order.setType(Constant.ORDER_TYPE_NORMAL);
+		order.setTitle(orderTitle);
+		order.setAmount(amount);
+		order.setStatus(Constant.ORDER_NA);
+		order.setExpiredAt(expiredAt);
+		sbillitOrderDao.createOrder(order);
+		
+		long orderId = order.getId();
+		
+		if (orderShareArry != null && orderShareArry.isArray()){
+			for (JsonNode os: orderShareArry) {
+				Long userId = os.get("userID").asLong();
+				String phone = os.get("phoneNumber").asText();
+				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_AGREE);
+			}			
+		}
+		
+		if (orderItemArray != null && orderItemArray.isArray()){
+			for (JsonNode oi: orderItemArray) {
+				String itemName = oi.get("itemName").asText();
+				JsonNode buyerArray = oi.get("buyerArray");
+				Double itemPrice = oi.get("itemPrice").asDouble();
+				Long itemNum = oi.get("itemTotalAmount").asLong();
+				if (buyerArray != null && buyerArray.isArray()) {
+					for (JsonNode buyer: buyerArray) {
+						Long userId = buyer.get("buyer").get("userID").asLong();
+						sbillitOrderDao.createOrderItem(orderId, userId, itemNum, itemPrice, itemName);
+					}
+				}
+			}			
+		}
+		
+		return orderId;
 	}
+
 
 	@Override
 	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode friendsArray, JsonNode contactsArray, Double amount) {

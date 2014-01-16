@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import entity.SbillitOrder;
+import entity.SbillitOrderItem;
 import entity.SbillitOrderShare;
 
 public interface SbillitOrderMapper {
@@ -23,5 +24,7 @@ public interface SbillitOrderMapper {
 	public void updateOrderShare(Map paraMap);
 	
 	public void updateOrder(Map paraMap);
+	
+	public void insertOrderItem(SbillitOrderItem orderItem);
 	
 }

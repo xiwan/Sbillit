@@ -27,7 +27,7 @@ import utils.DateUtil;
 import utils.FileUtil;
 import utils.JsonUtil;
 
-public class ModuleOrder extends Application {
+public class ModuleOrder extends Filter {
 	@Autowired
 	private SbillitOrderService sbillitOrderService;
 	
@@ -37,7 +37,7 @@ public class ModuleOrder extends Application {
 		return ok(Json.toJson(order));
 	}
 	
-	@With(Intercept.class)
+	@With(Interceptor.class)
 	public Result history(long userId){
 		String session = session().get("session");
 		List<SbillitOrder> orderList = sbillitOrderService.findOrderHistory(userId, session);
@@ -50,17 +50,26 @@ public class ModuleOrder extends Application {
 		return ok(js);
 	}
 	
-	@With(Intercept.class)
+	@With(Interceptor.class)
 	public Result normal(){
+		long ownerId = super.getUserBySessionId();
 		JsonNode postDataJson = super.parseParamJson("postData");
-		postDataJson.get("totalNumber").toString();
-		postDataJson.get("memberArray").toString();
-		postDataJson.get("orderCurrency").toString();
+		JsonNode orderShareArry = postDataJson.get("orderShareArray");
+		JsonNode orderItemArray = postDataJson.get("orderItemArray");
+		JsonNode orderCreator = postDataJson.get("orderCreator");
+		String orderImagePath = postDataJson.get("orderImagePath").asText();
+		String orderComments = postDataJson.get("orderComments").asText();
+		String orderTitle = postDataJson.get("orderTitle").asText();
+		Double totalNumber = postDataJson.get("totalNumber").asDouble();
 		
-		return ok("");
+		long orderId = sbillitOrderService.createOrder(ownerId, orderShareArry, orderItemArray, orderCreator, 
+				orderImagePath, orderComments, orderTitle, totalNumber);
+		
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, orderId);
+		return ok(js);
 	}
 
-	@With(Intercept.class)
+	@With(Interceptor.class)
 	public Result quick(){
 		long ownerId = super.getUserBySessionId();
 		JsonNode postDataJson = super.parseParamJson("postData");
@@ -71,7 +80,7 @@ public class ModuleOrder extends Application {
 		JsonNode contactsArray = postDataJson.findValue("contactsArray");		
 
 		SbillitOrder order = sbillitOrderService.quickOrder(ownerId, orderTitle, friendsArray, contactsArray, totalNumber);
-		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, order);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, order.getId());
 		return ok(js);
 	}
 	

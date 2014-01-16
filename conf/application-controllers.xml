@@ -7,8 +7,8 @@
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
          
- 	<bean id="application" class="controllers.Application"/>
- 	<bean id="intercept" class="controllers.Intercept"/>
+ 	<bean id="filter" class="controllers.Filter"/>
+ 	<bean id="interceptor" class="controllers.Interceptor"/>
  	<bean id="moduleUser" class="controllers.ModuleUser"/>   
  	<bean id="moduleOrder" class="controllers.ModuleOrder"/>   
  	

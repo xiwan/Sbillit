@@ -7,8 +7,8 @@
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context-3.0.xsd">
          
- 	<bean id="sbillitUserDao" class="dao.SbillitUserDaoImpl"/>
- 	<bean id="sbillitUserSessionDao" class="dao.SbillitUserSessionDaoImpl"/>
- 	<bean id="sbillitOrderDao" class="dao.SbillitOrderDaoImpl"/>
+ 	<bean id="sbillitUserDao" class="dao.SbillitUserDao"/>
+ 	<bean id="sbillitUserSessionDao" class="dao.SbillitUserSessionDao"/>
+ 	<bean id="sbillitOrderDao" class="dao.SbillitOrderDao"/>
  	       
 </beans>
