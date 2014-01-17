@@ -20,10 +20,15 @@ This is [play!](http://www.playframework.com/) based project.
 	GET		/order/:userid/history
 	_RESPONSE_		{orderList}
 	
+###### order create
+	POST    		/order/quick
+	_REQUEST_		postData={orderShareArray, orderItemArray, orderCreator, orderImagePath, orderComments, orderTitle, totalNumber}
+	_RESPONSE_		{orderID}
+	
 ###### quick order create
 	POST    		/order/quick
-	_REQUEST_		postData={totalNumber, memberArray, orderCurrency}
-	_RESPONSE_		{totalNumber, memberArray, orderCurrency, orderImagePath, orderID}
+	_REQUEST_		postData={orderTitle, totalNumber, friendsArray, contactsArray}
+	_RESPONSE_		{orderID}
 	
 ##### order image upload
 	POST 			/order/upload
