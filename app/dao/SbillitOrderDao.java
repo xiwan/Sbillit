@@ -18,28 +18,23 @@ public class SbillitOrderDao {
 	private SbillitOrderMapper sbillitOrderMapper;
 
 	public List<SbillitOrder> findAllOrders() {
-		// TODO Auto-generated method stub
 		return sbillitOrderMapper.findAllOrders();
 	}
 
 	public SbillitOrder findOrderbyId(long id) {
-		// TODO Auto-generated method stub
 		return sbillitOrderMapper.findOrderbyId(id);
 	}
 
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId) {
-		// TODO Auto-generated method stub
 		return sbillitOrderMapper.findOrderHistoryByUserId(userId);
 	}
 
 	public void createOrder(SbillitOrder order) {
-		// TODO Auto-generated method stub
 		this.sbillitOrderMapper.updateSeq();
 		this.sbillitOrderMapper.insertOrder(order);
 	}
 
 	public void createOrderShare(Long orderId, String phone, Long userId, Integer status){
-		// TODO Auto-generated method stub
 		SbillitOrderShare orderShare = new SbillitOrderShare();
 		orderShare.setOrderId(orderId);
 		orderShare.setStatus(status);
@@ -49,7 +44,6 @@ public class SbillitOrderDao {
 	}
 
 	public void updateOrderShare(Long orderId, String phone, Integer status){
-		// TODO Auto-generated method stub
 		Map paraMap = new HashMap<String, Object>();
 		paraMap.put("orderId", orderId);
 		paraMap.put("phone", phone);
@@ -58,7 +52,6 @@ public class SbillitOrderDao {
 	}
 
 	public void updateOrder(Long orderId, Integer status, String picture1, String picture2, String picture3) {
-		// TODO Auto-generated method stub
 		Map paraMap = new HashMap<String, Object>();
 		paraMap.put("orderId", orderId);
 		paraMap.put("status", status);
