@@ -22,4 +22,19 @@
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	 </bean>
 	 
+	 <bean id="sbillitAdsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mapper.SbillitAdsMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean>
+	 
+	 <bean id="sbillitComboMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mapper.SbillitComboMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean>
+	 
+	 <bean id="sbillitSellerMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mapper.SbillitSellerMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean>
+	 
 </beans>

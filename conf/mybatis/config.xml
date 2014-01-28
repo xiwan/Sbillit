@@ -12,13 +12,21 @@
 		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
 		<typeAlias alias="SbillitOrderShare" type="entity.SbillitOrderShare" /> 
 		<typeAlias alias="SbillitOrderItem" type="entity.SbillitOrderItem" /> 
+		<typeAlias alias="SbillitOrderThumbup" type="entity.SbillitOrderThumbup" /> 
+		
+		<typeAlias alias="SbillitAds" type="entity.SbillitAds" /> 
+		<typeAlias alias="SbillitCombo" type="entity.SbillitCombo" /> 
+		<typeAlias alias="SbillitSeller" type="entity.SbillitSeller" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mapper/SbillitUserMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitUserSessionMapper.xml"/>
-		
 		<mapper resource="mybatis/mapper/SbillitOrderMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitAdsMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitComboMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitSellerMapper.xml"/>
+		
     </mappers>
 
 </configuration>

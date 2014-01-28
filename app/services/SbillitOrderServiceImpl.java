@@ -14,10 +14,13 @@ import utils.AppProp;
 import utils.Constant;
 import utils.DateUtil;
 
+import dao.SbillitComboDao;
 import dao.SbillitOrderDao;
 import dao.SbillitUserSessionDao;
 
+import entity.SbillitCombo;
 import entity.SbillitOrder;
+import entity.SbillitOrderThumbup;
 import entity.SbillitUser;
 import entity.SbillitUserSession;
 
@@ -156,6 +159,29 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				returnMap.put(Constant.ERROR_INTERNAL, Constant.ORDER_IMAGE_UPLOAD_FAILED_MAX);
 			}
 		}
+		return returnMap;
+	}
+
+	@Override
+	public void thumbup(Long orderId, Long userId, String title) {
+		// TODO Auto-generated method stub
+		sbillitOrderDao.createOrderThumbup(orderId, userId, title);
+	}
+
+	@Override
+	public Map<String, Object> favoriteList(Long userId) {
+		// TODO Auto-generated method stub
+		List<SbillitOrderThumbup> orderThumbupList = sbillitOrderDao.findOrderThumbupByUserId(userId);
+		List<Long> ids = new ArrayList<Long>();
+		for (SbillitOrderThumbup orderThumbup: orderThumbupList) {
+			ids.add(orderThumbup.getOrderId());
+		}
+		List<SbillitOrder> orderList = sbillitOrderDao.findOrderInIds(ids);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("orderThumbupList", orderThumbupList);
+		returnMap.put("orderList", orderList);
+		
 		return returnMap;
 	}
 

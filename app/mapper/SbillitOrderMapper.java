@@ -6,6 +6,7 @@ import java.util.Map;
 import entity.SbillitOrder;
 import entity.SbillitOrderItem;
 import entity.SbillitOrderShare;
+import entity.SbillitOrderThumbup;
 
 public interface SbillitOrderMapper {
 
@@ -26,5 +27,11 @@ public interface SbillitOrderMapper {
 	public void updateOrder(Map paraMap);
 	
 	public void insertOrderItem(SbillitOrderItem orderItem);
+	
+	public void insertOrderThumbup(SbillitOrderThumbup orderThumbup);
+	
+	public List<SbillitOrder> findOrderInIds(Map paraMap);
+	
+	public List<SbillitOrderThumbup> findOrderThumbupByUserId(Long userId);
 	
 }

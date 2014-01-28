@@ -10,5 +10,8 @@
  	<bean id="sbillitUserDao" class="dao.SbillitUserDao"/>
  	<bean id="sbillitUserSessionDao" class="dao.SbillitUserSessionDao"/>
  	<bean id="sbillitOrderDao" class="dao.SbillitOrderDao"/>
- 	       
+ 	<bean id="sbillitAdsDao" class="dao.SbillitAdsDao"/>
+ 	<bean id="sbillitComboDao" class="dao.SbillitComboDao"/>
+ 	<bean id="sbillitSellerDao" class="dao.SbillitSellerDao"/>
+ 		    
 </beans>

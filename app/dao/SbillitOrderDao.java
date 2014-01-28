@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import entity.SbillitOrder;
 import entity.SbillitOrderItem;
 import entity.SbillitOrderShare;
+import entity.SbillitOrderThumbup;
 
 public class SbillitOrderDao {
 	
@@ -69,6 +70,24 @@ public class SbillitOrderDao {
 		orderItem.setItemPrice(itemPrice);
 		orderItem.setItemName(itemName);
 		this.sbillitOrderMapper.insertOrderItem(orderItem);	
+	}
+	
+	public void createOrderThumbup(Long orderId, Long userId, String title){
+		SbillitOrderThumbup orderThumbup = new SbillitOrderThumbup();
+		orderThumbup.setOrderId(orderId);
+		orderThumbup.setUserId(userId);
+		orderThumbup.setTitle(title);
+		this.sbillitOrderMapper.insertOrderThumbup(orderThumbup);
+	}
+	
+	public List<SbillitOrderThumbup> findOrderThumbupByUserId (Long userId) {
+		return sbillitOrderMapper.findOrderThumbupByUserId(userId);
+	}
+	
+	public List<SbillitOrder> findOrderInIds(List<Long> ids) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("ids", ids);
+		return this.sbillitOrderMapper.findOrderInIds(paraMap);
 	}
 
 }

@@ -10,5 +10,7 @@
 	<bean id="sbillitUserService" class="services.SbillitUserServiceImpl"/>
 	<bean id="sbillitOrderService" class="services.SbillitOrderServiceImpl"/>
 	<bean id="sbillitSessionService" class="services.SbillitSessionServiceImpl"/>
+	<bean id="sbillitAdsService" class="services.SbillitAdsServiceImpl"/>
+	<bean id="sbillitComboService" class="services.SbillitComboServiceImpl"/>
 	
 </beans>

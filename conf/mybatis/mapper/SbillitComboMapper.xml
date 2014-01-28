@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.SbillitComboMapper">
+
+	<resultMap id="combo" type="SbillitCombo">
+	  <id property="id" column="id"/>
+      <result property="title" column="titel"/>
+      <result property="itemName1" column="item_name1"/>
+      <result property="itemNumber1" column="item_number1"/>
+      <result property="itemPrice1" column="item_price1"/>
+      <result property="itemName2" column="item_name2"/>
+      <result property="itemNumber2" column="item_number2"/>
+      <result property="itemPrice2" column="item_price2"/>
+      <result property="itemName3" column="item_name3"/>
+      <result property="itemNumber3" column="item_number3"/>
+      <result property="itemPrice3" column="item_price3"/>
+      <result property="itemName4" column="item_name4"/>
+      <result property="itemNumber4" column="item_number4"/>
+      <result property="itemPrice4" column="item_price4"/>
+      <result property="itemName5" column="item_name5"/>
+      <result property="itemNumber5" column="item_number5"/>
+      <result property="itemPrice5" column="item_price5"/>     
+      <result property="sellerId" column="seller_id"/>
+      <result property="valid" column="valid"/>
+	</resultMap>
+	
+	<select id="findComboById" parameterType="int" resultMap="combo">
+		select * from sbillit_combo
+		where id = #{id}#
+	</select>
+
+
+</mapper>

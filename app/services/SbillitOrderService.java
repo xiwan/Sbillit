@@ -6,7 +6,9 @@ import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import entity.SbillitCombo;
 import entity.SbillitOrder;
+import entity.SbillitOrderThumbup;
 
 public interface SbillitOrderService {
 	public List<SbillitOrder> findAllOrders();
@@ -22,5 +24,8 @@ public interface SbillitOrderService {
 	
 	public Map<Long, String> uploadFile(long orderId, String filePath);
 	
+	public void thumbup(Long orderId, Long userId, String title);
+	
+	public Map<String, Object> favoriteList(Long userId);
 	
 }

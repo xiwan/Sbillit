@@ -26,6 +26,20 @@ POST	/1/order/quick					@controllers.ModuleOrder.quick()
 # upload
 POST	/1/order/:orderid/upload					@controllers.ModuleOrder.upload(orderid: Long)
 POST	/1/order/:orderid/uploadSync 				@controllers.ModuleOrder.uploadSync(orderid: Long)
+# thumbup
+POST    /1/order/:orderid/thumbup       @controllers.ModuleOrder.thumbup(orderid: Long)      
+# favorite
+GET     /1/order/favorite               @controllers.ModuleOrder.favorite()
+
+## Combo module
+# get combo
+GET    /1/combo/:comboId                @controllers.ModuleCombo.combo(comboId: Long)
+
+## Ads module
+# pull valid ads
+GET    /1/ads/pull						@controllers.ModuleAds.pull()
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

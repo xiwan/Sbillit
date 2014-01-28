@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import entity.SbillitAds;
+import entity.SbillitCombo;
 import entity.SbillitOrder;
 
 import play.Logger;
@@ -20,6 +22,7 @@ import play.mvc.Http.RawBuffer;
 import play.mvc.Http.RequestBody;
 import play.mvc.Result;
 import play.mvc.With;
+import services.SbillitAdsService;
 import services.SbillitOrderService;
 import utils.AppProp;
 import utils.Constant;
@@ -30,7 +33,7 @@ import utils.JsonUtil;
 public class ModuleOrder extends Filter {
 	@Autowired
 	private SbillitOrderService sbillitOrderService;
-	
+
 	public Result info(Long id) {
 		SbillitOrder order = sbillitOrderService.findOrderbyId(id);
 		
@@ -132,5 +135,30 @@ public class ModuleOrder extends Filter {
 	
 		return ok(js);
 	}
+	
+	@With(Interceptor.class)
+	public Result thumbup(Long orderId) {
+		long ownerId = super.getUserBySessionId();
+		RequestBody body = request().body();
+		JsonNode postDataJson = super.parseParamJson("postData");
+		String title = postDataJson.get("title").asText();
+		sbillitOrderService.thumbup(orderId, ownerId, title);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "yay!!!");
+		return ok(js);
+	}
+	
+	@With(Interceptor.class)
+	public Result favorite(){
+		long ownerId = super.getUserBySessionId();
+		Map returnMap = sbillitOrderService.favoriteList(ownerId);
+		JsonNode js = null;
+		if (returnMap == null){
+			js = JsonUtil.toJson(Constant.ERROR_FREE, "booooo");
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, returnMap);
+		}
+		return ok(js);
+	}
+
 
 }

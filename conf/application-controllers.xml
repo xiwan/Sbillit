@@ -9,7 +9,10 @@
          
  	<bean id="filter" class="controllers.Filter"/>
  	<bean id="interceptor" class="controllers.Interceptor"/>
+ 	
  	<bean id="moduleUser" class="controllers.ModuleUser"/>   
  	<bean id="moduleOrder" class="controllers.ModuleOrder"/>   
+ 	<bean id="moduleAds" class="controllers.ModuleAds"/>
+ 	<bean id="moduleCombo" class="controllers.ModuleCombo"/>
  	
 </beans>
