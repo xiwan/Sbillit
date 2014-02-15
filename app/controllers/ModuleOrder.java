@@ -43,12 +43,46 @@ public class ModuleOrder extends Filter {
 	@With(Interceptor.class)
 	public Result history(long userId){
 		String session = session().get("session");
-		List<SbillitOrder> orderList = sbillitOrderService.findOrderHistory(userId, session);
+		long ownerId = super.getUserBySessionId();
+		List<SbillitOrder> orderList = sbillitOrderService.findOrderHistory(ownerId, session);
 		JsonNode js = null;
 		if (orderList == null){
 			js = JsonUtil.toJson(Constant.ERROR_FREE, "");
 		}else {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, orderList);
+		}
+		return ok(js);
+	}
+	
+	@With(Interceptor.class)
+	public Result detail(long orderId){
+		long ownerId = super.getUserBySessionId();
+		Map returnMap = sbillitOrderService.orderDetail(ownerId, orderId);
+		JsonNode js = null;
+		if (returnMap == null){
+			js = JsonUtil.toJson(Constant.ERROR_FREE, "booooo");
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, returnMap);
+		}
+		return ok(js);
+	}
+	
+	
+	@With(Interceptor.class)
+	public Result comment(long orderId){
+		long ownerId = super.getUserBySessionId();
+		JsonNode postDataJson = super.parseParamJson("postData");
+		String message = postDataJson.get("comment").asText();	
+		Long atUserId = null;
+		if (postDataJson.get("atUserId") != null) {
+			atUserId = postDataJson.get("atUserId").asLong();
+		}
+		Long commentId = sbillitOrderService.postComment(orderId, ownerId, atUserId, message, Constant.ORDER_COMMENT_NORMAL);
+		JsonNode js = null;
+		if (commentId == null || commentId == 0){
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "booooo");
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, commentId);
 		}
 		return ok(js);
 	}

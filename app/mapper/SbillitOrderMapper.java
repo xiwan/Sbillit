@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import entity.SbillitOrder;
+import entity.SbillitOrderComment;
 import entity.SbillitOrderItem;
 import entity.SbillitOrderShare;
 import entity.SbillitOrderThumbup;
@@ -33,5 +34,15 @@ public interface SbillitOrderMapper {
 	public List<SbillitOrder> findOrderInIds(Map paraMap);
 	
 	public List<SbillitOrderThumbup> findOrderThumbupByUserId(Long userId);
+	
+	public List<SbillitOrderItem> findOrderItemByOrderId(Long orderId);
+	
+	public void insertOrderComment(SbillitOrderComment orderComment);
+	public void updateCommentSeq();
+	
+	public List<SbillitOrderShare> findOrderShareByUserIdAndOrderId (Map paraMap);
+	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderId (Map paraMap);
+	public List<SbillitOrderThumbup> findOrderThumbupByUserIdAndOrderId (Map paraMap);
+	public List<SbillitOrderComment> findOrderCommentByUserIdAndOrderId (Map paraMap);
 	
 }

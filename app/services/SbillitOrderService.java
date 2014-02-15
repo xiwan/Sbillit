@@ -28,4 +28,8 @@ public interface SbillitOrderService {
 	
 	public Map<String, Object> favoriteList(Long userId);
 	
+	public Map<String, Object> orderDetail(Long userId, Long orderId);
+	
+	public long postComment(Long orderId, Long userId, Long atUserId, String message, Long status);
+	
 }

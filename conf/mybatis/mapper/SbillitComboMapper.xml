@@ -31,5 +31,27 @@
 		where id = #{id}#
 	</select>
 
+	<insert id="insertCombo" parameterType="SbillitOrderItem" >
+		insert into sbillit_combo (
+		id, title, item_name1, item_number1, item_price1,
+		item_name2, item_number2, item_price2, item_name3, item_number3, item_price3,
+		item_name4, item_number4, item_price4, item_name5, item_number5, item_price5,
+		sellerId, valid)
+		values (
+			#{id}, #{title}, #{itemName1}, #{itemNumber1}, #{itemPrice1}, 
+			#{itemName2}, #{itemNumber2}, #{itemPrice2}, #{itemName3}, #{itemNumber3}, #{itemPrice3}, 
+			#{itemName4}, #{itemNumber4}, #{itemPrice4}, #{itemName5}, #{itemNumber5}, #{itemPrice5}, 
+			#{sellerId}, #{valid}
+		)
+	<selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
+	   SELECT id FROM seq_combo
+	</selectKey>
+	
+	</insert>
+	
+	<update id="updateSeq">
+    	UPDATE seq_combo SET id=id+1;
+    </update>	
+
 
 </mapper>

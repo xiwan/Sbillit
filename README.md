@@ -20,6 +20,15 @@ This is [play!](http://www.playframework.com/) based project.
 	GET		/order/:userid/history
 	_RESPONSE_		{orderList}
 	
+###### get history order  detail info by user id
+	GET		/order/:order/detail
+	_RESPONSE_		{order, orderShare, orderComment, orderItem, orderThumbup}
+	
+###### post comment
+	POST    /order/:orderid/comment
+	_REQUEST_  		postData={message, atUserId}
+	_RESPONSE_		{orderID}
+	
 ###### order create
 	POST    		/order/quick
 	_REQUEST_		postData={orderShareArray, orderItemArray, orderCreator, orderImagePath, orderComments, orderTitle, totalNumber}
@@ -34,6 +43,10 @@ This is [play!](http://www.playframework.com/) based project.
 	POST 			/order/upload
 	_REQUEST_		postData={orderId, image}
 	_RESPONSE_		{status}
+	
+##### ads pull
+	GET				/ads/pull
+	_RESPONSE_		{imageUrl, comboId}
 	
 ### NOTE:
 * To finish a successful request and response cycle, **sessionId=xxx** is required.

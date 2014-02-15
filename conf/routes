@@ -19,6 +19,10 @@ POST    /1/user/login					@controllers.ModuleUser.login()
 GET		/1/order/:orderid/info			@controllers.ModuleOrder.info(orderid: Long)
 # get history order info by user id
 GET		/1/order/:userid/history		@controllers.ModuleOrder.history(userid: Long)
+# get history order detail info
+GET		/1/order/:orderid/detail     	@controllers.ModuleOrder.detail(orderid: Long)
+# post order comment
+POST    /1/order/:orderid/comment		@controllers.ModuleOrder.comment(orderid: Long)
 # create order
 POST	/1/order/normal					@controllers.ModuleOrder.normal()
 # quick order

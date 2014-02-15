@@ -12,7 +12,8 @@
 		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
 		<typeAlias alias="SbillitOrderShare" type="entity.SbillitOrderShare" /> 
 		<typeAlias alias="SbillitOrderItem" type="entity.SbillitOrderItem" /> 
-		<typeAlias alias="SbillitOrderThumbup" type="entity.SbillitOrderThumbup" /> 
+		<typeAlias alias="SbillitOrderThumbup" type="entity.SbillitOrderThumbup" />
+		<typeAlias alias="SbillitOrderComment" type="entity.SbillitOrderComment" />  
 		
 		<typeAlias alias="SbillitAds" type="entity.SbillitAds" /> 
 		<typeAlias alias="SbillitCombo" type="entity.SbillitCombo" /> 

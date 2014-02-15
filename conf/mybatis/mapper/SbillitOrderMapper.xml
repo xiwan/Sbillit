@@ -46,6 +46,16 @@
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
     </resultMap>
+    
+    <resultMap id="orderComment" type="SbillitOrderComment">
+ 		<id property="id" column="id"/>
+ 		<result property="orderId" column="order_id"/>
+      	<result property="userId" column="user_id"/>
+      	<result property="message" column="message"/>
+      	<result property="status" column="status"/>
+      	<result property="atUserId" column="at_user_id"/>
+      	<result property="createdAt" column="created_at"/>
+    </resultMap>
 
     <select id="findAllOrders" resultMap="order">
         SELECT * FROM sbillit_order WHERE 1=1
@@ -67,9 +77,13 @@
 	</select>
 	
   	<insert id="insertOrder" parameterType="SbillitOrder">
-		INSERT INTO sbillit_order (id, user_id, type, amount, status, description, store_phone, picture_1, picture_2, picture_3, expired_at, created_at, updated_at)
-		VALUES (#{id}, #{userId}, #{type}, #{amount}, #{status}, #{description}, #{storePhone}, #{picture1}, #{picture2}, #{picture3}, #{expiredAt}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
-    <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
+		INSERT INTO sbillit_order 
+			(id, user_id, type, title, amount, status, description, store_phone, 
+			picture_1, picture_2, picture_3, expired_at, created_at, updated_at)
+		VALUES 
+			(#{id}, #{userId}, #{type},  #{title}, #{amount},#{status}, #{description}, #{storePhone}, 
+			#{picture1}, #{picture2}, #{picture3}, #{expiredAt}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
 	   SELECT id FROM seq_order
 	</selectKey>
 	</insert>  
@@ -115,6 +129,11 @@
     		order_id = #{orderId} AND phone = #{phone}	
     </update>
     
+    <select id="findOrderItemByOrderId" parameterType="int" resultMap="orderItem">
+    	SELECT * FROM sbillit_order_item
+    	WHERE order_id = #{orderId} ORDER BY updated_at DESC
+    </select>
+
     <insert id="insertOrderItem" parameterType="SbillitOrderItem"> 
     	INSERT INTO sbillit_order_item (order_id, user_id, item_num, item_price, item_name, created_at, updated_at)
     	VALUES (#{orderId}, #{userId}, #{itemNum}, #{itemPrice}, #{itemName}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
@@ -124,10 +143,42 @@
     	SELECT * FROM sbillit_order_thumbup
     	WHERE user_id = #{id} ORDER BY updated_at DESC
     </select>
-    
+
     <insert id="insertOrderThumbup" parameterType="SbillitOrderThumbup"> 
     	INSERT INTO sbillit_order_thumbup(order_id, user_id, title, created_at, updated_at)
     	VALUES (#{orderId}, #{userId}, #{title}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP());
     </insert>
-    	
+    
+    <insert id="insertOrderComment" parameterType="SbillitOrderComment"> 
+    	INSERT INTO sbillit_order_comment(id, order_id, user_id, message, status, at_user_id, created_at)
+    	VALUES (#{id}, #{orderId}, #{userId}, #{message}, #{status}, #{atUserId}, UNIX_TIMESTAMP());
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
+	   SELECT id FROM seq_order_comment
+	</selectKey>
+    </insert>
+    
+    <update id="updateCommentSeq">
+    	UPDATE seq_order_comment SET id=id+1;
+    </update>	
+    
+    <select id="findOrderShareByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderShare">
+    	SELECT * FROM sbillit_order_share
+    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY updated_at DESC
+    </select>
+    
+    <select id="findOrderItemByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderItem">
+    	SELECT * FROM sbillit_order_item
+    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY updated_at DESC
+    </select>
+    
+     <select id="findOrderThumbupByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderThumbup">
+    	SELECT * FROM sbillit_order_thumbup
+    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY updated_at DESC
+    </select>
+    
+    <select id="findOrderCommentByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderComment">
+    	SELECT * FROM sbillit_order_comment
+    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY created_at DESC
+    </select>
+	
 </mapper>

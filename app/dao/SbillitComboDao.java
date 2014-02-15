@@ -7,6 +7,7 @@ import mapper.SbillitComboMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import entity.SbillitCombo;
+import entity.SbillitOrder;
 
 public class SbillitComboDao {
 	
@@ -15,6 +16,11 @@ public class SbillitComboDao {
 	
 	public SbillitCombo findComboById(Long comboId) {
 		return sbillitComboMapper.findComboById(comboId);
+	}
+	
+	public void createCombo(SbillitCombo combo) {
+		this.sbillitComboMapper.updateSeq();
+		this.sbillitComboMapper.insertCombo(combo);
 	}
 
 }

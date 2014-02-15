@@ -31,6 +31,9 @@ public class Constant {
 	public static int ORDER_SHARE_AGREE = 1;
 	public static int ORDER_SHARE_REJECT = 2;
 	
+	public static long ORDER_COMMENT_NORMAL = 0;
+	public static long ORDER_COMMENT_PRIVATE = 1;
+	
 	public static String ORDER_QUICK_TITLE = "order.quick.title";
 	
 	public static String ORDER_IMAGE_UPLOAD_SUCCESS="order.image.upload.success";

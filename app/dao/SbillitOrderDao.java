@@ -8,7 +8,10 @@ import mapper.SbillitOrderMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import utils.Constant;
+
 import entity.SbillitOrder;
+import entity.SbillitOrderComment;
 import entity.SbillitOrderItem;
 import entity.SbillitOrderShare;
 import entity.SbillitOrderThumbup;
@@ -89,5 +92,51 @@ public class SbillitOrderDao {
 		paraMap.put("ids", ids);
 		return this.sbillitOrderMapper.findOrderInIds(paraMap);
 	}
+	
+	public List<SbillitOrderItem> findOrderItemByOrderId(Long orderId) {
+		return this.sbillitOrderMapper.findOrderItemByOrderId(orderId);
+	}
+	
+	
+	public long createOrderComment(Long orderId, Long userId, Long atUserId, String message, Long status) {
+		SbillitOrderComment orderComment = new SbillitOrderComment();
+		orderComment.setOrderId(orderId);
+		orderComment.setUserId(userId);
+		orderComment.setAtUserId(atUserId);
+		orderComment.setMessage(message);
+		orderComment.setStatus(status);
+		this.sbillitOrderMapper.updateCommentSeq();
+		this.sbillitOrderMapper.insertOrderComment(orderComment);
+		return orderComment.getId();
+	}
+	
+	public List<SbillitOrderShare> findOrderShareByUserIdAndOrderId (Long userId, Long orderId) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("orderId", orderId);
+		return this.sbillitOrderMapper.findOrderShareByUserIdAndOrderId(paraMap);
+	}
+	
+	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderId (Long userId, Long orderId) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("orderId", orderId);
+		return this.sbillitOrderMapper.findOrderItemByUserIdAndOrderId(paraMap);
+	}
+
+	public List<SbillitOrderThumbup> findOrderThumbupByUserIdAndOrderId (Long userId, Long orderId) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("orderId", orderId);
+		return this.sbillitOrderMapper.findOrderThumbupByUserIdAndOrderId(paraMap);
+	}
+
+	public List<SbillitOrderComment> findOrderCommentByUserIdAndOrderId (Long userId, Long orderId) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("orderId", orderId);
+		return this.sbillitOrderMapper.findOrderCommentByUserIdAndOrderId(paraMap);
+	}
+	
 
 }

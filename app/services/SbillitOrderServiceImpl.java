@@ -20,6 +20,9 @@ import dao.SbillitUserSessionDao;
 
 import entity.SbillitCombo;
 import entity.SbillitOrder;
+import entity.SbillitOrderComment;
+import entity.SbillitOrderItem;
+import entity.SbillitOrderShare;
 import entity.SbillitOrderThumbup;
 import entity.SbillitUser;
 import entity.SbillitUserSession;
@@ -29,6 +32,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	private SbillitOrderDao sbillitOrderDao;
 	@Autowired
 	private SbillitUserSessionDao sbillitUserSessionDao;
+	@Autowired
+	private SbillitComboDao sbillitComboDao;
 	
 	@Override
 	public List<SbillitOrder> findAllOrders() {
@@ -166,6 +171,11 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	public void thumbup(Long orderId, Long userId, String title) {
 		// TODO Auto-generated method stub
 		sbillitOrderDao.createOrderThumbup(orderId, userId, title);
+		List<SbillitOrderItem> orderItemList = sbillitOrderDao.findOrderItemByOrderId(orderId);
+		SbillitCombo orderCombo = new SbillitCombo();
+		orderCombo.setId(orderId); // set order id here
+		// for loop to build combo data
+		sbillitComboDao.createCombo(orderCombo);
 	}
 
 	@Override
@@ -183,6 +193,33 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		returnMap.put("orderList", orderList);
 		
 		return returnMap;
+	}
+
+	@Override
+	public Map<String, Object> orderDetail(Long userId, Long orderId) {
+		// TODO Auto-generated method stub
+		SbillitOrder order = sbillitOrderDao.findOrderbyId(orderId);
+		List<SbillitOrderComment> orderCommentList = sbillitOrderDao.findOrderCommentByUserIdAndOrderId(userId, orderId);
+		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(userId, orderId);
+		List<SbillitOrderItem> orderItemList = sbillitOrderDao.findOrderItemByUserIdAndOrderId(userId, orderId);
+		List<SbillitOrderThumbup> orderThumbupList = sbillitOrderDao.findOrderThumbupByUserIdAndOrderId(userId, orderId);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("order", order);
+		returnMap.put("orderCommentList", orderCommentList);
+		returnMap.put("orderShareList", orderShareList);
+		returnMap.put("orderItemList", orderItemList);
+		returnMap.put("orderThumbupList", orderThumbupList);
+		return returnMap;
+	}
+
+	@Override
+	public long postComment(Long orderId, Long userId, Long atUserId,
+			String message, Long status) {
+		// TODO Auto-generated method stub
+		
+		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
+		return commentId;
 	}
 
 }
