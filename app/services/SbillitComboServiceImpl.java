@@ -23,11 +23,9 @@ public class SbillitComboServiceImpl implements SbillitComboService {
 		// TODO Auto-generated method stub
 		SbillitCombo combo = sbillitComboDao.findComboById(comboId);
 		SbillitSeller seller = sbillitSellerDao.findSellerById(combo.getSellerId());
-		
 		Map returnMap = new HashMap<String, Object>();
-		returnMap.put("combo", combo);
+		returnMap.put("combo", combo.genComboArray());
 		returnMap.put("seller", seller);
-		
 		return returnMap;
 	}
 	

@@ -1,6 +1,11 @@
 package entity;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SbillitCombo implements Serializable {
@@ -23,6 +28,52 @@ public class SbillitCombo implements Serializable {
 	private Double itemPrice5;
 	private Long sellerId;
 	private Integer valid;
+
+	private class ComboArray {
+		public String itemName;
+		public Long itemNumber;
+		public Double itemPrice;		
+	};
+	
+	public List<ComboArray> genComboArray (){
+		List<ComboArray> comboList = new ArrayList<ComboArray> ();
+		if (this.itemName1!=null && this.itemName1.length()>0) {
+			ComboArray combo = new ComboArray();
+			combo.itemName = this.itemName1;
+			combo.itemNumber = this.itemNumber1;
+			combo.itemPrice = this.itemPrice1;
+			comboList.add(combo);
+		}
+		if (this.itemName2!=null &&  this.itemName2.length()>0) {
+			ComboArray combo = new ComboArray();
+			combo.itemName = this.itemName2;
+			combo.itemNumber = this.itemNumber2;
+			combo.itemPrice = this.itemPrice2;
+			comboList.add(combo);
+		}
+		if (this.itemName3!=null &&  this.itemName3.length()>0) {
+			ComboArray combo = new ComboArray();
+			combo.itemName = this.itemName3;
+			combo.itemNumber = this.itemNumber3;
+			combo.itemPrice = this.itemPrice3;
+			comboList.add(combo);
+		}
+		if (this.itemName4!=null &&  this.itemName4.length()>0) {
+			ComboArray combo = new ComboArray();
+			combo.itemName = this.itemName4;
+			combo.itemNumber = this.itemNumber4;
+			combo.itemPrice = this.itemPrice4;
+			comboList.add(combo);
+		}
+		if (this.itemName5!=null && this.itemName5.length()>0) {
+			ComboArray combo = new ComboArray();
+			combo.itemName = this.itemName5;
+			combo.itemNumber = this.itemNumber5;
+			combo.itemPrice = this.itemPrice5;
+			comboList.add(combo);
+		}
+		return comboList;
+	};
 	
 	public Long getId() {
 		return id;
