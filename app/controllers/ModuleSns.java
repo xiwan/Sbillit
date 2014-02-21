@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import entity.SbillitFriend;
 
 import play.mvc.Result;
+import play.mvc.With;
 
 import services.SbillitSnsService;
 import utils.AppProp;
@@ -20,6 +21,7 @@ public class ModuleSns  extends Filter {
 	@Autowired
 	private SbillitSnsService sbillitSnsService;
 	
+	@With(Interceptor.class)
 	public Result get(Long userId, Long friendId) {
 		List<SbillitFriend> friendList = sbillitSnsService.findFriends(userId, (friendId==0)?null:friendId);
 		JsonNode js = null;
@@ -27,6 +29,7 @@ public class ModuleSns  extends Filter {
 		return ok(js);
 	}
 	
+	@With(Interceptor.class)
 	public Result add(Long userId) {
 		JsonNode postDataJson = super.parseParamJson("postData");	
 		Long friendId = postDataJson.get("friendId").asLong(); 
