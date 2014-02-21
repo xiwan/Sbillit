@@ -29,47 +29,65 @@ public class SbillitCombo implements Serializable {
 	private Long sellerId;
 	private Integer valid;
 
-	private class ComboArray {
-		public String itemName;
-		public Long itemNumber;
-		public Double itemPrice;		
+	public class ComboArray {
+		private String itemName;
+		private Long itemNumber;
+		private Double itemPrice;
+		public String getItemName() {
+			return itemName;
+		}
+		public void setItemName(String itemName) {
+			this.itemName = itemName;
+		}
+		public Long getItemNumber() {
+			return itemNumber;
+		}
+		public void setItemNumber(Long itemNumber) {
+			this.itemNumber = itemNumber;
+		}
+		public Double getItemPrice() {
+			return itemPrice;
+		}
+		public void setItemPrice(Double itemPrice) {
+			this.itemPrice = itemPrice;
+		}		
 	};
 	
 	public List<ComboArray> genComboArray (){
 		List<ComboArray> comboList = new ArrayList<ComboArray> ();
 		if (this.itemName1!=null && this.itemName1.length()>0) {
 			ComboArray combo = new ComboArray();
-			combo.itemName = this.itemName1;
-			combo.itemNumber = this.itemNumber1;
-			combo.itemPrice = this.itemPrice1;
+			combo.setItemName(this.itemName1);
+			combo.setItemNumber(this.itemNumber1);
+			combo.setItemPrice(this.itemPrice1);
 			comboList.add(combo);
 		}
 		if (this.itemName2!=null &&  this.itemName2.length()>0) {
 			ComboArray combo = new ComboArray();
-			combo.itemName = this.itemName2;
-			combo.itemNumber = this.itemNumber2;
-			combo.itemPrice = this.itemPrice2;
+			combo.setItemName(this.itemName2);
+			combo.setItemNumber(this.itemNumber2);
+			combo.setItemPrice(this.itemPrice2);
 			comboList.add(combo);
 		}
 		if (this.itemName3!=null &&  this.itemName3.length()>0) {
 			ComboArray combo = new ComboArray();
-			combo.itemName = this.itemName3;
-			combo.itemNumber = this.itemNumber3;
-			combo.itemPrice = this.itemPrice3;
+			combo.setItemName(this.itemName3);
+			combo.setItemNumber(this.itemNumber3);
+			combo.setItemPrice(this.itemPrice3);
 			comboList.add(combo);
 		}
 		if (this.itemName4!=null &&  this.itemName4.length()>0) {
 			ComboArray combo = new ComboArray();
-			combo.itemName = this.itemName4;
-			combo.itemNumber = this.itemNumber4;
-			combo.itemPrice = this.itemPrice4;
+			combo.setItemName(this.itemName4);
+			combo.setItemNumber(this.itemNumber4);
+			combo.setItemPrice(this.itemPrice4);
 			comboList.add(combo);
 		}
 		if (this.itemName5!=null && this.itemName5.length()>0) {
 			ComboArray combo = new ComboArray();
-			combo.itemName = this.itemName5;
-			combo.itemNumber = this.itemNumber5;
-			combo.itemPrice = this.itemPrice5;
+			combo.setItemName(this.itemName5);
+			combo.setItemNumber(this.itemNumber5);
+			combo.setItemPrice(this.itemPrice5);
 			comboList.add(combo);
 		}
 		return comboList;
