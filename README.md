@@ -53,7 +53,7 @@ This is [play!](http://www.playframework.com/) based project.
 	_RESPONSE_		{friendList}
 
 ##### friend add
-	GET 			/sns/:userid/add
+	POST 			/sns/:userid/add
 	_REQUEST_  		postData={friendId}
 
 	
