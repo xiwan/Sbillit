@@ -14,5 +14,6 @@
  	<bean id="moduleOrder" class="controllers.ModuleOrder"/>   
  	<bean id="moduleAds" class="controllers.ModuleAds"/>
  	<bean id="moduleCombo" class="controllers.ModuleCombo"/>
+ 	<bean id="moduleSns" class="controllers.ModuleSns"/>
  	
 </beans>

@@ -37,4 +37,9 @@
 	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
 	 </bean>
 	 
+	 <bean id="sbillitFriendMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	  <property name="mapperInterface" value="mapper.SbillitFriendMapper" />
+	  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+	 </bean>
+	 
 </beans>

@@ -9,6 +9,8 @@
 		<typeAlias alias="SbillitUser" type="entity.SbillitUser" /> 	
 		<typeAlias alias="SbillitUserSession" type="entity.SbillitUserSession" /> 
 		
+		<typeAlias alias="SbillitFriend" type="entity.SbillitFriend" /> 
+		
 		<typeAlias alias="SbillitOrder" type="entity.SbillitOrder" /> 
 		<typeAlias alias="SbillitOrderShare" type="entity.SbillitOrderShare" /> 
 		<typeAlias alias="SbillitOrderItem" type="entity.SbillitOrderItem" /> 
@@ -27,6 +29,7 @@
 		<mapper resource="mybatis/mapper/SbillitAdsMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitComboMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitSellerMapper.xml"/>
+		<mapper resource="mybatis/mapper/SbillitFriendMapper.xml"/>
 		
     </mappers>
 

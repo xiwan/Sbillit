@@ -18,7 +18,7 @@ public class ModuleCombo extends Filter {
 	@Autowired
 	private SbillitComboService sbillitComboService;
 	
-	//@With(Interceptor.class)
+	@With(Interceptor.class)
 	public Result combo(Long comboId) {
 		JsonNode js = null;
 		Map returnMap = sbillitComboService.findComboAndSeller(comboId);

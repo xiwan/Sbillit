@@ -48,6 +48,15 @@ This is [play!](http://www.playframework.com/) based project.
 	GET				/ads/pull
 	_RESPONSE_		{imageUrl, comboId}
 	
+##### friend get
+	GET 			/sns/:userid/get/:friendid
+	_RESPONSE_		{friendList}
+
+##### friend add
+	GET 			/sns/:userid/add
+	_REQUEST_  		postData={friendId}
+
+	
 ### NOTE:
 * To finish a successful request and response cycle, **sessionId=xxx** is required.
 * A decent response formatted as {code: xxx, body:{jsonObj}}
