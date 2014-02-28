@@ -54,7 +54,7 @@
     	(id, phone, banned, sms_token, sms_flag, sms_expired_at, nickname, created_at, updated_at) 
     	VALUES 
     	(#{id}, #{phone}, #{banned}, #{smsToken}, #{smsFlag}, #{smsExpiredAt}, #{nickname}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
-    <selectKey keyProperty="id" resultType="java.lang.Integer" order="BEFORE">
+    <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
 	   SELECT id FROM seq_user
 	</selectKey>
     </insert>

@@ -29,11 +29,12 @@ public class ModuleSns  extends Filter {
 		return ok(js);
 	}
 	
-	@With(Interceptor.class)
+	//@With(Interceptor.class)
 	public Result add(Long userId) {
-		JsonNode postDataJson = super.parseParamJson("postData");	
-		Long friendId = postDataJson.get("friendId").asLong(); 
-		long status = sbillitSnsService.addFriends(userId, friendId, 0l);
+		JsonNode postDataJson = super.parseParamJson("postData");
+		JsonNode friendArr = postDataJson.get("friendArray");
+		//Long friendId = postDataJson.get("friendId").asLong(); 
+		long status = sbillitSnsService.addFriends(userId, friendArr, 0l);
 		JsonNode js = null;
 		if (status == 0) {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, AppProp.getPropertyi18n(Constant.SNS_FRIEND_ADD_SUCCESS));

@@ -54,7 +54,7 @@ This is [play!](http://www.playframework.com/) based project.
 
 ##### friend add
 	POST 			/sns/:userid/add
-	_REQUEST_  		postData={friendId}
+	_REQUEST_  		postData={friendArray=[{phone, name}]}
 
 	
 ### NOTE:

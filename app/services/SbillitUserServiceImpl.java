@@ -96,4 +96,16 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		return returnMap;
 	}
 
+	@Override
+	public Long findUserByPhone(String phone) {
+		// TODO Auto-generated method stub
+		List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
+		if (userList == null || userList.size() == 0) {
+			return 0l;
+		}else if (userList.size() == 1){
+			return userList.get(0).getId();
+		}
+		return -1l;
+	}
+
 }
