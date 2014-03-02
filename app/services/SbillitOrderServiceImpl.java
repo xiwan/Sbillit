@@ -105,7 +105,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 
 
 	@Override
-	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode friendsArray, JsonNode contactsArray, Double amount) {
+	public SbillitOrder quickOrder(long ownerId, String orderTitle, String orderShareArray, Double amount) {
 		// TODO Auto-generated method stub		
 		long expiredAt = DateUtil.getExpiredTimeFromNow("order.endure");
 		
@@ -122,24 +122,24 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		
 		// create order share records		
  		// duplication check point make sure the fa and ca dont share same phonenumber
-		if (friendsArray.isArray()){
-			for (JsonNode fa: friendsArray) {
-				String phone = fa.get("phoneNumber").asText();
-				Long userId = fa.get("userID").asLong();
+		if (orderShareArray.isArray()){
+			for (JsonNode os: orderShareArray) {
+				String phone = os.get("phoneNumber").asText();
+				Long userId = os.get("userID").asLong();
 				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_NA);
 			}			
 		}else {
 			
 		}
-		
-		if (contactsArray.isArray()){
-			for (JsonNode ca: contactsArray) {
-				String phone = ca.get("phoneNumber").asText();
-				sbillitOrderDao.createOrderShare(orderId, phone, 0l, Constant.ORDER_SHARE_NA);			
-			}			
-		}else  {
-			
-		}
+
+//		if (contactsArray.isArray()){
+//			for (JsonNode ca: contactsArray) {
+//				String phone = ca.get("phoneNumber").asText();
+//				sbillitOrderDao.createOrderShare(orderId, phone, 0l, Constant.ORDER_SHARE_NA);			
+//			}			
+//		}else  {
+//			
+//		}
 
 		//sbillitOrderDao.findOrderbyId(order.getId());
 		return order;

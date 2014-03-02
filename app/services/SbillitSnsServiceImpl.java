@@ -33,7 +33,7 @@ public class SbillitSnsServiceImpl implements SbillitSnsService {
 		
 		if (friendArr != null && friendArr.isArray()){
 			for (JsonNode fr: friendArr) {
-				String phone = fr.get("phone").asText();
+				String phone = fr.get("phoneNumber").asText();
 				String name = fr.get("name").asText();
 				List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
 				if (userList == null || userList.size() == 0) {

@@ -49,11 +49,11 @@ This is [play!](http://www.playframework.com/) based project.
 	_RESPONSE_		{imageUrl, comboId}
 	
 ##### friend get
-	GET 			/sns/:userid/get/:friendid
+	GET 			/sns/get/:friendid
 	_RESPONSE_		{friendList}
 
 ##### friend add
-	POST 			/sns/:userid/add
+	POST 			/sns/add
 	_REQUEST_  		postData={friendArray=[{phone, name}]}
 
 	

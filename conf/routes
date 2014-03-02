@@ -45,10 +45,10 @@ GET    /1/ads/pull						@controllers.ModuleAds.pull()
 
 ## Sns module
 # add friend
-POST    /1/sns/:userid/add                       @controllers.ModuleSns.add(userid: Long)
+POST    /1/sns/:userid/add                       @controllers.ModuleSns.add()
 
 # get friend
-GET    /1/sns/:userid/get/:friendid                      @controllers.ModuleSns.get(userid: Long, friendid: Long)
+GET    /1/sns/:userid/get/:friendid                      @controllers.ModuleSns.get(friendid: Long)
 
 
 

@@ -113,10 +113,11 @@ public class ModuleOrder extends Filter {
 		
 		String orderTitle = postDataJson.get("orderTitle").asText();		
 		Double totalNumber = postDataJson.get("totalNumber").asDouble();
-		JsonNode friendsArray = postDataJson.findValue("friendsArray");
-		JsonNode contactsArray = postDataJson.findValue("contactsArray");		
+		JsonNode orderShareArray = postDataJson.findValue("orderShareArray");
+		//JsonNode friendsArray = postDataJson.findValue("friendsArray");
+		//JsonNode contactsArray = postDataJson.findValue("contactsArray");		
 
-		SbillitOrder order = sbillitOrderService.quickOrder(ownerId, orderTitle, friendsArray, contactsArray, totalNumber);
+		SbillitOrder order = sbillitOrderService.quickOrder(ownerId, orderTitle, orderShareArray, totalNumber);
 		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, order.getId());
 		return ok(js);
 	}

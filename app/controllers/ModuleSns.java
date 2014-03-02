@@ -22,18 +22,19 @@ public class ModuleSns  extends Filter {
 	private SbillitSnsService sbillitSnsService;
 	
 	@With(Interceptor.class)
-	public Result get(Long userId, Long friendId) {
+	public Result get(Long friendId) {
+		long userId = super.getUserBySessionId();
 		List<SbillitFriend> friendList = sbillitSnsService.findFriends(userId, (friendId==0)?null:friendId);
 		JsonNode js = null;
 		js = JsonUtil.toJson(Constant.ERROR_FREE, friendList);
 		return ok(js);
 	}
 	
-	//@With(Interceptor.class)
-	public Result add(Long userId) {
+	@With(Interceptor.class)
+	public Result add() {
+		long userId = super.getUserBySessionId();
 		JsonNode postDataJson = super.parseParamJson("postData");
 		JsonNode friendArr = postDataJson.get("friendArray");
-		//Long friendId = postDataJson.get("friendId").asLong(); 
 		long status = sbillitSnsService.addFriends(userId, friendArr, 0l);
 		JsonNode js = null;
 		if (status == 0) {

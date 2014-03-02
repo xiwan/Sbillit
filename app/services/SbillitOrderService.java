@@ -20,7 +20,7 @@ public interface SbillitOrderService {
 	public long createOrder(long ownerId, JsonNode orderShareArry, JsonNode orderItemArray, JsonNode orderCreator, 
 			String orderImagePath, String orderComments, String orderTitle, Double amount);
 	
-	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode friendsArray, JsonNode contactsArray, Double amount);
+	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode orderShareArray, Double amount);
 	
 	public Map<Long, String> uploadFile(long orderId, String filePath);
 	
