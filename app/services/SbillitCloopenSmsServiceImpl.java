@@ -37,11 +37,7 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 		String timestamp = DateUtil.format(new Date(), DateUtil.DATE_TIME_PATTERN2);
 		String sig = Md5Util.MD5Encode(accountSid+authToken+timestamp).toUpperCase();
 		String auth = accountSid+";"+timestamp;
-		String authorization = Base64.encode(auth.getBytes());
-		
-		System.out.println(sig);
-		System.out.println(authorization);
-				
+		String authorization = Base64.encode(auth.getBytes());				
 		String httpsRequest = httpsURL + "/" + softVersion + "/Accounts/" + accountSid +
 				"/SMS/Messages?sig=" + sig;
 		
@@ -52,6 +48,11 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 		queryLoad.appId = appid;
 		queryLoad.subAccountSid = subAccountSid;
 		String query = JsonUtil.toJson(queryLoad).asText();
+		
+		System.out.println(sig);
+		System.out.println(authorization);
+		System.out.println(httpsRequest);
+		System.out.println(query);
 		
 		URL myurl = new URL(httpsRequest);
 		HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
