@@ -3,18 +3,10 @@ package services;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import org.eclipse.jetty.util.ajax.JSON;
-import org.specs2.json.Json;
-
-import com.fasterxml.jackson.databind.JsonNode;
 import com.ning.http.util.Base64;
 
 import utils.AppProp;
@@ -46,6 +38,9 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 		String sig = Md5Util.MD5Encode(accountSid+authToken+timestamp).toUpperCase();
 		String auth = accountSid+";"+timestamp;
 		String authorization = Base64.encode(auth.getBytes());
+		
+		System.out.println(sig);
+		System.out.println(authorization);
 				
 		String httpsRequest = httpsURL + "/" + softVersion + "/Accounts/" + accountSid +
 				"/SMS/Messages?sig=" + sig;
