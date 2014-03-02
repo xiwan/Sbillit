@@ -105,7 +105,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 
 
 	@Override
-	public SbillitOrder quickOrder(long ownerId, String orderTitle, String orderShareArray, Double amount) {
+	public SbillitOrder quickOrder(long ownerId, String orderTitle, JsonNode orderShareArray, Double amount) {
 		// TODO Auto-generated method stub		
 		long expiredAt = DateUtil.getExpiredTimeFromNow("order.endure");
 		
