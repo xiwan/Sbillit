@@ -12,11 +12,14 @@ import java.util.Date;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.eclipse.jetty.util.ajax.JSON;
+import org.specs2.json.Json;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.ning.http.util.Base64;
 
 import utils.AppProp;
 import utils.DateUtil;
+import utils.JsonUtil;
 import utils.Md5Util;
 
 public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
@@ -53,7 +56,7 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 		queryLoad.msgType = "0";
 		queryLoad.appId = appid;
 		queryLoad.subAccountSid = subAccountSid;
-		String query = JSON.toString(queryLoad);
+		String query = JsonUtil.toJson(queryLoad).asText();
 		
 		URL myurl = new URL(httpsRequest);
 		HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();

@@ -21,8 +21,13 @@ public class JsonUtil {
         return Json.toJson(new JsonUtil(code, body));
     }
 	
+	public static JsonNode toJson(Object body) {
+        return Json.toJson( body);
+    }
+	
 	public static JsonNode fromJson(String jsonStr){
 		return Json.parse(jsonStr);
 	}
+	
 
 }
