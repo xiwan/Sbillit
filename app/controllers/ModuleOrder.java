@@ -94,8 +94,14 @@ public class ModuleOrder extends Filter {
 		JsonNode orderShareArry = postDataJson.get("orderShareArray");
 		JsonNode orderItemArray = postDataJson.get("orderItemArray");
 		JsonNode orderCreator = postDataJson.get("orderCreator");
-		String orderImagePath = postDataJson.get("orderImagePath").asText();
-		String orderComments = postDataJson.get("orderComments").asText();
+		String orderImagePath = "";
+		if (postDataJson.get("orderImagePath") != null){
+			orderImagePath = postDataJson.get("orderImagePath").asText();
+		}
+		String orderComments = "";
+		if (postDataJson.get("orderComments") != null){
+			orderComments = postDataJson.get("orderComments").asText();
+		}
 		String orderTitle = postDataJson.get("orderTitle").asText();
 		Double totalNumber = postDataJson.get("totalNumber").asDouble();
 		
