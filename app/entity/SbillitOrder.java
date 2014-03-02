@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class SbillitOrder implements Serializable {
 	private long id;
 	private long userId;
+	private String userName;
 	private long type;
 	private String title;
 	private double amount;
@@ -101,6 +102,12 @@ public class SbillitOrder implements Serializable {
 	}
 	public void setStorePhone(String storePhone) {
 		this.storePhone = storePhone;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

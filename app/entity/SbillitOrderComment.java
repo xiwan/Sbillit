@@ -6,6 +6,7 @@ public class SbillitOrderComment implements Serializable {
 	private Long id = 0l;
 	private Long orderId;
 	private Long userId;
+	private String userName;
 	private String message;
 	private Long status;
 	private Long atUserId;
@@ -52,6 +53,12 @@ public class SbillitOrderComment implements Serializable {
 	}
 	public void setCreatedAt(Long createdAt) {
 		this.createdAt = createdAt;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

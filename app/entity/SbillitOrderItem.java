@@ -6,6 +6,7 @@ public class SbillitOrderItem implements Serializable {
 	private Long orderId;
 	private Long itemId;
 	private Long userId;
+	private String userName;
 	private Long itemNum;
 	private Double itemPrice;
 	private String itemName;
@@ -58,6 +59,12 @@ public class SbillitOrderItem implements Serializable {
 	}
 	public void setUpdatedAt(Long updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

@@ -6,6 +6,7 @@ public class SbillitOrderThumbup implements Serializable {
 	
 	private Long orderId;
 	private Long userId;
+	private String userName;
 	private String title;
 	private Long updatedAt;
 	private Long createdAt;
@@ -39,6 +40,12 @@ public class SbillitOrderThumbup implements Serializable {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 }

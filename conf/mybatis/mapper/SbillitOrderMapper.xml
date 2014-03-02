@@ -7,6 +7,7 @@
  	<resultMap id="order" type="SbillitOrder">
       <id property="id" column="id"/>
       <result property="userId" column="user_id"/>
+      <result property="userName" column="user_name"/>
       <result property="type" column="type"/>
       <result property="title" column="title"/>
       <result property="amount" column="amount"/>
@@ -25,6 +26,7 @@
       <result property="orderId" column="order_id"/>
       <result property="phone" column="phone"/>
       <result property="userId" column="user_id"/>
+      <result property="userName" column="user_name"/>
       <result property="status" column="status" />
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
@@ -33,6 +35,7 @@
     <resultMap id="orderItem" type="SbillitOrderItem">
       <result property="orderId" column="order_id"/>
       <result property="userId" column="user_id"/>
+      <result property="userName" column="user_name"/>
       <result property="itemNum" column="item_num"/>
       <result property="itemPrice" column="item_price" />
       <result property="itemName" column="item_name" />
@@ -43,6 +46,7 @@
     <resultMap id="orderThumbup" type="SbillitOrderThumbup">
       <result property="orderId" column="order_id"/>
       <result property="userId" column="user_id"/>
+      <result property="userName" column="user_name"/>
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
     </resultMap>
@@ -51,6 +55,7 @@
  		<id property="id" column="id"/>
  		<result property="orderId" column="order_id"/>
       	<result property="userId" column="user_id"/>
+      	<result property="userName" column="user_name"/>
       	<result property="message" column="message"/>
       	<result property="status" column="status"/>
       	<result property="atUserId" column="at_user_id"/>
@@ -58,22 +63,34 @@
     </resultMap>
 
     <select id="findAllOrders" resultMap="order">
-        SELECT * FROM sbillit_order WHERE 1=1
+        <!-- SELECT * FROM sbillit_order WHERE 1=1 -->
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE 1=1
     </select>
     
     <select id="findOrderbyId" parameterType="int" resultMap="order">
-        SELECT * FROM sbillit_order WHERE id=#{value}
+        <!-- SELECT * FROM sbillit_order WHERE id=#{value} -->
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE id=#{value}
     </select>
     
     <select id="findOrderInIds" parameterType="java.util.HashMap" resultMap="order">
-    	SELECT * FROM sbillit_order WHERE id in
+    	<!-- SELECT * FROM sbillit_order WHERE id in -->
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.id IN 
     	<foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
 	        #{item}
 	    </foreach>
     </select>
     
     <select id="findOrderHistoryByUserId" parameterType="long" resultMap="order">
-    	SELECT * FROM sbillit_order WHERE user_id=#{value} ORDER BY created_at DESC;
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+    	WHERE o.user_id=#{value} 
+    	ORDER BY o.created_at DESC;
 	</select>
 	
   	<insert id="insertOrder" parameterType="SbillitOrder">
@@ -130,8 +147,9 @@
     </update>
     
     <select id="findOrderItemByOrderId" parameterType="int" resultMap="orderItem">
-    	SELECT * FROM sbillit_order_item
-    	WHERE order_id = #{orderId} ORDER BY updated_at DESC
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.order_id = #{orderId} ORDER BY o.updated_at DESC
     </select>
 
     <insert id="insertOrderItem" parameterType="SbillitOrderItem"> 
@@ -140,8 +158,9 @@
     </insert>
     
     <select id="findOrderThumbupByUserId" parameterType="int" resultMap="orderThumbup">
-    	SELECT * FROM sbillit_order_thumbup
-    	WHERE user_id = #{id} ORDER BY updated_at DESC
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_thumbup AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.user_id = #{id} ORDER BY o.updated_at DESC
     </select>
 
     <insert id="insertOrderThumbup" parameterType="SbillitOrderThumbup"> 
@@ -162,23 +181,28 @@
     </update>	
     
     <select id="findOrderShareByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderShare">
-    	SELECT * FROM sbillit_order_share
-    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY updated_at DESC
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_share AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
+    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} 
+    	ORDER BY o.updated_at DESC
     </select>
     
     <select id="findOrderItemByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderItem">
-    	SELECT * FROM sbillit_order_item
-    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY updated_at DESC
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
+    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.updated_at DESC
     </select>
     
      <select id="findOrderThumbupByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderThumbup">
-    	SELECT * FROM sbillit_order_thumbup
-    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY updated_at DESC
+     	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_thumbup AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
+    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.updated_at DESC
     </select>
     
     <select id="findOrderCommentByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderComment">
-    	SELECT * FROM sbillit_order_comment
-    	WHERE user_id = #{userId} AND order_id = #{orderId} ORDER BY created_at DESC
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_comment AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
+    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.created_at DESC
     </select>
 	
 </mapper>

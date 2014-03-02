@@ -6,6 +6,7 @@ public class SbillitOrderShare implements Serializable {
 	private Long orderId;
 	private String phone;
 	private Long userId;
+	private String userName;
 	private Integer status;
 	private Long createdAt;
 	private Long updatedAt;
@@ -45,6 +46,12 @@ public class SbillitOrderShare implements Serializable {
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	
