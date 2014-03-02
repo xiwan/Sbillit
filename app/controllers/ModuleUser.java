@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import entity.SbillitUser;
-
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -17,6 +16,7 @@ import play.mvc.Http.Context;
 import play.mvc.Http.RequestBody;
 import play.mvc.Result;
 import play.mvc.With;
+import services.SbillitCloopenSmsService;
 import services.SbillitSessionService;
 import services.SbillitUserService;
 import utils.AppProp;
@@ -29,6 +29,9 @@ public class ModuleUser extends Filter {
 	
 	@Autowired
 	private SbillitSessionService sbillitSessionService;
+	
+	@Autowired
+	private SbillitCloopenSmsService sbillitCloopenSmsService;
 	
 	@With(Interceptor.class)
 	public Result info() {
@@ -47,6 +50,14 @@ public class ModuleUser extends Filter {
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
 		
 		// should use sms sender
+		try {
+			sbillitCloopenSmsService.sendSmsToUser(phone, smsToken);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			JsonNode js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
+			return ok(js);
+		}
 		
 		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
 		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){

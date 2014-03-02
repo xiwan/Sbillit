@@ -13,4 +13,7 @@
 	<bean id="sbillitAdsService" class="services.SbillitAdsServiceImpl"/>
 	<bean id="sbillitComboService" class="services.SbillitComboServiceImpl"/>
 	<bean id="sbillitSnsService" class="services.SbillitSnsServiceImpl"/>
+	<bean id="sbillitCloopenSmsService" class="services.SbillitCloopenSmsServiceImpl"/>
+	
+	
 </beans>

@@ -2,6 +2,7 @@ package utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DateUtil {
@@ -9,6 +10,7 @@ public class DateUtil {
 	public static final String DATE_PATTERN2="yyyy.MM.dd HH:mm";
 	public  static final String DATE_PATTERN3="yyyy-MM-dd HH:mm";
 	public  static final String DATE_TIME_PATTERN="yyyy-MM-dd HH:mm:ss";
+	public static final String DATE_TIME_PATTERN2="yyyyMMddHHmmss";
 	public static final String MONTH_PATTERN = "yyyy-MM";
     public static final String MARK_TODAY = "t";
 	public static final String MARK_LAST_MONTH = "lm";
@@ -21,6 +23,13 @@ public class DateUtil {
 	public static long GetCurrentTimeStamp(){
 		return System.currentTimeMillis()/1000;
 	}
+	
+	public static String format(Date date, String pattern) {
+        if (date == null)
+            return null;
+        SimpleDateFormat sf = new SimpleDateFormat(pattern);
+        return sf.format(date);
+    }
 	
 	public static long getExpiredTimeFromNow(String key){
 		long currentTimestamp = DateUtil.GetCurrentTimeStamp();
