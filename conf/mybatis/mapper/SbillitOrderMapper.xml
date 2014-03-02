@@ -73,7 +73,7 @@
         <!-- SELECT * FROM sbillit_order WHERE id=#{value} -->
         SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
-        WHERE id=#{value}
+        WHERE o.id=#{value}
     </select>
     
     <select id="findOrderInIds" parameterType="java.util.HashMap" resultMap="order">
