@@ -47,12 +47,14 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 		queryLoad.msgType = "0";
 		queryLoad.appId = appid;
 		queryLoad.subAccountSid = subAccountSid;
-		String query = JsonUtil.toJson(queryLoad).asText();
+		String query = JsonUtil.toJson(queryLoad).toString();
 		
 		System.out.println(sig);
 		System.out.println(authorization);
 		System.out.println(httpsRequest);
 		System.out.println(query);
+		System.out.println(phone);
+		System.out.println(smsToken);
 		
 		URL myurl = new URL(httpsRequest);
 		HttpsURLConnection con = (HttpsURLConnection)myurl.openConnection();
