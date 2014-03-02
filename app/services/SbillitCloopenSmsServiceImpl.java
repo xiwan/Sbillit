@@ -31,7 +31,7 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 	private static String appid = AppProp.getPropertyValue("cloopen.appid");
 	private static String authToken = AppProp.getPropertyValue("cloopen.auth.token");
 	
-	private class QueryLoad {
+	public class QueryLoad {
 		String to;
 		String body;
 		String msgType;
