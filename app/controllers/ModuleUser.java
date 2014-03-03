@@ -50,14 +50,14 @@ public class ModuleUser extends Filter {
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
 		
 		// should use sms sender
-		try {
-			sbillitCloopenSmsService.sendSmsToUser(phone, smsToken);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			JsonNode js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
-			return ok(js);
-		}
+//		try {
+//			sbillitCloopenSmsService.sendSmsToUser(phone, smsToken);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			JsonNode js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
+//			return ok(js);
+//		}
 		
 		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
 		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){
