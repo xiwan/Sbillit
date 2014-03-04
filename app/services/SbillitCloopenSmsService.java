@@ -6,6 +6,8 @@ import java.net.MalformedURLException;
 
 public interface SbillitCloopenSmsService {
 	
-	public void sendSmsToUser(String phone, String smsToken) throws IOException;
+	public String createSubaccount() throws IOException;
+	
+	public String sendSmsToUser(String phone, String smsToken) throws IOException;
 
 }
