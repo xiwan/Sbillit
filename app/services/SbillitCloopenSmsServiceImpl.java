@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -17,7 +18,12 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.ning.http.util.Base64;
+
+import dao.SbillitUserDao;
+import entity.SbillitUser;
 
 import utils.AppProp;
 import utils.DateUtil;
@@ -25,6 +31,9 @@ import utils.JsonUtil;
 import utils.Md5Util;
 
 public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
+	
+	@Autowired
+	private SbillitUserDao UserDao;
 	
 	private static String httpsURL = AppProp.getPropertyValue("cloopen.rest.url");
 	private static String softVersion = AppProp.getPropertyValue("cloopen.soft.version");
@@ -60,19 +69,19 @@ public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 		}
 	}
 
-//	static {
-//	    //for localhost testing only
-//	    javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
-//	    new javax.net.ssl.HostnameVerifier(){
-//	        public boolean verify(String hostname,
-//	                javax.net.ssl.SSLSession sslSession) {
-//	            if (hostname.equals("sandboxapp.cloopen.com")) {
-//	                return true;
-//	            }
-//	            return false;
-//	        }
-//	    });
-//	}
+	static {
+	    //for localhost testing only
+	    javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+	    new javax.net.ssl.HostnameVerifier(){
+	        public boolean verify(String hostname,
+	                javax.net.ssl.SSLSession sslSession) {
+	            if (hostname.equals("sandboxapp.cloopen.com")) {
+	                return true;
+	            }
+	            return false;
+	        }
+	    });
+	}
 	
 	private HttpsURLConnection byPassSSLSecurityCheck(String httpsRequest){
 		// Imports: javax.net.ssl.TrustManager, javax.net.ssl.X509TrustManager

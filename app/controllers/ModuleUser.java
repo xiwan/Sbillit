@@ -56,10 +56,10 @@ public class ModuleUser extends Filter {
 				if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){
 					js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "duplicate phone number!");
 				}else {
-					js = JsonUtil.toJson(Constant.ERROR_FREE, returnStr);
+					js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
 				}
 			}else {
-				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
+				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

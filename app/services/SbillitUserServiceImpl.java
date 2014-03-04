@@ -39,12 +39,12 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	@Override
 	public String createNewUserAndAssignSmsToken(String phone, String nickname) {
 		// TODO Auto-generated method stub
-		
-		long smsExpiredAt = DateUtil.getExpiredTimeFromNow("sms.endure");
-		String smsToken = RamNumUtil.Instance().getRandom();
-		
-		List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
+		List<SbillitUser> userList = UserDao.findeUserByPhone(phone);
+		String smsToken = "0";
+		//List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
 		if (userList == null || userList.size() == 0) {
+			long smsExpiredAt = DateUtil.getExpiredTimeFromNow("sms.endure");
+			smsToken = RamNumUtil.Instance().getRandom();
 			SbillitUser user = new SbillitUser();
 			user.setPhone(phone);
 			user.setSmsToken(smsToken);
@@ -54,9 +54,14 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		}else {
 			if (userList.size() == 1){
 				SbillitUser user = userList.get(0);
-				user.setSmsToken(smsToken);
-				user.setSmsExpiredAt(smsExpiredAt);
-				this.UserDao.saveUser(user);
+				long now = DateUtil.GetCurrentTimeStamp();
+				long expireAt = user.getSmsExpiredAt();
+				if (now < expireAt) {
+					smsToken = user.getSmsToken();
+				}else {
+					smsToken = RamNumUtil.Instance().getRandom();
+					this.UserDao.saveUser(user);
+				}
 			}else{
 				return Constant.USER_PHONE_DUPLICATE;
 			}
