@@ -4,19 +4,24 @@
 
 <mapper namespace="mapper.SbillitFriendMapper">
 	<resultMap id="friend" type="SbillitFriend">
-      <result property="userId" column="user_id"/>
-      <result property="friendId" column="friend_id"/>
+      <!-- result property="userId" column="user_id"/> -->
+      <result property="userId" column="friend_id"/>
+      <result property="nickname" column="nickname"/>
+      <result property="phoneNumber" column="phone" />
       <result property="status" column="status"/>
       <result property="createdAt" column="created_at"/>
       <result property="updatedAt" column="updated_at"/>
 	</resultMap>
 	
 	<select id="findFriends" parameterType="java.util.HashMap" resultMap="friend">
-	  SELECT * FROM sbillit_friend 
-	  WHERE user_id = #{userId}
+	  SELECT friend_id, nickname, phone, status, f.created_at as created_at, f.updated_at as updated_at
+	  FROM sbillit_friend AS f, sbillit_user AS u 
+	  WHERE f.friend_id = u.id AND user_id = #{userId}
 	  <if test="friendId != null">
-	    AND friend_id = #{friendId}
+	    AND f.friend_id = #{friendId}
 	  </if>
+	  AND status IN (0, 1)
+	  ORDER BY status ASC
 	</select>	
 	
 	<insert id="insertFriends" parameterType="java.util.HashMap" >
@@ -27,5 +32,9 @@
       </foreach>
 	</insert>
 	
+	<update id="updateFriend" parameterType="java.util.HashMap">
+	  UPDATE sbillit_friend SET status = #{status}, updated_at = UNIX_TIMESTAMP()
+	  WHERE user_id=#{userId} AND friend_id=#{friendId}
+	</update>
 
 </mapper>

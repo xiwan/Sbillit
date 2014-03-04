@@ -26,5 +26,13 @@ public class SbillitFriendDao {
 		paraMap.put("friendsList", friendsList);
 		sbillitFriendMapper.insertFriends(paraMap);
 	};
+	
+	public void updateFriend(Long userId, Long friendId, Long status){
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("friendId", friendId);
+		paraMap.put("status", status);
+		sbillitFriendMapper.updateFriend(paraMap);
+	}
 
 }

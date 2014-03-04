@@ -59,7 +59,10 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 				if (now < expireAt) {
 					smsToken = user.getSmsToken();
 				}else {
+					long smsExpiredAt = DateUtil.getExpiredTimeFromNow("sms.endure");
 					smsToken = RamNumUtil.Instance().getRandom();
+					user.setSmsToken(smsToken);
+					user.setSmsExpiredAt(smsExpiredAt);
 					this.UserDao.saveUser(user);
 				}
 			}else{

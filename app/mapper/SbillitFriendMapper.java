@@ -10,5 +10,7 @@ public interface SbillitFriendMapper {
 	public List<SbillitFriend> findFriends(Map paraMap);
 	
 	public void insertFriends(Map paraMap);
+	
+	public void updateFriend(Map paraMap);
 
 }

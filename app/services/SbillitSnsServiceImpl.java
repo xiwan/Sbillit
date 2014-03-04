@@ -74,4 +74,10 @@ public class SbillitSnsServiceImpl implements SbillitSnsService {
 		return flag;
 	}
 
+	@Override
+	public void updateFriend(Long userId, Long friendId, Long status) {
+		// TODO Auto-generated method stub
+		sbillitFriendDao.updateFriend(userId, friendId, status);
+	}
+
 }

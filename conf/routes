@@ -46,7 +46,12 @@ GET    /1/ads/pull						@controllers.ModuleAds.pull()
 ## Sns module
 # add friend
 POST    /1/sns/add                       @controllers.ModuleSns.add()
-
+# block friend
+POST    /1/sns/block                     @controllers.ModuleSns.block()
+# block friend
+POST    /1/sns/restore                     @controllers.ModuleSns.restore()
+# delete friend
+POST    /1/sns/delete                     @controllers.ModuleSns.delete()
 # get friend
 GET    /1/sns/get/:friendid                      @controllers.ModuleSns.get(friendid: Long)
 

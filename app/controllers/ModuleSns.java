@@ -35,7 +35,7 @@ public class ModuleSns  extends Filter {
 		long userId = super.getUserBySessionId();
 		JsonNode postDataJson = super.parseParamJson("postData");
 		JsonNode friendArr = postDataJson.get("friendArray");
-		long status = sbillitSnsService.addFriends(userId, friendArr, 0l);
+		long status = sbillitSnsService.addFriends(userId, friendArr, Constant.SNS_NORMAL);
 		JsonNode js = null;
 		if (status == 0) {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, AppProp.getPropertyi18n(Constant.SNS_FRIEND_ADD_SUCCESS));
@@ -46,5 +46,35 @@ public class ModuleSns  extends Filter {
 		}
 		return ok(js);
 	}
-
+	
+	@With(Interceptor.class)
+	public Result block() {
+		long userId = super.getUserBySessionId();
+		JsonNode postDataJson = super.parseParamJson("postData");
+		long friendId = postDataJson.get("friendId").asLong();
+		sbillitSnsService.updateFriend(userId, friendId, Constant.SNS_BLOCK);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "");
+		return ok(js);
+	}
+	
+	@With(Interceptor.class)
+	public Result restore() {
+		long userId = super.getUserBySessionId();
+		JsonNode postDataJson = super.parseParamJson("postData");
+		long friendId = postDataJson.get("friendId").asLong();
+		sbillitSnsService.updateFriend(userId, friendId, Constant.SNS_NORMAL);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "");
+		return ok(js);
+	}
+	
+	@With(Interceptor.class)
+	public Result delete() {
+		long userId = super.getUserBySessionId();
+		JsonNode postDataJson = super.parseParamJson("postData");
+		long friendId = postDataJson.get("friendId").asLong();
+		sbillitSnsService.updateFriend(userId, friendId, Constant.SNS_DELTE);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "");
+		return ok(js);
+	}
+	
 }

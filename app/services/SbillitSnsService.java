@@ -11,5 +11,7 @@ public interface SbillitSnsService {
 	public List<SbillitFriend> findFriends (Long userId, Long friendId);
 	
 	public long addFriends(Long userId, JsonNode friendArr, Long status);
+	
+	public void updateFriend(Long userId, Long friendId, Long status);
 
 }

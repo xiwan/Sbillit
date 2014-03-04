@@ -49,22 +49,25 @@ public class ModuleUser extends Filter {
 		
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
 		JsonNode js = null;
-		
-		try {
-			String returnStr = sbillitCloopenSmsService.sendSmsToUser(phone, smsToken);
-			if (returnStr != null) {
-				if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){
-					js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "duplicate phone number!");
+		if (AppProp.getPropertyi18n("sms.disabled") == "1") {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
+		}else {
+			try {
+				String returnStr = sbillitCloopenSmsService.sendSmsToUser(phone, smsToken);
+				if (returnStr != null) {
+					if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){
+						js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "duplicate phone number!");
+					}else {
+						js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
+					}
 				}else {
-					js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
+					js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
 				}
-			}else {
-				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
 		}
 		return ok(js);
 	}

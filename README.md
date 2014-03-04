@@ -55,6 +55,10 @@ This is [play!](http://www.playframework.com/) based project.
 ##### friend add
 	POST 			/sns/add
 	_REQUEST_  		postData={friendArray=[{phone, name}]}
+	
+##### friend block/delete/restore
+	POST 			/sns/block    /sns/delete   /sns/restore
+	_REQUEST_  		postData={friendId}
 
 	
 ### NOTE:

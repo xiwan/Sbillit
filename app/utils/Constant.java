@@ -34,6 +34,10 @@ public class Constant {
 	public static long ORDER_COMMENT_NORMAL = 0;
 	public static long ORDER_COMMENT_PRIVATE = 1;
 	
+	public static long SNS_NORMAL = 0;
+	public static long SNS_BLOCK = 1;
+	public static long SNS_DELTE = 2;
+	
 	public static String SNS_FRIEND_ADD_SUCCESS = "sns.friend.add.success";
 	public static String SNS_FRIEND_ADD_FAILURE_EXISTING = "sns.friend.add.failure.existing";
 	public static String SNS_FRIEND_ADD_FAILURE_ERROR = "sns.friend.add.failure.error";
