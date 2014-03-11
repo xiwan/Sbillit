@@ -45,10 +45,19 @@ public class ModuleUser extends Filter {
 		// store the phone number and assign it with an expiring smsToken
 		JsonNode postDataJson = super.parseParamJson("postData");
 		String phone = postDataJson.get("phone").asText();
+		Integer deviceType = postDataJson.get("deviceType").asInt();
 		String nickname = phone;
+		String deviceToken = "";
+		String smsToken = "0000";
+		if (deviceType == Constant.DEVICE_IOS) {
+			deviceToken = postDataJson.get("deviceToken").asText();
+			smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname, deviceType, deviceToken);
+		}else if (deviceType == Constant.DEVICE_ANDROID) {
+			
+		}
 		
-		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname);
 		JsonNode js = null;
+		System.out.println(AppProp.getPropertyi18n("sms.disabled"));
 		if (AppProp.getPropertyi18n("sms.disabled") == "1") {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
 		}else {

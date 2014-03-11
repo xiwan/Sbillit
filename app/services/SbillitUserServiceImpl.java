@@ -37,7 +37,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	}
 
 	@Override
-	public String createNewUserAndAssignSmsToken(String phone, String nickname) {
+	public String createNewUserAndAssignSmsToken(String phone, String nickname, Integer deviceType, String deviceToken) {
 		// TODO Auto-generated method stub
 		List<SbillitUser> userList = UserDao.findeUserByPhone(phone);
 		String smsToken = "0";
@@ -50,6 +50,8 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 			user.setSmsToken(smsToken);
 			user.setSmsExpiredAt(smsExpiredAt);
 			user.setNickname(nickname);
+			user.setDeviceType(deviceType);
+			user.setDeviceToken(deviceToken);
 			this.UserDao.insertUser(user);
 		}else {
 			if (userList.size() == 1){
@@ -63,6 +65,8 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 					smsToken = RamNumUtil.Instance().getRandom();
 					user.setSmsToken(smsToken);
 					user.setSmsExpiredAt(smsExpiredAt);
+					user.setDeviceType(deviceType);
+					user.setDeviceToken(deviceToken);
 					this.UserDao.saveUser(user);
 				}
 			}else{

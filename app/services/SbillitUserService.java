@@ -13,7 +13,7 @@ public interface SbillitUserService {
 	
 	public Long findUserByPhone(String phone);
 	
-	public String createNewUserAndAssignSmsToken (String phone, String nickname);
+	public String createNewUserAndAssignSmsToken (String phone, String nickname, Integer deviceType, String deviceToken);
 	
 	public Map completeNewUserRegister(String phone, String smsToken);
 	

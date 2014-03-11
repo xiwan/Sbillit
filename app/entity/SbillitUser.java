@@ -12,6 +12,8 @@ public class SbillitUser implements Serializable {
 	private String phone;
 	private long banned;
 	private long point;
+	private int deviceType;
+	private String deviceToken;
 	private String smsToken;
 	private long smsFlag;
 	private long smsExpiredAt;
@@ -25,6 +27,18 @@ public class SbillitUser implements Serializable {
 	// pending
 	private String session;
 	
+	public int getDeviceType() {
+		return deviceType;
+	}
+	public void setDeviceType(int deviceType) {
+		this.deviceType = deviceType;
+	}
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
 	public long getId() {
 		return id;
 	}

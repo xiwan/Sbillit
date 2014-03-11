@@ -2,6 +2,10 @@ package utils;
 
 public class Constant {
 	
+	public static int DEVICE_IOS = 0;
+	public static int DEVICE_ANDROID = 1;
+	public static int DEVICE_WINPHONE = 2;
+	
 	public static long ERROR_INTERNAL = 500l;
 	public static long ERROR_BAD_REQUEST = 400l;
 	public static long ERROR_NOT_ALLOWED = 300l;

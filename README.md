@@ -4,6 +4,10 @@ Sbillit --  great tool to split bill
 This is [play!](http://www.playframework.com/) based project. 
 
 ### API specification (ver 1):
+
+###### user register
+	POST    /user/register
+	_REQUEST_		postData={phone, deviceType, [deviceToken]}
 		
 ###### user login, create session and identify login source, finally return session id and user info
 	POST 	/user/login	

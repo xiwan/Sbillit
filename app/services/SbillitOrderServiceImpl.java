@@ -80,6 +80,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (orderShareArry != null && orderShareArry.isArray()){
 			for (JsonNode os: orderShareArry) {
 				Long userId = os.get("userID").asLong();
+				// throuth the userId, retrieve the device token and use apsn
 				String phone = os.get("phoneNumber").asText();
 				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_AGREE);
 			}			
