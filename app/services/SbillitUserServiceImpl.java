@@ -1,15 +1,20 @@
 package services;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import common.AppProp;
+import common.CloopenSms;
+import common.Constant;
+
 import play.Logger;
 
-import utils.Constant;
 import utils.DateUtil;
+import utils.JsonUtil;
 import utils.Md5Util;
 import utils.RamNumUtil;
 
@@ -40,7 +45,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	public String createNewUserAndAssignSmsToken(String phone, String nickname, Integer deviceType, String deviceToken) {
 		// TODO Auto-generated method stub
 		List<SbillitUser> userList = UserDao.findeUserByPhone(phone);
-		String smsToken = "0";
+		String smsToken = "0000";
 		//List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
 		if (userList == null || userList.size() == 0) {
 			long smsExpiredAt = DateUtil.getExpiredTimeFromNow("sms.endure");
@@ -70,7 +75,20 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 					this.UserDao.saveUser(user);
 				}
 			}else{
-				return Constant.USER_PHONE_DUPLICATE;
+				smsToken = Constant.USER_PHONE_DUPLICATE;
+			}
+		}
+		
+		if (AppProp.getPropertyValue("sms.disabled").equals("0")) {
+			try {
+				String returnStr = CloopenSms.sendSmsToUser(phone, smsToken);
+				if (returnStr == null) {
+					smsToken = Constant.USER_SMSTOKEN_PROVIDER_ERROR;
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				smsToken = Constant.USER_SMSTOKEN_INERNAL_ERROR;
 			}
 		}
 		return smsToken;

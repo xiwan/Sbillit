@@ -8,7 +8,8 @@ import mapper.SbillitOrderMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import utils.Constant;
+import common.Constant;
+
 
 import entity.SbillitOrder;
 import entity.SbillitOrderComment;

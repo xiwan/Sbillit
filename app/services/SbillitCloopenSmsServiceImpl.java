@@ -21,19 +21,16 @@ import javax.net.ssl.X509TrustManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ning.http.util.Base64;
+import common.AppProp;
 
 import dao.SbillitUserDao;
 import entity.SbillitUser;
 
-import utils.AppProp;
 import utils.DateUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
 
 public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
-	
-	@Autowired
-	private SbillitUserDao UserDao;
 	
 	private static String httpsURL = AppProp.getPropertyValue("cloopen.rest.url");
 	private static String softVersion = AppProp.getPropertyValue("cloopen.soft.version");

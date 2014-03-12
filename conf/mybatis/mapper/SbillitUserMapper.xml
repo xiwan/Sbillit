@@ -44,6 +44,12 @@
       		<if test="smsExpiredAt != null">
       			sms_expired_at = #{smsExpiredAt}, 
       		</if>
+      		<if test="deviceType != null">
+      			device_type = #{deviceType}, 
+      		</if>
+      		<if test="deviceToken != null">
+      			device_token = #{deviceToken}, 
+      		</if>
       		updated_at = UNIX_TIMESTAMP()
       	</set>
     	WHERE id = #{id}

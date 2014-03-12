@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import common.AppProp;
+import common.Constant;
+
 import entity.SbillitAds;
 import entity.SbillitCombo;
 import entity.SbillitOrder;
@@ -24,8 +27,6 @@ import play.mvc.Result;
 import play.mvc.With;
 import services.SbillitAdsService;
 import services.SbillitOrderService;
-import utils.AppProp;
-import utils.Constant;
 import utils.DateUtil;
 import utils.FileUtil;
 import utils.JsonUtil;

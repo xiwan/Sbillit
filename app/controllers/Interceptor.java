@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import common.AppProp;
+import common.Constant;
+
 import play.Logger;
 import play.libs.F;
 import play.libs.Json;
@@ -17,8 +20,6 @@ import play.mvc.SimpleResult;
 import play.mvc.Http.Context;
 import play.mvc.Http.RequestBody;
 import services.SbillitSessionService;
-import utils.AppProp;
-import utils.Constant;
 import utils.JsonUtil;
 
 

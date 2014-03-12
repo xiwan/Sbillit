@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import common.AppProp;
+import common.CloopenSms;
+import common.Constant;
+
 import entity.SbillitUser;
 import play.Logger;
 import play.libs.Json;
@@ -19,8 +23,6 @@ import play.mvc.With;
 import services.SbillitCloopenSmsService;
 import services.SbillitSessionService;
 import services.SbillitUserService;
-import utils.AppProp;
-import utils.Constant;
 import utils.JsonUtil;
 
 public class ModuleUser extends Filter {
@@ -29,9 +31,6 @@ public class ModuleUser extends Filter {
 	
 	@Autowired
 	private SbillitSessionService sbillitSessionService;
-	
-	@Autowired
-	private SbillitCloopenSmsService sbillitCloopenSmsService;
 	
 	@With(Interceptor.class)
 	public Result info() {
@@ -48,36 +47,23 @@ public class ModuleUser extends Filter {
 		Integer deviceType = postDataJson.get("deviceType").asInt();
 		String nickname = phone;
 		String deviceToken = "";
-		String smsToken = "0000";
 		if (deviceType == Constant.DEVICE_IOS) {
 			deviceToken = postDataJson.get("deviceToken").asText();
-			smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname, deviceType, deviceToken);
 		}else if (deviceType == Constant.DEVICE_ANDROID) {
 			
 		}
-		
+		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname, deviceType, deviceToken);
 		JsonNode js = null;
-		System.out.println(AppProp.getPropertyi18n("sms.disabled"));
-		if (AppProp.getPropertyi18n("sms.disabled") == "1") {
-			js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
+		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)) {
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(smsToken));
+		}else if (smsToken.equals(Constant.USER_SMSTOKEN_INERNAL_ERROR)){
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
+		}else if (smsToken.equals(Constant.USER_SMSTOKEN_PROVIDER_ERROR)){
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
 		}else {
-			try {
-				String returnStr = sbillitCloopenSmsService.sendSmsToUser(phone, smsToken);
-				if (returnStr != null) {
-					if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)){
-						js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "duplicate phone number!");
-					}else {
-						js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
-					}
-				}else {
-					js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				js = JsonUtil.toJson(Constant.ERROR_INTERNAL, "boooo!");
-			}
+			js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
 		}
+		
 		return ok(js);
 	}
 	

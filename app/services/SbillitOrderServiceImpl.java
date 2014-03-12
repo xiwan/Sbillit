@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import utils.AppProp;
-import utils.Constant;
+import common.AppProp;
+import common.Constant;
+
 import utils.DateUtil;
 
 import dao.SbillitComboDao;

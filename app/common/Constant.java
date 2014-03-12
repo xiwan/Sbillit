@@ -1,4 +1,4 @@
-package utils;
+package common;
 
 public class Constant {
 	
@@ -58,6 +58,8 @@ public class Constant {
 	public static String USER_PHONE_DUPLICATE = "user.phone.duplicate";
 	public static String USER_SMSTOKEN_NOT_MATCH = "user.smstoken.not.match";
 	public static String USER_SMSTOKEN_EXPIRED = "user.smstoken.expired";
+	public static String USER_SMSTOKEN_INERNAL_ERROR = "user.smstoken.internal.error";
+	public static String USER_SMSTOKEN_PROVIDER_ERROR = "user.smstoken.provider.error";
 	public static String USER_NORMAL = "user.normal";
 	
 	public static String SESSION_EXPIRED = "session.expired";

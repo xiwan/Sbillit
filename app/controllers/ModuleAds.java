@@ -7,11 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import play.mvc.Result;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import common.Constant;
 
 import entity.SbillitAds;
 
 import services.SbillitAdsService;
-import utils.Constant;
 import utils.JsonUtil;
 
 public class ModuleAds extends Filter {

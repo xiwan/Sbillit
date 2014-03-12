@@ -6,7 +6,8 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import utils.Constant;
+import common.Constant;
+
 import utils.DateUtil;
 import utils.Md5Util;
 

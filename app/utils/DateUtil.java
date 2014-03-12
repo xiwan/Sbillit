@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import common.AppProp;
+
 public class DateUtil {
 	public static final String DATE_PATTERN = "yyyy-MM-dd";
 	public static final String DATE_PATTERN2="yyyy.MM.dd HH:mm";
