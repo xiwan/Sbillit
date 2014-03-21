@@ -32,4 +32,6 @@ public interface SbillitOrderService {
 	
 	public long postComment(Long orderId, Long userId, Long atUserId, String message, Long status);
 	
+	public void modifyOrderItem(Long OrderId, Long ownerId, JsonNode orderItemArray);
+	
 }

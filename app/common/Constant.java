@@ -30,6 +30,7 @@ public class Constant {
 	public static int ORDER_EXPIRED = 4;
 	public static int ORDER_FAILDED = 5;
 	public static int ORDER_SUCCESS = 6;
+	public static int ORDER_CLOSE = 7;
 	
 	public static int ORDER_SHARE_NA = 0;
 	public static int ORDER_SHARE_AGREE = 1;

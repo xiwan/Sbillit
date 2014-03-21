@@ -34,6 +34,9 @@ POST	/1/order/:orderid/uploadSync 				@controllers.ModuleOrder.uploadSync(orderi
 POST    /1/order/:orderid/thumbup       @controllers.ModuleOrder.thumbup(orderid: Long)      
 # favorite
 GET     /1/order/favorite               @controllers.ModuleOrder.favorite()
+# modify order
+POST    /1/order/:orderid/modify        @controllers.ModuleOrder.modify(orderid: Long)  
+
 
 ## Combo module
 # get combo

@@ -56,10 +56,11 @@ public class SbillitOrderDao {
 		this.sbillitOrderMapper.updateOrderShare(paraMap);	
 	}
 
-	public void updateOrder(Long orderId, Integer status, String picture1, String picture2, String picture3) {
+	public void updateOrder(Long orderId, Integer status, Double amount,  String picture1, String picture2, String picture3) {
 		Map paraMap = new HashMap<String, Object>();
 		paraMap.put("orderId", orderId);
 		paraMap.put("status", status);
+		paraMap.put("amount", amount);
 		paraMap.put("picture1", picture1);
 		paraMap.put("picture2", picture2);
 		paraMap.put("picture3", picture3);
@@ -124,6 +125,14 @@ public class SbillitOrderDao {
 		paraMap.put("orderId", orderId);
 		return this.sbillitOrderMapper.findOrderItemByUserIdAndOrderId(paraMap);
 	}
+	
+	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderIdAndItem (Long userId, Long orderId, String itemName) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("orderId", orderId);
+		paraMap.put("itemName", itemName);
+		return this.sbillitOrderMapper.findOrderItemByUserIdAndOrderIdAndItem(paraMap);
+	}
 
 	public List<SbillitOrderThumbup> findOrderThumbupByUserIdAndOrderId (Long userId, Long orderId) {
 		Map paraMap = new HashMap<String, Object>();
@@ -137,6 +146,16 @@ public class SbillitOrderDao {
 		paraMap.put("userId", userId);
 		paraMap.put("orderId", orderId);
 		return this.sbillitOrderMapper.findOrderCommentByUserIdAndOrderId(paraMap);
+	}
+	
+	public void updateOrderItem(Long orderId, Long userId, String itemName,  Double itemPrice, Long itemNum){
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("orderId", orderId);
+		paraMap.put("userId", userId);
+		paraMap.put("itemPrice", itemPrice);
+		paraMap.put("itemName", itemName);
+		paraMap.put("itemNum", itemNum);
+		this.sbillitOrderMapper.updateOrderItem(paraMap);
 	}
 	
 

@@ -120,6 +120,9 @@
         <if test="status != null">
     		status = #{status}, 
     	</if>
+    	<if test="amount != null">
+    		amount = #{amount}, 
+    	</if>
     	<if test="picture1 != null">
     		picture_1 = #{picture1}, 
     	</if>
@@ -142,20 +145,34 @@
     	</if>
     	updated_at = UNIX_TIMESTAMP()
     	</set>
-    	WHERE 
-    		order_id = #{orderId} AND phone = #{phone}	
+    	WHERE order_id = #{orderId} AND phone = #{phone}	
     </update>
     
     <select id="findOrderItemByOrderId" parameterType="int" resultMap="orderItem">
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
-        WHERE o.order_id = #{orderId} ORDER BY o.updated_at DESC
+        WHERE o.order_id = #{orderId} AND o.item_num > 0 
+        ORDER BY o.updated_at DESC
     </select>
 
     <insert id="insertOrderItem" parameterType="SbillitOrderItem"> 
     	INSERT INTO sbillit_order_item (order_id, user_id, item_num, item_price, item_name, created_at, updated_at)
     	VALUES (#{orderId}, #{userId}, #{itemNum}, #{itemPrice}, #{itemName}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
     </insert>
+    
+    <update id="updateOrderItem" parameterType="java.util.HashMap">
+    	UPDATE sbillit_order_item 
+    	<set>
+    		<if test="itemPrice != null">
+    			item_price = #{itemPrice},
+    		</if>
+    		<if test="itemNum != null">
+    			item_num = #{itemNum},
+    		</if>
+    		updated_at = UNIX_TIMESTAMP()
+    	</set>
+    	WHERE order_id = #{orderId} AND user_id = #{userId} AND item_name = #{itemName}
+    </update>
     
     <select id="findOrderThumbupByUserId" parameterType="int" resultMap="orderThumbup">
     	SELECT o.*, u.nickname AS user_name 
@@ -183,7 +200,10 @@
     <select id="findOrderShareByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderShare">
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_share AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
-    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} 
+    	WHERE o.user_id = #{userId} 
+    	<if test="orderId != null">
+    		AND o.order_id = #{orderId}
+    	</if> 
     	ORDER BY o.updated_at DESC
     </select>
     
@@ -191,6 +211,13 @@
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
     	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.updated_at DESC
+    </select>
+    
+    <select id="findOrderItemByUserIdAndOrderIdAndItem" parameterType="java.util.HashMap" resultMap="orderItem">
+    	SELECT * 
+        FROM sbillit_order_item
+    	WHERE user_id = #{userId} AND order_id = #{orderId} AND item_name= #{itemName} 
+    	ORDER BY updated_at DESC
     </select>
     
      <select id="findOrderThumbupByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderThumbup">

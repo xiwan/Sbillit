@@ -1,4 +1,4 @@
-package services;
+package services.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import common.AppProp;
 import common.Constant;
 
+import services.SbillitOrderService;
 import utils.DateUtil;
 
 import dao.SbillitComboDao;
@@ -57,6 +58,13 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (userSession.getSession().equals(session)){
 			orderList = sbillitOrderDao.findOrderHistoryByUserId(userId);
 		}
+		// here we have to append shared orders
+		List<SbillitOrderShare> tempOrderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(userId, null);
+		//List<SbillitOrder> tempOrderList = new ArrayList<SbillitOrder>();
+		for (SbillitOrderShare os: tempOrderShareList) {
+			orderList.add(sbillitOrderDao.findOrderbyId(os.getOrderId()));
+		}
+		
 		return orderList;
 	}
 	
@@ -157,11 +165,11 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		}else {
 			returnMap.put(Constant.ERROR_FREE, Constant.ORDER_IMAGE_UPLOAD_SUCCESS);
 			if (order.getPicture1() == null){
-				sbillitOrderDao.updateOrder(orderId, null, filePath, null, null);
+				sbillitOrderDao.updateOrder(orderId, null, null, filePath, null, null);
 			}else if (order.getPicture2() == null){
-				sbillitOrderDao.updateOrder(orderId, null, null, filePath, null);
+				sbillitOrderDao.updateOrder(orderId, null, null, null,filePath, null);
 			}else if (order.getPicture3() == null){
-				sbillitOrderDao.updateOrder(orderId, null, null, null, filePath);
+				sbillitOrderDao.updateOrder(orderId, null, null, null, null, filePath);
 			}else {
 				returnMap.put(Constant.ERROR_INTERNAL, Constant.ORDER_IMAGE_UPLOAD_FAILED_MAX);
 			}
@@ -200,6 +208,9 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	@Override
 	public Map<String, Object> orderDetail(Long userId, Long orderId) {
 		// TODO Auto-generated method stub
+		
+		// here to add an exception for shared order
+		
 		SbillitOrder order = sbillitOrderDao.findOrderbyId(orderId);
 		List<SbillitOrderComment> orderCommentList = sbillitOrderDao.findOrderCommentByUserIdAndOrderId(userId, orderId);
 		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(userId, orderId);
@@ -222,6 +233,42 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		
 		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
 		return commentId;
+	}
+
+	@Override
+	public void modifyOrderItem(Long orderId, Long ownerId, JsonNode orderItemArray) {
+		// TODO Auto-generated method stub
+		SbillitOrder order = sbillitOrderDao.findOrderbyId(orderId);
+		if (order==null || order.getUserId() != ownerId || order.getStatus() == Constant.ORDER_CLOSE) {
+			return;
+		}
+		
+		Double amountChange = 0d;
+		String phone = "";
+		if (orderItemArray != null && orderItemArray.isArray()){
+			for (JsonNode oi: orderItemArray) {
+				String itemName = oi.get("itemName").asText();
+				JsonNode buyerArray = oi.get("buyerArray");
+				Double itemPrice = oi.get("itemPrice").asDouble();
+				Long itemNum = oi.get("itemTotalAmount").asLong();
+				if (buyerArray != null && buyerArray.isArray()) {
+					for (JsonNode buyer: buyerArray) {
+						Long userId = buyer.get("buyer").get("userID").asLong();
+						phone = buyer.get("buyer").get("phoneNumber").asText();
+						List<SbillitOrderItem> itemList = sbillitOrderDao.findOrderItemByUserIdAndOrderIdAndItem(userId, orderId, itemName);
+						if (itemList.size() == 0) {
+							sbillitOrderDao.createOrderItem(orderId, userId, itemNum, itemPrice, itemName);
+						}else {
+							sbillitOrderDao.updateOrderItem(orderId, userId, itemName, itemPrice, itemNum);
+						}
+						amountChange += itemPrice*itemNum;
+					}
+				}
+			}
+			sbillitOrderDao.updateOrderShare(orderId, phone, Constant.ORDER_SHARE_AGREE);
+		}
+		
+		sbillitOrderDao.updateOrder(orderId, null, (order.getAmount() + amountChange), null, null, null);
 	}
 
 }

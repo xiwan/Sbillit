@@ -1,4 +1,4 @@
-package services;
+package services.impl;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import common.Constant;
 
 import play.Logger;
 
+import services.SbillitUserService;
 import utils.DateUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
@@ -83,7 +84,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 			try {
 				String returnStr = CloopenSms.sendSmsToUser(phone, smsToken);
 				if (returnStr == null) {
-					smsToken = Constant.USER_SMSTOKEN_PROVIDER_ERROR;
+					//smsToken = Constant.USER_SMSTOKEN_PROVIDER_ERROR;
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

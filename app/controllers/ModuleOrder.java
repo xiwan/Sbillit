@@ -129,6 +129,16 @@ public class ModuleOrder extends Filter {
 		return ok(js);
 	}
 	
+	@With(Interceptor.class)
+	public Result modify(Long orderId){
+		long ownerId = super.getUserBySessionId();
+		JsonNode postDataJson = super.parseParamJson("postData");
+		JsonNode orderItemArray = postDataJson.get("orderItemArray");
+		sbillitOrderService.modifyOrderItem(orderId, ownerId, orderItemArray);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "yaaaa");
+		return ok(js);
+	}
+	
 	public Result uploadSync(long orderId) {
 		MultipartFormData body = request().body().asMultipartFormData();
 		FilePart picture = body.getFile("QuickOrder_Image");

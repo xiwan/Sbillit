@@ -28,6 +28,7 @@ public interface SbillitOrderMapper {
 	public void updateOrder(Map paraMap);
 	
 	public void insertOrderItem(SbillitOrderItem orderItem);
+	public void updateOrderItem(Map paraMap);
 	
 	public void insertOrderThumbup(SbillitOrderThumbup orderThumbup);
 	
@@ -42,7 +43,10 @@ public interface SbillitOrderMapper {
 	
 	public List<SbillitOrderShare> findOrderShareByUserIdAndOrderId (Map paraMap);
 	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderId (Map paraMap);
+	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderIdAndItem(Map paraMap);
 	public List<SbillitOrderThumbup> findOrderThumbupByUserIdAndOrderId (Map paraMap);
 	public List<SbillitOrderComment> findOrderCommentByUserIdAndOrderId (Map paraMap);
+	
+	
 	
 }

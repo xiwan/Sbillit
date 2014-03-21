@@ -14,8 +14,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import services.SbillitCloopenSmsServiceImpl.SMSQuery;
-import services.SbillitCloopenSmsServiceImpl.SubQuery;
+import services.impl.SbillitCloopenSmsServiceImpl.SMSQuery;
+import services.impl.SbillitCloopenSmsServiceImpl.SubQuery;
 import utils.DateUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
