@@ -134,8 +134,14 @@ public class ModuleOrder extends Filter {
 		long ownerId = super.getUserBySessionId();
 		JsonNode postDataJson = super.parseParamJson("postData");
 		JsonNode orderItemArray = postDataJson.get("orderItemArray");
-		sbillitOrderService.modifyOrderItem(orderId, ownerId, orderItemArray);
-		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "yaaaa");
+		Double totalAmount = postDataJson.get("totalNumber").asDouble();
+		long retId = sbillitOrderService.modifyOrderItem(orderId, ownerId, totalAmount, orderItemArray);
+		JsonNode js = null;
+		if (retId == 0) {
+			js = JsonUtil.toJson(Constant.ERROR_NOT_ALLOWED, "not allowed");
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, "yaaaa");
+		}
 		return ok(js);
 	}
 	
@@ -194,8 +200,13 @@ public class ModuleOrder extends Filter {
 		RequestBody body = request().body();
 		JsonNode postDataJson = super.parseParamJson("postData");
 		String title = postDataJson.get("title").asText();
-		sbillitOrderService.thumbup(orderId, ownerId, title);
-		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, "yay!!!");
+		long retId = sbillitOrderService.thumbup(orderId, ownerId, title);
+		JsonNode js = null;
+		if (retId == 0) {
+			js = JsonUtil.toJson(Constant.ERROR_NOT_ALLOWED, "not allowed");
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, "yaaaa");
+		}
 		return ok(js);
 	}
 	
@@ -208,6 +219,19 @@ public class ModuleOrder extends Filter {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, "booooo");
 		}else {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, returnMap);
+		}
+		return ok(js);
+	}
+	
+	@With(Interceptor.class)
+	public Result close(Long orderId){
+		long ownerId = super.getUserBySessionId();
+		long retId = sbillitOrderService.closeOrder(orderId, ownerId);
+		JsonNode js = null;
+		if (retId == 0) {
+			js = JsonUtil.toJson(Constant.ERROR_NOT_ALLOWED, "not allowed");
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE, "yaaaa");
 		}
 		return ok(js);
 	}

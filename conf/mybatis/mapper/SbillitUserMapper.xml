@@ -8,6 +8,8 @@
       <result property="phone" column="phone"/>
       <result property="banned" column="banned"/>
       <result property="point" column="point"/>
+      <result property="deviceType" column="device_type"/>
+      <result property="deviceToken" column="device_token"/>
       <result property="smsToken" column="sms_token"/>
       <result property="smsFlag" column="sms_flag"/>
       <result property="smsExpiredAt" column="sms_expired_at"/>

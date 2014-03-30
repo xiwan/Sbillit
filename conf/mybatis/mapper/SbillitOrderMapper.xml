@@ -63,17 +63,39 @@
     </resultMap>
 
     <select id="findAllOrders" resultMap="order">
-        <!-- SELECT * FROM sbillit_order WHERE 1=1 -->
         SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
         WHERE 1=1
     </select>
     
     <select id="findOrderbyId" parameterType="int" resultMap="order">
-        <!-- SELECT * FROM sbillit_order WHERE id=#{value} -->
         SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
         WHERE o.id=#{value}
+    </select>
+    
+    <select id="findValidOrderbyId" parameterType="int" resultMap="order">
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.id=#{value} AND o.status IN (0, 1, 2, 3, 6)
+    </select>
+    
+    <select id="findExpiredOrderbyId" parameterType="int" resultMap="order">
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.id=#{value} AND o.status = 4
+    </select>
+    
+    <select id="findFailedOrderbyId" parameterType="int" resultMap="order">
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.id=#{value} AND o.status = 5
+    </select>
+    
+    <select id="findClosedOrderbyId" parameterType="int" resultMap="order">
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.id=#{value} AND o.status = 7
     </select>
     
     <select id="findOrderInIds" parameterType="java.util.HashMap" resultMap="order">
@@ -127,14 +149,17 @@
     		picture_1 = #{picture1}, 
     	</if>
     	<if test="picture2 != null">
-    		picture_2 = #{picture1}, 
+    		picture_2 = #{picture2}, 
     	</if>
     	<if test="picture3 != null">
-    		picture_3 = #{picture1}, 
+    		picture_3 = #{picture3}, 
     	</if>
     	updated_at = UNIX_TIMESTAMP()
     </set>
     WHERE id = #{orderId} 
+   	<if test="userId != null">
+   		AND user_id = #{userId} 
+   	</if>
     </update>
     
     <update id="updateOrderShare" parameterType="java.util.HashMap">
@@ -200,7 +225,10 @@
     <select id="findOrderShareByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderShare">
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_share AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
-    	WHERE o.user_id = #{userId} 
+    	WHERE 1=1 
+    	<if test="userId != null">
+   			AND o.user_id = #{userId} 
+   		</if>
     	<if test="orderId != null">
     		AND o.order_id = #{orderId}
     	</if> 
@@ -210,7 +238,21 @@
     <select id="findOrderItemByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderItem">
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
-    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.updated_at DESC
+    	WHERE o.order_id = #{orderId} 
+    	<if test="userId != null">
+   		AND o.user_id = #{userId} 
+   		</if>
+    	ORDER BY o.updated_at DESC
+    </select>
+    
+    <select id="findOrderItemByOrderIds" parameterType="java.util.HashMap" resultMap="orderItem">
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
+    	WHERE o.item_num > 0 AND o.user_id = #{userId} AND o.order_id IN
+      	<foreach item="item" index="index" collection="orderIds" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    	ORDER BY o.updated_at DESC
     </select>
     
     <select id="findOrderItemByUserIdAndOrderIdAndItem" parameterType="java.util.HashMap" resultMap="orderItem">
@@ -223,13 +265,21 @@
      <select id="findOrderThumbupByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderThumbup">
      	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_thumbup AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
-    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.updated_at DESC
+    	WHERE o.order_id = #{orderId} 
+    	<if test="userId != null">
+   		AND o.user_id = #{userId} 
+   		</if>
+   		ORDER BY o.updated_at DESC
     </select>
     
     <select id="findOrderCommentByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderComment">
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_comment AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
-    	WHERE o.user_id = #{userId} AND o.order_id = #{orderId} ORDER BY o.created_at DESC
+    	WHERE o.order_id = #{orderId} 
+    	<if test="userId != null">
+   		AND o.user_id = #{userId} 
+   		</if>
+    	ORDER BY o.created_at DESC
     </select>
 	
 </mapper>

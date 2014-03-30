@@ -3,6 +3,7 @@ package dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import mapper.SbillitOrderMapper;
 
@@ -26,8 +27,18 @@ public class SbillitOrderDao {
 		return sbillitOrderMapper.findAllOrders();
 	}
 
-	public SbillitOrder findOrderbyId(long id) {
-		return sbillitOrderMapper.findOrderbyId(id);
+	public SbillitOrder findOrderbyId(long id, int type) {
+		if (type == 1) {
+			return sbillitOrderMapper.findValidOrderbyId(id);
+		}else if (type == 2) {
+			return sbillitOrderMapper.findExpiredOrderbyId(id);
+		}else if (type == 3) {
+			return sbillitOrderMapper.findFailedOrderbyId(id);
+		}else if (type == 4) {
+			return sbillitOrderMapper.findClosedOrderbyId(id);
+		}else {
+			return sbillitOrderMapper.findOrderbyId(id);
+		}
 	}
 
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId) {
@@ -56,9 +67,10 @@ public class SbillitOrderDao {
 		this.sbillitOrderMapper.updateOrderShare(paraMap);	
 	}
 
-	public void updateOrder(Long orderId, Integer status, Double amount,  String picture1, String picture2, String picture3) {
+	public void updateOrder(Long orderId, Long userId, Integer status, Double amount, String picture1, String picture2, String picture3) {
 		Map paraMap = new HashMap<String, Object>();
 		paraMap.put("orderId", orderId);
+		paraMap.put("userId", userId);
 		paraMap.put("status", status);
 		paraMap.put("amount", amount);
 		paraMap.put("picture1", picture1);
@@ -99,6 +111,12 @@ public class SbillitOrderDao {
 		return this.sbillitOrderMapper.findOrderItemByOrderId(orderId);
 	}
 	
+	public List<SbillitOrderItem> findOrderItemByOrderIds(Long ownerId, Set<Long> orderIds) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", ownerId);
+		paraMap.put("orderIds", orderIds);
+		return this.sbillitOrderMapper.findOrderItemByOrderIds(paraMap);
+	}
 	
 	public long createOrderComment(Long orderId, Long userId, Long atUserId, String message, Long status) {
 		SbillitOrderComment orderComment = new SbillitOrderComment();

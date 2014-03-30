@@ -14,6 +14,10 @@ public interface SbillitOrderMapper {
 	public List<SbillitOrder> findAllOrders();
 	
 	public SbillitOrder findOrderbyId(long id);
+	public SbillitOrder findValidOrderbyId(long id);
+	public SbillitOrder findExpiredOrderbyId(long id);
+	public SbillitOrder findFailedOrderbyId(long id);
+	public SbillitOrder findClosedOrderbyId(long id);
 	
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId);
 	
@@ -37,6 +41,7 @@ public interface SbillitOrderMapper {
 	public List<SbillitOrderThumbup> findOrderThumbupByUserId(Long userId);
 	
 	public List<SbillitOrderItem> findOrderItemByOrderId(Long orderId);
+	public List<SbillitOrderItem> findOrderItemByOrderIds(Map paraMap);
 	
 	public void insertOrderComment(SbillitOrderComment orderComment);
 	public void updateCommentSeq();

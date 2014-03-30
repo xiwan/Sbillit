@@ -35,7 +35,9 @@ POST    /1/order/:orderid/thumbup       @controllers.ModuleOrder.thumbup(orderid
 # favorite
 GET     /1/order/favorite               @controllers.ModuleOrder.favorite()
 # modify order
-POST    /1/order/:orderid/modify        @controllers.ModuleOrder.modify(orderid: Long)  
+POST    /1/order/:orderid/modify        @controllers.ModuleOrder.modify(orderid: Long) 
+# close order
+POST    /1/order/:orderid/close         @controllers.ModuleOrder.close(orderid: Long) 
 
 
 ## Combo module

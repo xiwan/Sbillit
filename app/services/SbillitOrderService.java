@@ -24,7 +24,7 @@ public interface SbillitOrderService {
 	
 	public Map<Long, String> uploadFile(long orderId, String filePath);
 	
-	public void thumbup(Long orderId, Long userId, String title);
+	public long thumbup(Long orderId, Long userId, String title);
 	
 	public Map<String, Object> favoriteList(Long userId);
 	
@@ -32,6 +32,8 @@ public interface SbillitOrderService {
 	
 	public long postComment(Long orderId, Long userId, Long atUserId, String message, Long status);
 	
-	public void modifyOrderItem(Long OrderId, Long ownerId, JsonNode orderItemArray);
+	public long modifyOrderItem(Long OrderId, Long ownerId, Double totalAmount, JsonNode orderItemArray);
+	
+	public long closeOrder(Long orderId, Long ownerId);
 	
 }

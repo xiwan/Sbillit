@@ -48,6 +48,13 @@ This is [play!](http://www.playframework.com/) based project.
 	_REQUEST_		postData={orderId, image}
 	_RESPONSE_		{status}
 	
+#### order modify
+	POST 			/order/:orderid/modify
+	_REQUEST_       postData={orderItemArray, totalNumber}
+
+#### order close
+	POST 			/order/:orderid/close
+	
 ##### ads pull
 	GET				/ads/pull
 	_RESPONSE_		{imageUrl, comboId}
