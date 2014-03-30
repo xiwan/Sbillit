@@ -10,8 +10,8 @@
   	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations"><list>
-			<value>classpath:properties/localhost.properties</value> 
-			<!-- <value>classpath:properties/production.properties</value> -->
+			<!-- <value>classpath:properties/localhost.properties</value>  -->
+			<value>classpath:properties/production.properties</value>
 		</list></property>
 	</bean>
             
