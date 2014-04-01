@@ -12,7 +12,7 @@
  	
  	<bean id="moduleUser" class="controllers.ModuleUser"/>   
  	<bean id="moduleOrder" class="controllers.ModuleOrder"/>   
- 	<bean id="moduleAds" class="controllers.ModuleAds"/>
+ 	<bean id="moduleAdsAndFeeds" class="controllers.ModuleAdsAndFeeds"/>
  	<bean id="moduleCombo" class="controllers.ModuleCombo"/>
  	<bean id="moduleSns" class="controllers.ModuleSns"/>
  	

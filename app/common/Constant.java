@@ -23,6 +23,9 @@ public class Constant {
 	public static int ORDER_TYPE_NORMAL = 0;
 	public static int ORDER_TYPE_QUICK = 1;
 	
+	public static int FEED_ORDER_OWN = 0;
+	public static int FEED_ORDER_SHARE = 1;
+	
 	public static int ORDER_NA = 0;
 	public static int ORDER_CREATED = 1;
 	public static int ORDER_SHARED = 2;

@@ -5,7 +5,7 @@
 <mapper namespace="mapper.SbillitAdsMapper">
 	<resultMap id="ads" type="SbillitAds">
 	  <id property="id" column="id"/>
-      <result property="title" column="titel"/>
+      <result property="title" column="title"/>
       <result property="comboId" column="combo_id"/>
       <result property="imageUrl" column="image_url"/>
       <result property="areaId" column="area_id"/>

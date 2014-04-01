@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.SbillitFeedMapper">
+	<resultMap id="feed" type="SbillitFeed">
+	  <id property="id" column="id"/>
+      <result property="orderId" column="order_id"/>
+      <result property="title" column="title"/>
+      <result property="type" column="type"/>
+      <result property="createdAt" column="created_at"/>
+      <result property="inUserId" column="in_user_id"/>
+      <result property="expiredAt" column="expired_at" />
+	</resultMap>
+	
+	<select id="findAllFeeds" resultMap="feed">
+	  select * from sbillit_feed 
+	</select>
+	
+	<select id="findUserFeeds" parameterType="java.util.HashMap" resultMap="feed">
+	  <![CDATA[ 
+	  SELECT * FROM sbillit_feed
+	  WHERE in_user_id LIKE #{userId} AND UNIX_TIMESTAMP() < expired_at
+	  ]]>
+	</select>
+
+</mapper>

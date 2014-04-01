@@ -44,9 +44,11 @@ POST    /1/order/:orderid/close         @controllers.ModuleOrder.close(orderid: 
 # get combo
 GET    /1/combo/:comboId                @controllers.ModuleCombo.combo(comboId: Long)
 
-## Ads module
+## Ads And feeds module
 # pull valid ads
-GET    /1/ads/pull						@controllers.ModuleAds.pull()
+GET    /1/ads/pull						@controllers.ModuleAdsAndFeeds.pull()
+# feeds wall
+GET    /1/feeds/wall					@controllers.ModuleAdsAndFeeds.wall()
 
 ## Sns module
 # add friend

@@ -14,5 +14,6 @@
  	<bean id="sbillitComboDao" class="dao.SbillitComboDao"/>
  	<bean id="sbillitSellerDao" class="dao.SbillitSellerDao"/>
  	<bean id="sbillitFriendDao" class="dao.SbillitFriendDao"/>
+ 	<bean id="sbillitFeedDao" class="dao.SbillitFeedDao"/>
  		    
 </beans>
