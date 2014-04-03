@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import common.AppProp;
-import common.Apsn;
+import common.Apns;
 import common.Constant;
 
 import services.SbillitOrderService;
@@ -100,6 +100,9 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		order.setExpiredAt(expiredAt);
 		sbillitOrderDao.createOrder(order);
 		
+		SbillitUser owner = sbillitUserDao.findUserById(ownerId);
+		String nickName = owner.getNickname();
+		
 		long orderId = order.getId();
 		if (orderShareArry != null && orderShareArry.isArray()){
 			for (JsonNode os: orderShareArry) {
@@ -107,12 +110,11 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				String phone = os.get("phoneNumber").asText();
 				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_AGREE);
 				
-				// throuth the userId, retrieve the device token and use apsn
+				// through the userId, retrieve the device token and use apns
 				SbillitUser user = sbillitUserDao.findUserById(userId);
 				String token = user.getDeviceToken();
 				if (token != null) {
-					//Apsn.sendPush(token, "AAA Share order received");
-					Apsn.sendSandboxPush(token, "Share order received");
+					Apns.sendPush(nickName + " shared an order with you.", token);
 				}
 			}			
 		}
@@ -156,6 +158,9 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		
 		long orderId = order.getId();
 		
+		SbillitUser owner = sbillitUserDao.findUserById(ownerId);
+		String nickName = owner.getNickname();
+		
 		// create order share records		
  		// duplication check point make sure the fa and ca dont share same phonenumber
 		if (orderShareArray.isArray()){
@@ -164,27 +169,17 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				Long userId = os.get("userID").asLong();
 				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_NA);
 				
-				// throuth the userId, retrieve the device token and use apsn
+				// through the userId, retrieve the device token and use apns
 				SbillitUser user = sbillitUserDao.findUserById(userId);
 				String token = user.getDeviceToken();
 				if (token != null) {
-					Apsn.sendSandboxPush(token, "Normal Share order received");
+					Apns.sendPush(nickName + " shared an order with you.", token);
 				}
 			}			
 		}else {
 			
 		}
 
-//		if (contactsArray.isArray()){
-//			for (JsonNode ca: contactsArray) {
-//				String phone = ca.get("phoneNumber").asText();
-//				sbillitOrderDao.createOrderShare(orderId, phone, 0l, Constant.ORDER_SHARE_NA);			
-//			}			
-//		}else  {
-//			
-//		}
-
-		//sbillitOrderDao.findOrderbyId(order.getId());
 		return order;
 	}
 
@@ -254,17 +249,6 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(null, orderId);
 		List<SbillitOrderItem> orderItemList = sbillitOrderDao.findOrderItemByUserIdAndOrderId(null, orderId);
 		List<SbillitOrderThumbup> orderThumbupList = sbillitOrderDao.findOrderThumbupByUserIdAndOrderId(null, orderId);
-		// find shared order's item
-		
-//		Long ownerId = order.getUserId();
-//		Set<Long> sharedIds = new HashSet<Long> ();
-//		for (SbillitOrderShare os: orderShareList) {
-//			sharedIds.add(os.getOrderId());
-//		}
-//		if (sharedIds.size()>0){
-//			List<SbillitOrderItem> appendOrderItemList = sbillitOrderDao.findOrderItemByOrderIds(ownerId, sharedIds);
-//			orderItemList.addAll(appendOrderItemList);
-//		}
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("order", order);

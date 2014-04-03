@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import common.Apns;
 import common.AppProp;
-import common.Apsn;
 import common.Constant;
 import entity.SbillitAds;
 import entity.SbillitCombo;
@@ -36,7 +36,7 @@ public class ModuleOrder extends Filter {
 
 	public Result info(Long id) {
 		SbillitOrder order = sbillitOrderService.findOrderbyId(id);
-		Apsn.sendSandboxPush("f898e34d a58fa342 9220905a 92313da8 62a4e5ad bbbcd3dc 6849d62a 718b81d2", "Share order received");
+		//Apns.sendSandboxApns("威武", "f898e34d a58fa342 9220905a 92313da8 62a4e5ad bbbcd3dc 6849d62a 718b81d2");
 		return ok(Json.toJson(order));
 	}
 	
