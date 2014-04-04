@@ -33,6 +33,7 @@ import entity.SbillitOrderThumbup;
 import entity.SbillitUser;
 import entity.SbillitUserSession;
 
+@Transactional
 public class SbillitOrderServiceImpl implements SbillitOrderService {
 	@Autowired
 	private SbillitOrderDao sbillitOrderDao;
@@ -62,7 +63,6 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	}
 
 	@Override
-	@Transactional
 	public List<SbillitOrder> findOrderHistory(long userId, String session) {
 		// TODO Auto-generated method stub
 		SbillitUserSession userSession = sbillitUserSessionDao.getUserSessionByUserId(userId);
