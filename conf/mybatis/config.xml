@@ -5,7 +5,10 @@
 
 <configuration>
 	
-	<typeAliases>		
+	<typeAliases>	
+		<typeAlias alias="SbillitConfig" type="entity.SbillitConfig" />
+		<typeAlias alias="SbillitDice" type="entity.SbillitDice" />
+			
 		<typeAlias alias="SbillitUser" type="entity.SbillitUser" /> 	
 		<typeAlias alias="SbillitUserSession" type="entity.SbillitUserSession" /> 
 		
@@ -25,6 +28,7 @@
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="mybatis/mapper/SbillitMasterMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitUserMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitUserSessionMapper.xml"/>
 		<mapper resource="mybatis/mapper/SbillitOrderMapper.xml"/>

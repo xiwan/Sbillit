@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.SbillitMasterMapper">
+ 	<resultMap id="config" type="SbillitConfig">
+      <result property="key" column="key"/>
+      <result property="value" column="value"/>
+    </resultMap>
+    
+    <resultMap id="dice" type="SbillitDice">
+      <result property="dinners" column="dinners"/>
+    </resultMap>
+    
+    <select id="getConfig" resultMap="config" >
+    	SELECT * FROM sbillit_config WHERE 1=1
+    </select>
+    
+    <select id="getDice" resultMap="dice">
+    	SELECT * FROM sbillit_dice WHERE 1=1
+    </select>
+    
+
+
+</mapper>

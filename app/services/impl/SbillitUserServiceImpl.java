@@ -138,4 +138,14 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		return -1l;
 	}
 
+	@Override
+	public Long updateUserName(Long userId, String name) {
+		// TODO Auto-generated method stub
+		SbillitUser user = new SbillitUser();
+		user.setId(userId);
+		user.setNickname(name);
+		this.UserDao.saveUser(user);
+		return userId;
+	}
+
 }

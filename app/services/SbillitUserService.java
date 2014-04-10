@@ -17,5 +17,7 @@ public interface SbillitUserService {
 	
 	public Map completeNewUserRegister(String phone, String smsToken);
 	
+	public Long updateUserName(Long userId, String name);
+	
 
 }

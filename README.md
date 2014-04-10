@@ -5,6 +5,9 @@ This is [play!](http://www.playframework.com/) based project.
 
 ### API specification (ver 1):
 
+###### master data version: client need to compare with server version to renew master data
+	GET      /version/:verid
+
 ###### user register
 	POST    /user/register
 	_REQUEST_		postData={phone, deviceType, [deviceToken]}
@@ -16,6 +19,11 @@ This is [play!](http://www.playframework.com/) based project.
 	
 ###### get user info
 	GET		/user/:id/info
+
+###### update user profile
+	POST    /user/profile/update
+	_REQUEST_		postData={name}
+	_RESPONSE_		{userId}	
 		
 ###### get order info (session check)
 	GET		/order/:id/info	

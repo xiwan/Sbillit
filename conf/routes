@@ -5,6 +5,10 @@
 # Home page
 # GET     /                           	@controllers.Application.index()
 
+## master data
+# check master version
+GET     /1/version/:verId               @controllers.ModuleUser.version(verId: Long)
+
 ## User module
 # get user info by user id
 GET		/1/user/info			@controllers.ModuleUser.info()
@@ -12,6 +16,8 @@ GET		/1/user/info			@controllers.ModuleUser.info()
 POST 	/1/user/register				@controllers.ModuleUser.register()
 # user login, create session and identify login source, finally session id and user info
 POST    /1/user/login					@controllers.ModuleUser.login()
+# user profile update
+POST    /1/user/profile/update				@controllers.ModuleUser.profileUpdate()
 
 
 ## Order module

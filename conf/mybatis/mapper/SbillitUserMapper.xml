@@ -52,6 +52,9 @@
       		<if test="deviceToken != null">
       			device_token = #{deviceToken}, 
       		</if>
+      		<if test="nickname != null">
+      			nickname = #{nickname}, 
+      		</if>
       		updated_at = UNIX_TIMESTAMP()
       	</set>
     	WHERE id = #{id}

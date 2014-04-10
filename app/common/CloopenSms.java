@@ -155,7 +155,7 @@ public class CloopenSms {
 		String authorization = Base64.encode(auth.getBytes());				
 		String httpsRequest = httpsURL + "/" + softVersion + "/Accounts/" + accountSid + "/SMS/Messages?sig=" + sig;
 		System.out.println(query);
-		return CloopenSms.sendWrapper(httpsRequest, authorization, query);
+		return null;//CloopenSms.sendWrapper(httpsRequest, authorization, query);
 	}
 	
 	public static String sendTemplateSmsToUser(String phone, String smsToken) throws IOException {

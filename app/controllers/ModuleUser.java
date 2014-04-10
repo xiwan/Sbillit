@@ -2,6 +2,8 @@ package controllers;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import common.AppProp;
 import common.CloopenSms;
 import common.Constant;
+import entity.SbillitDice;
 import entity.SbillitUser;
 import play.Logger;
 import play.libs.Json;
@@ -20,6 +23,7 @@ import play.mvc.Http.RequestBody;
 import play.mvc.Result;
 import play.mvc.With;
 import services.SbillitCloopenSmsService;
+import services.SbillitMasterService;
 import services.SbillitSessionService;
 import services.SbillitUserService;
 import utils.JsonUtil;
@@ -30,6 +34,10 @@ public class ModuleUser extends Filter {
 	
 	@Autowired
 	private SbillitSessionService sbillitSessionService;
+	
+	@Autowired
+	private SbillitMasterService sbillitMasterService;
+	
 	
 	@With(Interceptor.class)
 	public Result info() {
@@ -110,6 +118,38 @@ public class ModuleUser extends Filter {
 		}
 		return ok(js);
 	}
+	
+	@With(Interceptor.class)
+	public Result profileUpdate(){
+		long id = super.getUserBySessionId();
+		JsonNode postDataJson = super.parseParamJson("postData");	
+		String name = postDataJson.get("name").asText(); 
+		Long userId = sbillitUserService.updateUserName(id, name);
+		JsonNode js = JsonUtil.toJson(Constant.ERROR_FREE, userId);
+		return ok(js);
+	}
+	
+    public Result version(Long versionId) {
+    	Map<String, Object> masterData = new HashMap<String, Object>();
+    	
+    	String version = sbillitMasterService.getMasterVersion();
+    	Long _versionId = Long.parseLong(version);
+    	JsonNode js = null;
+    	if (versionId<_versionId){
+    		// get new master data
+    		List<SbillitDice> dices = sbillitMasterService.getDice();
+    		masterData.put("version", version);
+    		masterData.put("dices", dices);
+    	}else{
+    		// no master data update
+    		masterData.put("version", version);
+    		
+    	}
+    	js = JsonUtil.toJson(Constant.ERROR_FREE, masterData);
+    	return ok(js);
+    }
+	
+	
 
 
 }
