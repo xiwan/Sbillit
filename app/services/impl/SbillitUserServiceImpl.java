@@ -6,23 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import common.AppProp;
 import common.CloopenSms;
 import common.Constant;
-
 import play.Logger;
-
 import services.SbillitUserService;
 import utils.DateUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
 import utils.RamNumUtil;
-
 import dao.SbillitUserDao;
 import dao.SbillitUserSessionDao;
 import entity.SbillitUser;
 
+@Transactional
 public class SbillitUserServiceImpl implements SbillitUserService {
 	@Autowired
 	private SbillitUserDao UserDao;

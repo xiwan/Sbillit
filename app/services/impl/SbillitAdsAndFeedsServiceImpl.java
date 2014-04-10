@@ -3,6 +3,7 @@ package services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import services.SbillitAdsAndFeedsService;
 import dao.SbillitAdsDao;
@@ -10,6 +11,7 @@ import dao.SbillitFeedDao;
 import entity.SbillitAds;
 import entity.SbillitFeed;
 
+@Transactional
 public class SbillitAdsAndFeedsServiceImpl implements SbillitAdsAndFeedsService {
 	
 	@Autowired

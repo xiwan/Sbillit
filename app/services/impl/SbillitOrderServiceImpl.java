@@ -212,12 +212,13 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (order == null) {
 			return 0;
 		}
+		
 		sbillitOrderDao.createOrderThumbup(orderId, userId, title);
 		List<SbillitOrderItem> orderItemList = sbillitOrderDao.findOrderItemByOrderId(orderId);
 		SbillitCombo orderCombo = new SbillitCombo();
 		orderCombo.setId(orderId); // set order id here
 		// for loop to build combo data
-		sbillitComboDao.createCombo(orderCombo);
+		// sbillitComboDao.createCombo(orderCombo);
 		return orderId;
 	}
 

@@ -19,18 +19,19 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ning.http.util.Base64;
-import common.AppProp;
 
+import common.AppProp;
 import dao.SbillitUserDao;
 import entity.SbillitUser;
-
 import services.SbillitCloopenSmsService;
 import utils.DateUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
 
+@Transactional
 public class SbillitCloopenSmsServiceImpl implements SbillitCloopenSmsService {
 	
 	private static String httpsURL = AppProp.getPropertyValue("cloopen.rest.url");

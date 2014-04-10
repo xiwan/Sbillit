@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import services.SbillitComboService;
-
 import dao.SbillitComboDao;
 import dao.SbillitSellerDao;
-
 import entity.SbillitCombo;
 import entity.SbillitSeller;
 
+@Transactional
 public class SbillitComboServiceImpl implements SbillitComboService {
 	@Autowired
 	private SbillitComboDao sbillitComboDao;

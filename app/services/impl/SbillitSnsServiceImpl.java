@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import services.SbillitSnsService;
 
@@ -11,10 +12,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import dao.SbillitFriendDao;
 import dao.SbillitUserDao;
-
 import entity.SbillitFriend;
 import entity.SbillitUser;
 
+@Transactional
 public class SbillitSnsServiceImpl implements SbillitSnsService {
 	@Autowired
 	private SbillitFriendDao sbillitFriendDao;

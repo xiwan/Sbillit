@@ -15,6 +15,7 @@ import utils.Md5Util;
 import dao.SbillitUserSessionDao;
 import entity.SbillitUserSession;
 
+@Transactional
 public class SbillitSessionServiceImpl implements SbillitSessionService {
 	
 	private static String salt = "MONKEY_TYPE!@#$%";

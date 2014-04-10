@@ -200,9 +200,9 @@ public class ModuleOrder extends Filter {
 		return ok(js);
 	}
 	
-	@With(Interceptor.class)
+	//@With(Interceptor.class)
 	public Result thumbup(Long orderId) {
-		long ownerId = super.getUserBySessionId();
+		long ownerId = 1;
 		RequestBody body = request().body();
 		JsonNode postDataJson = super.parseParamJson("postData");
 		String title = postDataJson.get("title").asText();

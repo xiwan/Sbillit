@@ -43,31 +43,31 @@ This is [play!](http://www.playframework.com/) based project.
 	_REQUEST_		postData={orderTitle, totalNumber, friendsArray, contactsArray}
 	_RESPONSE_		{orderID}
 	
-##### order image upload
+###### order image upload
 	POST 			/order/upload
 	_REQUEST_		postData={orderId, image}
 	_RESPONSE_		{status}
 	
-#### order modify
+###### order modify
 	POST 			/order/:orderid/modify
 	_REQUEST_       postData={orderItemArray, totalNumber}
 
-#### order close
+###### order close
 	POST 			/order/:orderid/close
 	
-##### ads pull
+###### ads pull
 	GET				/ads/pull
 	_RESPONSE_		{imageUrl, comboId}
 	
-##### friend get
+###### friend get
 	GET 			/sns/get/:friendid
 	_RESPONSE_		{friendList}
 
-##### friend add
+###### friend add
 	POST 			/sns/add
 	_REQUEST_  		postData={friendArray=[{phone, name}]}
 	
-##### friend block/delete/restore
+###### friend block/delete/restore
 	POST 			/sns/block    /sns/delete   /sns/restore
 	_REQUEST_  		postData={friendId}
 

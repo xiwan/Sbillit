@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import common.AppProp;
 import common.CloopenSms;
 import common.Constant;
-
 import entity.SbillitUser;
 import play.Logger;
 import play.libs.Json;
@@ -53,6 +52,14 @@ public class ModuleUser extends Filter {
 			
 		}
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname, deviceType, deviceToken);
+		
+//		String smsToken = "";
+//		try {
+//			smsToken = CloopenSms.sendSmsToUser(phone, "1234");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		JsonNode js = null;
 		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)) {
 			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(smsToken));

@@ -14,8 +14,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import services.impl.SbillitCloopenSmsServiceImpl.SMSQuery;
-import services.impl.SbillitCloopenSmsServiceImpl.SubQuery;
 import utils.DateUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
@@ -47,6 +45,21 @@ public class CloopenSms {
 			this.subAccountSid = subAccountSid;
 		}
 	};
+	
+	public static class TemplateSMSQuery {
+		public String to;
+		public String appId;
+		public String templateId;
+		public String[] datas;
+		public String data;
+		public TemplateSMSQuery(String to, String appId, String templateId, String[] datas, String data) {
+			this.to = to;
+			this.appId = appId;
+			this.templateId = templateId;
+			this.datas = datas;
+			this.data = data;
+		}
+	}
 	
 	public static class SubQuery {
 		public String appId;
@@ -141,7 +154,22 @@ public class CloopenSms {
 		String auth = accountSid + ":" + timestamp;
 		String authorization = Base64.encode(auth.getBytes());				
 		String httpsRequest = httpsURL + "/" + softVersion + "/Accounts/" + accountSid + "/SMS/Messages?sig=" + sig;
-		
+		System.out.println(query);
+		return CloopenSms.sendWrapper(httpsRequest, authorization, query);
+	}
+	
+	public static String sendTemplateSmsToUser(String phone, String smsToken) throws IOException {
+		String[] datas = new String[2];
+		datas[0] = smsToken;
+		datas[1] = "30";
+		TemplateSMSQuery smsQuery = new TemplateSMSQuery(phone, appid, "1204", datas, "");
+		String query = JsonUtil.toJson(smsQuery).toString();
+		String timestamp = DateUtil.format(new Date(), DateUtil.DATE_TIME_PATTERN2);
+		String sig = Md5Util.MD5Encode(accountSid+authToken+timestamp).toUpperCase();
+		String auth = accountSid + ":" + timestamp;
+		String authorization = Base64.encode(auth.getBytes());
+		System.out.println(query);
+		String httpsRequest = httpsURL + "/" + softVersion + "/Accounts/" + accountSid + "/SMS/TemplateSMS?sig=" + sig;
 		return CloopenSms.sendWrapper(httpsRequest, authorization, query);
 	}
 	
@@ -157,5 +185,15 @@ public class CloopenSms {
 		
 		return CloopenSms.sendWrapper(httpsRequest, authorization, query);
 	}
+	
+//	public static void main(String[] args) {
+//		//CloopenSms sms = new CloopenSms();
+//		try {
+//			CloopenSms.sendTemplateSmsToUser("18221114531", "1234");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 }
