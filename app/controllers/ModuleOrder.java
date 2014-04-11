@@ -35,15 +35,7 @@ public class ModuleOrder extends Filter {
 	private SbillitOrderService sbillitOrderService;
 
 	public Result info(Long id) {
-		SbillitOrder order = sbillitOrderService.findOrderbyId(id);
-		//Apns.sendSandboxApns("威武", "f898e34d a58fa342 9220905a 92313da8 62a4e5ad bbbcd3dc 6849d62a 718b81d2");
-		
-//		
-//		try {  
-//	        int i = 1/0;  
-//	    } catch(Exception e) {  
-//	    	throw new RuntimeException(e);  
-//	    } 
+		SbillitOrder order = sbillitOrderService.findOrderbyId(id); 
 		return ok(Json.toJson(order));
 	}
 	
@@ -200,7 +192,7 @@ public class ModuleOrder extends Filter {
 		return ok(js);
 	}
 	
-	//@With(Interceptor.class)
+	@With(Interceptor.class)
 	public Result thumbup(Long orderId) {
 		long ownerId = 1;
 		RequestBody body = request().body();

@@ -34,7 +34,6 @@ public class ModuleAdsAndFeeds extends Filter {
 	@With(Interceptor.class)
 	public Result wall() {
 		long ownerId = super.getUserBySessionId();
-		System.out.println(ownerId);
 		JsonNode js = null;
 		List<SbillitFeed> feedList = sbillitAdsAndFeedsService.findUserFeeds(ownerId);
 		if (feedList == null){

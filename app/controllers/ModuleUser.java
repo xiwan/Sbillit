@@ -27,6 +27,7 @@ import services.SbillitMasterService;
 import services.SbillitSessionService;
 import services.SbillitUserService;
 import utils.JsonUtil;
+import utils.StringUtil;
 
 public class ModuleUser extends Filter {
 	@Autowired
@@ -50,7 +51,13 @@ public class ModuleUser extends Filter {
 	public Result register(){
 		// store the phone number and assign it with an expiring smsToken
 		JsonNode postDataJson = super.parseParamJson("postData");
-		String phone = postDataJson.get("phone").asText();
+		String phone = "";
+		try{
+			phone = StringUtil.phoneNormalize(postDataJson.get("phone").asText());
+		}catch (Exception e) {
+			e.printStackTrace();
+			return badRequest(JsonUtil.toJson(Constant.ERROR_INTERNAL, "not qualified phone number"));
+		}
 		Integer deviceType = postDataJson.get("deviceType").asInt();
 		String nickname = phone;
 		String deviceToken = "";
@@ -60,14 +67,6 @@ public class ModuleUser extends Filter {
 			
 		}
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname, deviceType, deviceToken);
-		
-//		String smsToken = "";
-//		try {
-//			smsToken = CloopenSms.sendSmsToUser(phone, "1234");
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		JsonNode js = null;
 		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)) {
 			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(smsToken));
@@ -89,8 +88,14 @@ public class ModuleUser extends Filter {
 		// token should be valid, and match with last registered token
 
 		JsonNode postDataJson = super.parseParamJson("postData");	
+		String phone = "";
+		try{
+			phone = StringUtil.phoneNormalize(postDataJson.get("phone").asText());
+		}catch (Exception e) {
+			e.printStackTrace();
+			return badRequest(JsonUtil.toJson(Constant.ERROR_INTERNAL, "not qualified phone number"));
+		}
 		String smsToken = postDataJson.get("token").asText(); 
-		String phone = postDataJson.get("phone").asText();
 		
 		JsonNode js = null;
 		// register a new user and session

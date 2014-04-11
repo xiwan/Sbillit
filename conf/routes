@@ -2,9 +2,6 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-# GET     /                           	@controllers.Application.index()
-
 ## master data
 # check master version
 GET     /1/version/:verId               @controllers.ModuleUser.version(verId: Long)
