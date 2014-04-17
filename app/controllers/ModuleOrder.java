@@ -152,7 +152,7 @@ public class ModuleOrder extends Filter {
 		    String contentType = picture.getContentType(); 
 		    File file = picture.getFile(); 
 		    String tempFilePath = file.getPath();
-		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/" + orderId + 
+		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/order/" + orderId + 
 					"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
 		    FileUtil.move(tempFilePath, newFilePath);
 		    
@@ -176,7 +176,7 @@ public class ModuleOrder extends Filter {
 		File file = buf.asFile();
 		String tempFilePath = file.getPath();
 		String fileName = file.getName();
-		String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/" + orderId + 
+		String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/order/" + orderId + 
 				"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
 		FileUtil.move(tempFilePath, newFilePath);
 		JsonNode js = null;
