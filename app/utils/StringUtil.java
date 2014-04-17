@@ -16,6 +16,11 @@ public class StringUtil {
         return str!=null&&!"".equals(str.trim())&&!"UNDEFINED".equals(str.trim());
     }
 	
+	public static String getExtension(String fileName){
+		int dot = fileName.lastIndexOf(".");
+		return fileName.substring(dot+1);
+	}
+	
 	public static void main(String[] args){
 		System.out.println(StringUtil.phoneNormalize("(+86-182_2111 4531"));
 	}

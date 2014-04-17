@@ -19,6 +19,7 @@ public class SbillitUser implements Serializable {
 	private long smsExpiredAt;
 	private long inviteId;
 	private String nickname;
+	private String avatar;
 	private String password;
 	private String country;
 	private String city;
@@ -128,6 +129,12 @@ public class SbillitUser implements Serializable {
 	}
 	public void setSession(String session) {
 		this.session = session;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 	

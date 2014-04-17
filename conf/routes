@@ -15,7 +15,8 @@ POST 	/1/user/register				@controllers.ModuleUser.register()
 POST    /1/user/login					@controllers.ModuleUser.login()
 # user profile update
 POST    /1/user/profile/update				@controllers.ModuleUser.profileUpdate()
-
+# user profile update
+POST    /1/user/avatar/update				@controllers.ModuleUser.avatarUpdate()
 
 ## Order module
 # get order info by order id

@@ -15,6 +15,7 @@
       <result property="smsExpiredAt" column="sms_expired_at"/>
       <result property="inviteId" column="invite_id"/>
       <result property="nickname" column="nickname"/>
+      <result property="avatar" column="avatar"/>
       <result property="password" column="password"/>
       <result property="country" column="country"/>
       <result property="city" column="city"/>
@@ -54,6 +55,9 @@
       		</if>
       		<if test="nickname != null">
       			nickname = #{nickname}, 
+      		</if>
+      		<if test="avatar != null">
+      			avatar = #{avatar}, 
       		</if>
       		updated_at = UNIX_TIMESTAMP()
       	</set>

@@ -51,7 +51,6 @@ public class Constant {
 	public static String SNS_FRIEND_ADD_FAILURE_ERROR = "sns.friend.add.failure.error";
 	
 	public static String ORDER_QUICK_TITLE = "order.quick.title";
-	
 	public static String ORDER_IMAGE_UPLOAD_SUCCESS="order.image.upload.success";
 	public static String ORDER_IMAGE_UPLOAD_FAILED="order.image.upload.failed";
 	public static String ORDER_IMAGE_UPLOAD_FAILED_MAX="order.image.upload.failed.max";
@@ -65,6 +64,9 @@ public class Constant {
 	public static String USER_SMSTOKEN_INERNAL_ERROR = "user.smstoken.internal.error";
 	public static String USER_SMSTOKEN_PROVIDER_ERROR = "user.smstoken.provider.error";
 	public static String USER_NORMAL = "user.normal";
+	
+	public static String AVATAR_IMAGE_UPLOAD_SUCCESS="avatar.image.upload.success";
+	public static String AVATAR_IMAGE_UPLOAD_FAILDED="avatar.image.upload.failed";
 	
 	public static String SESSION_EXPIRED = "session.expired";
 	public static String SESSION_NOT_EXIST = "session.not.exist";

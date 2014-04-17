@@ -14,6 +14,7 @@ import common.Constant;
 import play.Logger;
 import services.SbillitUserService;
 import utils.DateUtil;
+import utils.FileUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
 import utils.RamNumUtil;
@@ -145,6 +146,25 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		user.setId(userId);
 		user.setNickname(name);
 		this.UserDao.saveUser(user);
+		return userId;
+	}
+
+	@Override
+	public Long updateAvatar(Long userId, String tempFilePath,  String newFilePath) {
+		// TODO Auto-generated method stub
+		
+		FileUtil.move(tempFilePath, newFilePath);
+		
+		SbillitUser user = UserDao.findUserById(userId);
+		if (user == null) {
+			userId = 0l;
+		}else {
+			user = new SbillitUser();
+			user.setId(userId);
+			user.setAvatar(newFilePath);
+			this.UserDao.saveUser(user);
+		}
+		
 		return userId;
 	}
 

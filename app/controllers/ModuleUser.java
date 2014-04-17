@@ -1,5 +1,6 @@
 package controllers;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,13 +20,17 @@ import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.Context;
+import play.mvc.Http.MultipartFormData;
 import play.mvc.Http.RequestBody;
+import play.mvc.Http.MultipartFormData.FilePart;
 import play.mvc.Result;
 import play.mvc.With;
 import services.SbillitCloopenSmsService;
 import services.SbillitMasterService;
 import services.SbillitSessionService;
 import services.SbillitUserService;
+import utils.DateUtil;
+import utils.FileUtil;
 import utils.JsonUtil;
 import utils.StringUtil;
 
@@ -134,6 +139,32 @@ public class ModuleUser extends Filter {
 		return ok(js);
 	}
 	
+	@With(Interceptor.class)
+	public Result avatarUpdate(){
+		long userId = super.getUserBySessionId();
+		
+		MultipartFormData body = request().body().asMultipartFormData();
+		FilePart picture = body.getFile("Avatar");
+		
+		JsonNode js = null;
+		if (picture != null) {
+		    String fileName = picture.getFilename();
+		    //String ext = StringUtil.getExtension(fileName);
+		    //String contentType = picture.getContentType(); 
+		    File file = picture.getFile(); 
+		    String tempFilePath = file.getPath();
+		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/avatar/" + userId + 
+					"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
+		    long uid = sbillitUserService.updateAvatar(userId, tempFilePath,  newFilePath);
+		    if (uid != userId) {
+		    	js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(Constant.AVATAR_IMAGE_UPLOAD_FAILDED));
+		    }else {
+		    	js = JsonUtil.toJson(Constant.ERROR_FREE, AppProp.getPropertyi18n(Constant.AVATAR_IMAGE_UPLOAD_SUCCESS));
+		    }
+		}  
+		return ok(js);
+	}
+	
     public Result version(Long versionId) {
     	Map<String, Object> masterData = new HashMap<String, Object>();
     	
@@ -155,6 +186,10 @@ public class ModuleUser extends Filter {
     }
 	
 	
-
+    public static void main(String[] args){
+    	String test = "abc.jpeg";
+    	int dot = test.lastIndexOf(".");
+    	System.out.println(test.substring(dot+1));
+    }
 
 }

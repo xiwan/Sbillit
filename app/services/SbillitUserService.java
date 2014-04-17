@@ -19,5 +19,5 @@ public interface SbillitUserService {
 	
 	public Long updateUserName(Long userId, String name);
 	
-
+	public Long updateAvatar(Long userId, String tempFilePath,  String newFilePath);
 }

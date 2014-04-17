@@ -23,6 +23,11 @@ This is [play!](http://www.playframework.com/) based project.
 ###### update user profile
 	POST    /user/profile/update
 	_REQUEST_		postData={name}
+	_RESPONSE_		{userId}
+
+###### update avatar 
+	POST    /user/avatar/update
+	_REQUEST_		postData={avatar}
 	_RESPONSE_		{userId}	
 		
 ###### get order info (session check)
