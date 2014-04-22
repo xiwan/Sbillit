@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -16,7 +18,6 @@ import common.Constant;
 import entity.SbillitAds;
 import entity.SbillitCombo;
 import entity.SbillitOrder;
-import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http.MultipartFormData;
@@ -31,10 +32,13 @@ import utils.FileUtil;
 import utils.JsonUtil;
 
 public class ModuleOrder extends Filter {
+	private static final Log logger = LogFactory.getLog(ModuleOrder.class);
+	
 	@Autowired
 	private SbillitOrderService sbillitOrderService;
-
+	
 	public Result info(Long id) {
+		logger.info("Here is some DEBUG"); 
 		SbillitOrder order = sbillitOrderService.findOrderbyId(id); 
 		return ok(Json.toJson(order));
 	}

@@ -144,7 +144,7 @@ public class ModuleUser extends Filter {
 		long userId = super.getUserBySessionId();
 		
 		MultipartFormData body = request().body().asMultipartFormData();
-		FilePart picture = body.getFile("Avatar");
+		FilePart picture = body.getFile("avatar");
 		
 		JsonNode js = null;
 		if (picture != null) {
