@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<SaladoPlayer>
+    <global>
+        <panoramas firstPanorama="testpano"/>
+    </global>
+    <panoramas>
+        <panorama id="testpano" path="~panoramas/dz_kiev/kiev_f.xml"/>
+    </panoramas>
+</SaladoPlayer>

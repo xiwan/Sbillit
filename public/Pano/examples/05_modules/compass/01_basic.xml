@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Point to image containig bitmaps grid with bitmaps for compass. You can choose from many such grids
+	or you can easily create your own. Compass reflects pan and panorama direction into geografphical direction.
+	
+	http://panozona.com/wiki/Module:Compass
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml" direction="45"/>
+	</panoramas>
+	<modules>
+		<Compass path="~modules/compass/Compass-1.2.swf">
+			<settings path="~modules/compass/images/compass_dark_93x81.png" rotateNeedle="false"/>
+		</Compass>
+	</modules>
+</SaladoPlayer>

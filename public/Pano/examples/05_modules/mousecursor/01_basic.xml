@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Point to image containig bitmaps grid with bitmaps for chosen states of mouse cursor. You can choose
+	from many such grids or you can easily create your own. When adding many modules, add it as last node
+	in "modules" so that it would be displayed under other modules.
+	
+	http://panozona.com/wiki/Module:MouseCursor
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml"/>
+	</panoramas>
+	<modules>
+		<MouseCursor path="~modules/mousecursor/MouseCursor-1.2.swf">
+			<settings path="~modules/mousecursor/images/cursors_31x31.png"/>
+		</MouseCursor>
+	</modules>
+</SaladoPlayer>

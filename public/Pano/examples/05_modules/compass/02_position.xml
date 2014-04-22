@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	
+	http://panozona.com/wiki/Module:Compass
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml" direction="45"/>
+	</panoramas>
+	<modules>
+		<Compass path="~modules/compass/Compass-1.2.swf">
+			<window align="vertical:middle" move="horizontal:20"/>
+			<settings path="~modules/compass/images/compass_eugen360_93x81.png"/>
+		</Compass>
+	</modules>
+</SaladoPlayer>

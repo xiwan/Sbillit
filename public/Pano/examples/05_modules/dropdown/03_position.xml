@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	You can set position of drop-dwon list inside panorama window.
+	
+	http://panozona.com/wiki/Module:DropDown
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerGreen" path="~panoramas/dz_checker_green/checker_green_f.xml"/>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml"/>
+		<panorama id="checkerRed" path="~panoramas/dz_checker_red/checker_red_f.xml"/>
+		<panorama id="checkerYellow" path="~panoramas/dz_checker_yellow/checker_yellow_f.xml"/>
+	</panoramas>
+	<modules>
+		<DropDown path="~modules/DropDown-1.2.swf">
+			<window align="horizontal:right,vertical:top" move="horizontal:-40,vertical:40"/>
+			<box opensUp="false"/>
+			<elements>
+				<element target="checkerBlue" label="Blue checker"/>
+				<element target="checkerGreen" label="Green checker"/>
+				<element target="checkerRed" label="Red checker"/>
+				<element target="checkerYellow" label="Yellow checker"/>
+			</elements>
+		</DropDown>
+	</modules>
+</SaladoPlayer>

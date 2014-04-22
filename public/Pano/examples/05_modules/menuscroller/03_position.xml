@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Change size and alignment of module window. If you set window size dimension to NaN, module
+	will use entire panorama window width or height. Set scrollsVertical value to change scrolling
+	direction. Additionally you can define "close" button and place it around menu window.
+	
+	http://panozona.com/wiki/Module:MenuScroller
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml">
+			<image id="cb_arrowYellow" path="~hotspots/images/arrow_yellow.png" mouse="onClick:toggleOpenMenu"/>
+		</panorama>
+		<panorama id="checkerGreen" path="~panoramas/dz_checker_green/checker_green_f.xml">
+			<image id="cg_arrowYellow" path="~hotspots/images/arrow_yellow.png" mouse="onClick:toggleOpenMenu"/>
+		</panorama>
+		<panorama id="checkerRed" path="~panoramas/dz_checker_red/checker_red_f.xml">
+			<image id="cr_arrowYellow" path="~hotspots/images/arrow_yellow.png" mouse="onClick:toggleOpenMenu"/>
+		</panorama>
+		<panorama id="checkerYellow" path="~panoramas/dz_checker_yellow/checker_yellow_f.xml">
+			<image id="cy_arrowYellow" path="~hotspots/images/arrow_yellow.png" mouse="onClick:toggleOpenMenu"/>
+		</panorama>
+	</panoramas>
+	<modules>
+		<MenuScroller path="~modules/MenuScroller-1.2.swf">
+			<window size="width:700,height:300" align="horizontal:center" transition="type:slideDown"/>
+			<close path="~media/images/misc/close.png" move="vertical:-10,horizontal:10"/>
+			<scroller scrollsVertical="false"/>
+			<elements>
+				<element target="checkerBlue" path="~media/images/thumbs/checker_blue.jpg"/>
+				<element target="checkerGreen" path="~media/images/thumbs/checker_green.jpg"/>
+				<element target="checkerRed" path="~media/images/thumbs/checker_red.jpg"/>
+				<element target="checkerYellow" path="~media/images/thumbs/checker_yellow.jpg"/>
+			</elements>
+		</MenuScroller>
+	</modules>
+	<actions>
+		<action id="toggleOpenMenu" content="MenuScroller.toggleOpen()"/>
+	</actions>
+</SaladoPlayer>

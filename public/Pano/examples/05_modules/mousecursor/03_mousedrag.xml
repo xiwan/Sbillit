@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+	Module does not have exposed functions, and it does not communicate with other modules.
+	It reacts to changes of mouseInertial and mouseDrag in SaladoPlayer and displayes images
+	reflecting their current "enabled" state.
+	
+	http://panozona.com/wiki/Module:MouseCursor
+-->
+<SaladoPlayer>
+	<global debug="true">
+		<control mouseInertial="enabled:false" mouseDrag="enabled:true"/>
+	</global>
+	<panoramas>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml"/>
+	</panoramas>
+	<modules>
+		<MouseCursor path="~modules/mousecursor/MouseCursor-1.2.swf">
+			<settings path="~modules/mousecursor/images/cursors_31x31.png"/>
+		</MouseCursor>
+	</modules>
+</SaladoPlayer>

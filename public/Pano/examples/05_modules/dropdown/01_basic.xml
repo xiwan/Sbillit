@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	DropDown allows simple switching between panoramas. You can decide sequence of element in drop-down list,
+	panoramas that will be loaded when user clicks on elements and labels describing those panoramas.
+	
+	http://panozona.com/wiki/Module:DropDown
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerGreen" path="~panoramas/dz_checker_green/checker_green_f.xml"/>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml"/>
+		<panorama id="checkerRed" path="~panoramas/dz_checker_red/checker_red_f.xml"/>
+		<panorama id="checkerYellow" path="~panoramas/dz_checker_yellow/checker_yellow_f.xml"/>
+	</panoramas>
+	<modules>
+		<DropDown path="~modules/DropDown-1.2.swf">
+			<elements>
+				<element target="checkerGreen" label="Green checker"/>
+				<element target="checkerBlue" label="Blue checker"/>
+				<element target="checkerRed" label="Red checker"/>
+				<element target="checkerYellow" label="Yellow checker"/>
+			</elements>
+		</DropDown>
+	</modules>
+</SaladoPlayer>

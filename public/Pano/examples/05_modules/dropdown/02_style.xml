@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+	You can set font type and size, colors for fonts, borders and background and decide if drop-down
+	list opens up or down.
+	
+	http://panozona.com/wiki/Module:DropDown
+-->
+<SaladoPlayer>
+	<global debug="true"/>
+	<panoramas>
+		<panorama id="checkerGreen" path="~panoramas/dz_checker_green/checker_green_f.xml"/>
+		<panorama id="checkerBlue" path="~panoramas/dz_checker_blue/checker_blue_f.xml"/>
+		<panorama id="checkerRed" path="~panoramas/dz_checker_red/checker_red_f.xml"/>
+		<panorama id="checkerYellow" path="~panoramas/dz_checker_yellow/checker_yellow_f.xml"/>
+	</panoramas>
+	<modules>
+		<DropDown path="~modules/DropDown-1.2.swf">
+			<box style="fontFamily:Arial,fontSize:25,fontColor:#0000FF,plainColor:#FFFF00,hoverColor:#FF0000,activeColor:#FF00FF,borderColor:#00FFFF"/>
+			<elements>
+				<element target="checkerGreen" label="Green checker"/>
+				<element target="checkerBlue" label="Blue checker"/>
+				<element target="checkerRed" label="Red checker"/>
+				<element target="checkerYellow" label="Yellow checker"/>
+			</elements>
+		</DropDown>
+	</modules>
+</SaladoPlayer>
