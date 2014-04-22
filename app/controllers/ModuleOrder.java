@@ -156,9 +156,9 @@ public class ModuleOrder extends Filter {
 		    String contentType = picture.getContentType(); 
 		    File file = picture.getFile(); 
 		    String tempFilePath = file.getPath();
-		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/order/" + orderId + 
+		    String newFilePath = "/order/" + orderId + 
 					"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
-		    FileUtil.move(tempFilePath, newFilePath);
+		    FileUtil.move(tempFilePath, AppProp.getPropertyValue("file.image.root.path") + newFilePath);
 		    
 		    Map<Long, String> returnMap = sbillitOrderService.uploadFile(orderId, newFilePath);
 		    if (returnMap.get(Constant.ERROR_INTERNAL) != null) {

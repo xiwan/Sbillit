@@ -153,7 +153,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	public Long updateAvatar(Long userId, String tempFilePath,  String newFilePath) {
 		// TODO Auto-generated method stub
 		
-		FileUtil.move(tempFilePath, newFilePath);
+		
 		
 		SbillitUser user = UserDao.findUserById(userId);
 		if (user == null) {

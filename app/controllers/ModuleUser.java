@@ -153,8 +153,10 @@ public class ModuleUser extends Filter {
 		    //String contentType = picture.getContentType(); 
 		    File file = picture.getFile(); 
 		    String tempFilePath = file.getPath();
-		    String newFilePath = AppProp.getPropertyValue("file.image.root.path") + "/avatar/" + userId + 
+		    String newFilePath =  "/avatar/" + userId + 
 					"-" + DateUtil.GetCurrentTimeStamp() + "-" + fileName;
+		    FileUtil.move(tempFilePath, AppProp.getPropertyValue("file.image.root.path") + newFilePath);
+		    
 		    long uid = sbillitUserService.updateAvatar(userId, tempFilePath,  newFilePath);
 		    if (uid != userId) {
 		    	js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(Constant.AVATAR_IMAGE_UPLOAD_FAILDED));
