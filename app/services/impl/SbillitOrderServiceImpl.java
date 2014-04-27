@@ -18,13 +18,16 @@ import common.Constant;
 
 import services.SbillitOrderService;
 import utils.DateUtil;
+import utils.StringUtil;
 
 import dao.SbillitComboDao;
+import dao.SbillitFeedDao;
 import dao.SbillitOrderDao;
 import dao.SbillitUserDao;
 import dao.SbillitUserSessionDao;
 
 import entity.SbillitCombo;
+import entity.SbillitFeed;
 import entity.SbillitOrder;
 import entity.SbillitOrderComment;
 import entity.SbillitOrderItem;
@@ -43,6 +46,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	private SbillitComboDao sbillitComboDao;
 	@Autowired
 	private SbillitUserDao sbillitUserDao;
+	@Autowired
+	private SbillitFeedDao sbillitFeedDao;
 	
 	private static int NA_ORDER = 0;
 	private static int VALID_ORDER = 1;
@@ -105,9 +110,11 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		
 		long orderId = order.getId();
 		if (orderShareArry != null && orderShareArry.isArray()){
+			StringBuffer inUserIds = new StringBuffer();
+			
 			for (JsonNode os: orderShareArry) {
 				Long userId = os.get("userID").asLong();
-				String phone = os.get("phoneNumber").asText();
+				String phone = StringUtil.phoneNormalize(os.get("phoneNumber").asText());
 				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_AGREE);
 				
 				// through the userId, retrieve the device token and use apns
@@ -116,7 +123,19 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				if (token != null) {
 					Apns.sendPush(nickName + " shared an order with you.", token);
 				}
-			}			
+				
+				inUserIds.append(" "+userId+",");
+			}
+			
+			SbillitFeed feed = new SbillitFeed();
+			feed.setInUserId(inUserIds.toString());
+			feed.setOrderId(orderId);
+			feed.setTitle(nickName + " shared an order with you.");
+			feed.setType(Constant.FEED_ORDER_SHARE);
+			feed.setExpiredAt(DateUtil.getExpiredTimeFromNow("feed.endure"));
+			List<SbillitFeed> feedsList = new ArrayList<SbillitFeed> ();
+			feedsList.add(feed);
+			sbillitFeedDao.insertUserFeeds(feedsList);
 		}
 		
 		if (orderItemArray != null && orderItemArray.isArray()){
@@ -164,8 +183,10 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		// create order share records		
  		// duplication check point make sure the fa and ca dont share same phonenumber
 		if (orderShareArray.isArray()){
+			StringBuffer inUserIds = new StringBuffer();
+			
 			for (JsonNode os: orderShareArray) {
-				String phone = os.get("phoneNumber").asText();
+				String phone = StringUtil.phoneNormalize( os.get("phoneNumber").asText() );
 				Long userId = os.get("userID").asLong();
 				sbillitOrderDao.createOrderShare(orderId, phone, userId, Constant.ORDER_SHARE_NA);
 				
@@ -175,7 +196,18 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				if (token != null) {
 					Apns.sendPush(nickName + " shared an order with you.", token);
 				}
-			}			
+				inUserIds.append(" "+userId+",");
+			}
+			
+			SbillitFeed feed = new SbillitFeed();
+			feed.setInUserId(inUserIds.toString());
+			feed.setOrderId(orderId);
+			feed.setTitle(nickName + " shared an order with you.");
+			feed.setType(Constant.FEED_ORDER_SHARE);
+			feed.setExpiredAt(DateUtil.getExpiredTimeFromNow("feed.endure"));
+			List<SbillitFeed> feedsList = new ArrayList<SbillitFeed> ();
+			feedsList.add(feed);
+			sbillitFeedDao.insertUserFeeds(feedsList);
 		}else {
 			
 		}
@@ -266,6 +298,18 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		// TODO Auto-generated method stub
 		
 		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
+		
+		String nickName = sbillitUserDao.findUserById(userId).getNickname();
+		SbillitFeed feed = new SbillitFeed();
+		feed.setInUserId(" "+atUserId+", ");
+		feed.setOrderId(orderId);
+		feed.setTitle(nickName + " commented on your order.");
+		feed.setType(Constant.FEED_ORDER_COMMENT);
+		feed.setExpiredAt(DateUtil.getExpiredTimeFromNow("feed.endure"));
+		List<SbillitFeed> feedsList = new ArrayList<SbillitFeed> ();
+		feedsList.add(feed);
+		sbillitFeedDao.insertUserFeeds(feedsList);
+		
 		return commentId;
 	}
 
@@ -276,7 +320,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (order==null) {
 			return 0;
 		}
-		if (order.getUserId() != ownerId) {
+		Long targetUserId = order.getUserId();
+		if (targetUserId != ownerId) {
 			List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(ownerId, orderId);
 			if (orderShareList.size() == 0) {
 				return 0;
@@ -295,7 +340,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 					for (JsonNode buyer: buyerArray) {
 						Long userId = buyer.get("buyer").get("userID").asLong();
 						Long itemNum = buyer.get("buyAmount").asLong();
-						phone = buyer.get("buyer").get("phoneNumber").asText();
+						phone =  StringUtil.phoneNormalize(buyer.get("buyer").get("phoneNumber").asText());
 						List<SbillitOrderItem> itemList = sbillitOrderDao.findOrderItemByUserIdAndOrderIdAndItem(userId, orderId, itemName);
 						if (itemList.size() == 0) {
 							sbillitOrderDao.createOrderItem(orderId, userId, itemNum, itemPrice, itemName);
@@ -310,6 +355,29 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		}
 		
 		sbillitOrderDao.updateOrder(orderId, ownerId, null, totalAmount, null, null, null);
+		
+		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(null, orderId);
+		StringBuffer inUserIds = new StringBuffer();
+		for (SbillitOrderShare so: orderShareList) {
+			if (ownerId != so.getUserId()) {
+				inUserIds.append(" "+so.getUserId()+",");
+			}
+		}
+		if (ownerId != targetUserId){
+			inUserIds.append(" "+targetUserId+",");
+		}
+		
+		String nickName = sbillitUserDao.findUserById(ownerId).getNickname();
+		SbillitFeed feed = new SbillitFeed();
+		feed.setInUserId(inUserIds.toString());
+		feed.setOrderId(orderId);
+		feed.setTitle( nickName + " responsed to the order.");
+		feed.setType(Constant.FEED_ORDER_OWN);
+		feed.setExpiredAt(DateUtil.getExpiredTimeFromNow("feed.endure"));
+		List<SbillitFeed> feedsList = new ArrayList<SbillitFeed> ();
+		feedsList.add(feed);
+		sbillitFeedDao.insertUserFeeds(feedsList);
+		
 		return orderId;
 	}
 

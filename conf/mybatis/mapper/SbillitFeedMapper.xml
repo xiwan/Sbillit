@@ -8,20 +8,40 @@
       <result property="orderId" column="order_id"/>
       <result property="title" column="title"/>
       <result property="type" column="type"/>
-      <result property="createdAt" column="created_at"/>
       <result property="inUserId" column="in_user_id"/>
+      <result property="createdAt" column="created_at"/>
       <result property="expiredAt" column="expired_at" />
 	</resultMap>
 	
 	<select id="findAllFeeds" resultMap="feed">
-	  select * from sbillit_feed 
+	  SELECT * FROM sbillit_feed 
 	</select>
 	
-	<select id="findUserFeeds" parameterType="java.util.HashMap" resultMap="feed">
+	<select id="findUserFeeds" parameterType="java.util.HashMap" resultMap="feed" >
 	  <![CDATA[ 
 	  SELECT * FROM sbillit_feed
 	  WHERE in_user_id LIKE #{userId} AND UNIX_TIMESTAMP() < expired_at
+	  ORDER BY created_at DESC
 	  ]]>
 	</select>
+	
+	<insert id="insertUserFeeds" parameterType="java.util.HashMap" >
+	  INSERT INTO sbillit_feed (id, order_id, title, type, in_user_id, created_at, expired_at)
+	  VALUES 
+	  <foreach item="item" collection="feedsList" separator=",">
+          (#{item.id}, #{item.orderId}, #{item.title}, #{item.type}, #{item.inUserId}, UNIX_TIMESTAMP(), #{item.expiredAt})   
+      </foreach>
+      <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+	   		SELECT id FROM seq_feed
+	  </selectKey>
+	</insert>
+	
+	<select  id="selectSeqFeed" resultType="java.lang.Long">
+		SELECT id FROM seq_feed
+	</select>
+	
+	<update id="updateSeqFeed" parameterType="java.lang.Long">
+    	UPDATE seq_feed SET id=#{value};
+    </update>
 
 </mapper>

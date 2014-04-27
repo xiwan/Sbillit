@@ -8,8 +8,10 @@ public class StringUtil {
 	
 	public static String phoneNormalize(String phone){
 		Pattern p = Pattern.compile(PHONE_DELIMITER); 
-		Matcher m = p.matcher(phone); 
-		return m.replaceAll("");
+		Matcher m = p.matcher(phone);
+		String norPhone = m.replaceAll("");
+		System.out.println(norPhone);
+		return norPhone;
 	}
 	
 	public static boolean isNotBlank(String str){
