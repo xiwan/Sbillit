@@ -304,15 +304,23 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (order==null) {
 			return 0;
 		}
+		Long targetUserId = order.getUserId();
+		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(null, orderId);
+		StringBuffer inUserIds = new StringBuffer();
+		for (SbillitOrderShare so: orderShareList) {
+			if (userId != so.getUserId()) {
+				inUserIds.append(" "+so.getUserId()+",");
+			}
+		}
+		if (userId != targetUserId){
+			inUserIds.append(" "+targetUserId+",");
+		}
 		
 		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
 
 		String nickName = sbillitUserDao.findUserById(userId).getNickname();
 		SbillitFeed feed = new SbillitFeed();
-		feed.setInUserId(" "+order.getUserId()+", ");
-		if (atUserId!=null) {
-			feed.setInUserId(" "+order.getUserId()+", "+atUserId+", ");
-		}
+		feed.setInUserId(inUserIds.toString());
 		feed.setOrderId(orderId);
 		feed.setTitle(nickName + " commented on your order.");
 		feed.setType(Constant.FEED_ORDER_COMMENT);
@@ -320,7 +328,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		List<SbillitFeed> feedsList = new ArrayList<SbillitFeed> ();
 		feedsList.add(feed);
 		sbillitFeedDao.insertUserFeeds(feedsList);
-		
+		// need to add push notification !!!
 		return commentId;
 	}
 
