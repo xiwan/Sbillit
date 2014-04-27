@@ -123,8 +123,9 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				if (token != null) {
 					Apns.sendPush(nickName + " shared an order with you.", token);
 				}
-				
-				inUserIds.append(" "+userId+",");
+				if (userId != ownerId){
+					inUserIds.append(" "+userId+",");
+				}
 			}
 			
 			SbillitFeed feed = new SbillitFeed();
@@ -196,7 +197,9 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				if (token != null) {
 					Apns.sendPush(nickName + " shared an order with you.", token);
 				}
-				inUserIds.append(" "+userId+",");
+				if (userId != ownerId){
+					inUserIds.append(" "+userId+",");
+				}
 			}
 			
 			SbillitFeed feed = new SbillitFeed();
