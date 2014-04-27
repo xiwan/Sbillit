@@ -300,12 +300,19 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	public long postComment(Long orderId, Long userId, Long atUserId,
 			String message, Long status) {
 		// TODO Auto-generated method stub
+		SbillitOrder order = sbillitOrderDao.findOrderbyId(orderId, VALID_ORDER);
+		if (order==null) {
+			return 0;
+		}
 		
 		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
-		
+
 		String nickName = sbillitUserDao.findUserById(userId).getNickname();
 		SbillitFeed feed = new SbillitFeed();
-		feed.setInUserId(" "+atUserId+", ");
+		feed.setInUserId(" "+order.getUserId()+", ");
+		if (atUserId!=null) {
+			feed.setInUserId(" "+order.getUserId()+", "+atUserId+", ");
+		}
 		feed.setOrderId(orderId);
 		feed.setTitle(nickName + " commented on your order.");
 		feed.setType(Constant.FEED_ORDER_COMMENT);
@@ -351,6 +358,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 						}else {
 							sbillitOrderDao.updateOrderItem(orderId, userId, itemName, itemPrice, itemNum);
 						}
+						// we need to add push notification here !!!!
 						//amountChange += itemPrice*itemTotalAmount;
 					}
 				}
