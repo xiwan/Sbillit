@@ -161,9 +161,12 @@ public class ModuleUser extends Filter {
 		    if (uid != userId) {
 		    	js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(Constant.AVATAR_IMAGE_UPLOAD_FAILDED));
 		    }else {
-		    	js = JsonUtil.toJson(Constant.ERROR_FREE, AppProp.getPropertyi18n(Constant.AVATAR_IMAGE_UPLOAD_SUCCESS));
+		    	js = JsonUtil.toJson(Constant.ERROR_FREE, newFilePath);
 		    }
-		}  
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(Constant.AVATAR_IMAGE_UPLOAD_FAILDED));
+		}
+		
 		return ok(js);
 	}
 	

@@ -5,9 +5,11 @@ public class SbillitFriend {
 	private Long friendId;
 	private String nickname;
 	private String phoneNumber;
+	private String avatar;
 	private Long status;
 	private Long createdAt;
 	private Long updatedAt;
+	
 	public Long getUserId() {
 		return userId;
 	}
@@ -49,6 +51,12 @@ public class SbillitFriend {
 	}
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	
 }

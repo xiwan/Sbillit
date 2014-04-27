@@ -1,0 +1,48 @@
+3/19/14
+1. add exception filter for shared order in history and detail request -> done
+2. send push for every shared order
+3. order close -> done
+
+3/11/14
+1. push notification -> done
+2. send apsn at every sharing action 
+3. feeds (friends, etc)
+4. update order where friends wana join a order
+
+
+3/4/14
+1. sms sender need to check to token's expiration time -> done
+2. friend delete (block/delete/restore) -> done
+
+2/16/14
+1. receive contact list: search existing users and add them as friends to current user;
+2. template
+3. feeds
+4. comments push notification
+5. alarm associated with order
+6. combo single json formated to array -> done
+
+
+1/27/14
+1. Ads pull request, schedule. [{combo image, combo id}] - done
+2. Combo id request, combo table add. [Combo detail, included merchant info.] - done
+3. Order participants thumb up. -> Combo template -> Archive - developing
+4. Order history timeline flow chart. (navi. share. revive. arch.)
+5. Archive: navi. arrange. revive.
+6. Friends phone based. Not in sns, just add phone; otherwise send push/internal msg.
+   Friends search.  
+7. Feeds: comment, pending order, friends 
+8. Comment push request
+9. Wallet ???
+10. contact sms send provider ???
+
+12/2/13
+1. use other json lib to strip out quotes around json string, rewritten util class -> solved
+2. contact sms send provider -> store the phone number as ascII code for fasten retrieval -> solved
+3. mysql int cannot support 11 digits
+4. entity use object instead of primitive type
+5. append random number to image file -> solved
+
+
+
+
