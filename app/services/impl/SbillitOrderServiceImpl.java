@@ -262,13 +262,14 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		for (SbillitOrderThumbup orderThumbup: orderThumbupList) {
 			ids.add(orderThumbup.getOrderId());
 		}
-		List<SbillitOrder> orderList = sbillitOrderDao.findOrderInIds(ids);
-		
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("orderThumbupList", orderThumbupList);
-		returnMap.put("orderList", orderList);
-		
-		return returnMap;
+		if (ids.size()>0) {
+			List<SbillitOrder> orderList = sbillitOrderDao.findOrderInIds(ids);
+			Map<String, Object> returnMap = new HashMap<String, Object>();
+			returnMap.put("orderThumbupList", orderThumbupList);
+			returnMap.put("orderList", orderList);
+			return returnMap;
+		}
+		return null;
 	}
 
 	@Override
