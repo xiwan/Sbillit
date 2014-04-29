@@ -55,6 +55,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	private static int FAILED_ORDER = 3;
 	private static int CLOSED_ORDER = 4;
 	
+	private static long POINT_ORDER = 10l;
+	
 	@Override
 	public List<SbillitOrder> findAllOrders() {
 		// TODO Auto-generated method stub
@@ -107,6 +109,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		
 		SbillitUser owner = sbillitUserDao.findUserById(ownerId);
 		String nickName = owner.getNickname();
+		owner.setPoint( owner.getPoint() + POINT_ORDER );
+		sbillitUserDao.saveUser(owner);
 		
 		long orderId = order.getId();
 		if (orderShareArry != null && orderShareArry.isArray()){
@@ -180,6 +184,8 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		
 		SbillitUser owner = sbillitUserDao.findUserById(ownerId);
 		String nickName = owner.getNickname();
+		owner.setPoint( owner.getPoint() + POINT_ORDER );
+		sbillitUserDao.saveUser(owner);
 		
 		// create order share records		
  		// duplication check point make sure the fa and ca dont share same phonenumber
@@ -304,21 +310,26 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (order==null) {
 			return 0;
 		}
+		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
+		
+		String nickName = sbillitUserDao.findUserById(userId).getNickname();
 		Long targetUserId = order.getUserId();
 		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(null, orderId);
 		StringBuffer inUserIds = new StringBuffer();
 		for (SbillitOrderShare so: orderShareList) {
-			if (userId != so.getUserId()) {
-				inUserIds.append(" "+so.getUserId()+",");
+			Long _userId = so.getUserId();
+			if (userId != _userId) {
+				inUserIds.append(" " + _userId + ",");
+				String token = sbillitUserDao.findUserById(_userId).getDeviceToken();
+				Apns.sendPush(nickName + " commented on the order.", token);
 			}
 		}
 		if (userId != targetUserId){
 			inUserIds.append(" "+targetUserId+",");
+			String token = sbillitUserDao.findUserById(targetUserId).getDeviceToken();
+			Apns.sendPush(nickName + " commented on the order.", token);
 		}
-		
-		long commentId = sbillitOrderDao.createOrderComment(orderId, userId, atUserId, message, status);
 
-		String nickName = sbillitUserDao.findUserById(userId).getNickname();
 		SbillitFeed feed = new SbillitFeed();
 		feed.setInUserId(inUserIds.toString());
 		feed.setOrderId(orderId);
@@ -328,7 +339,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		List<SbillitFeed> feedsList = new ArrayList<SbillitFeed> ();
 		feedsList.add(feed);
 		sbillitFeedDao.insertUserFeeds(feedsList);
-		// need to add push notification !!!
+
 		return commentId;
 	}
 
@@ -377,19 +388,25 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		sbillitOrderDao.updateOrder(orderId, ownerId, null, totalAmount, null, null, null);
 		
 		List<SbillitOrderShare> orderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(null, orderId);
+		String nickName = sbillitUserDao.findUserById(ownerId).getNickname();	
 		StringBuffer inUserIds = new StringBuffer();
 		for (SbillitOrderShare so: orderShareList) {
 			if (ownerId != so.getUserId()) {
-				inUserIds.append(" "+so.getUserId()+",");
+				Long _userId = so.getUserId();
+				inUserIds.append(" "+_userId+",");
+				String token = sbillitUserDao.findUserById(_userId).getDeviceToken();
+				Apns.sendPush(nickName + " responsed on the order.", token);
 			}
 		}
 		if (ownerId != targetUserId){
 			inUserIds.append(" "+targetUserId+",");
+			String token = sbillitUserDao.findUserById(targetUserId).getDeviceToken();
+			Apns.sendPush(nickName + " responsed on the order.", token);
 		}
 		
-		String nickName = sbillitUserDao.findUserById(ownerId).getNickname();
+		String inUserIdStr = inUserIds.toString();
 		SbillitFeed feed = new SbillitFeed();
-		feed.setInUserId(inUserIds.toString());
+		feed.setInUserId(inUserIdStr);
 		feed.setOrderId(orderId);
 		feed.setTitle( nickName + " responsed to the order.");
 		feed.setType(Constant.FEED_ORDER_OWN);

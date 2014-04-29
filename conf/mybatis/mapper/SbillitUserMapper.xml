@@ -59,6 +59,9 @@
       		<if test="avatar != null">
       			avatar = #{avatar}, 
       		</if>
+      		<if test="point != null">
+      			point = #{point}, 
+      		</if>
       		updated_at = UNIX_TIMESTAMP()
       	</set>
     	WHERE id = #{id}

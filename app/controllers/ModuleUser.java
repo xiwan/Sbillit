@@ -86,6 +86,48 @@ public class ModuleUser extends Filter {
 		return ok(js);
 	}
 	
+	public Result oldRegister(){
+		JsonNode postDataJson = super.parseParamJson("postData");
+		String phone = "";
+		String password = "";
+		try{
+			phone = StringUtil.phoneNormalize(postDataJson.get("phone").asText());
+			password = postDataJson.get("ps").asText();
+		}catch (Exception e) {
+			e.printStackTrace();
+			return badRequest(JsonUtil.toJson(Constant.ERROR_INTERNAL, "not qualified parameters."));
+		}
+		Integer deviceType = postDataJson.get("deviceType").asInt();
+		String nickname = phone;
+		String deviceToken = "";
+		if (deviceType == Constant.DEVICE_IOS) {
+			deviceToken = postDataJson.get("deviceToken").asText();
+		}else if (deviceType == Constant.DEVICE_ANDROID) {
+			
+		}
+		
+		System.out.println(phone + " " + password + " " + deviceType + " " + deviceToken);
+		
+		return ok("old register");
+	}
+	
+	public Result oldLogin(){
+		JsonNode postDataJson = super.parseParamJson("postData");	
+		String phone = "";
+		String password = "";                  
+		try{
+			phone = StringUtil.phoneNormalize(postDataJson.get("phone").asText());
+			password = postDataJson.get("ps").asText();
+		}catch (Exception e) {
+			e.printStackTrace();
+			return badRequest(JsonUtil.toJson(Constant.ERROR_INTERNAL, "not qualified parameters."));
+		}  
+		
+		System.out.println(phone + " " + password);
+		
+		return ok("old login");
+	}
+	
 	public Result login(){
 		
 		// here we need to verify the 'phone' and 'token'

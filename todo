@@ -1,12 +1,12 @@
 3/19/14
 1. add exception filter for shared order in history and detail request -> done
-2. send push for every shared order
+2. send push for every shared order -> done
 3. order close -> done
 
 3/11/14
 1. push notification -> done
-2. send apsn at every sharing action 
-3. feeds (friends, etc)
+2. send apsn at every sharing action -> done
+3. feeds (friends, etc) -> done
 4. update order where friends wana join a order
 
 

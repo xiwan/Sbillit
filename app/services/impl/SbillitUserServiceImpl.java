@@ -166,4 +166,17 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		return userId;
 	}
 
+	@Override
+	public String createNewUserWithPassword(String phone, String nickname,
+			Integer deviceType, String deviceToken) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map userLogin(String phone, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
