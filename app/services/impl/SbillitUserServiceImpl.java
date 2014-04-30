@@ -18,6 +18,7 @@ import utils.FileUtil;
 import utils.JsonUtil;
 import utils.Md5Util;
 import utils.RamNumUtil;
+import utils.StringUtil;
 import dao.SbillitUserDao;
 import dao.SbillitUserSessionDao;
 import entity.SbillitUser;
@@ -41,10 +42,49 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		// TODO Auto-generated method stub
 		return this.UserDao.findUserById(id);
 	}
+	
+	@Override
+	public String createNewUserWithPassword(String phone, String nickname, Integer deviceType, String deviceToken, String password) {
+		// TODO Auto-generated method stub
+		// check the password 6-20 long no forbidden char
+		if (StringUtil.phoneCheck(phone)){
+			return Constant.USER_PHONE_INVALID;
+		}
+		if (StringUtil.passwordCheck(password)){
+			return Constant.USER_PASSWORD_INVALID;
+		}
+		
+		List<SbillitUser> userList = UserDao.findeUserByPhone(phone);
+		String smsToken = "0000";
+		if (userList == null || userList.size() == 0) {
+			long smsExpiredAt = DateUtil.GetCurrentTimeStamp();
+			SbillitUser user = new SbillitUser();
+			user.setPhone(phone);
+			user.setSmsToken(smsToken);
+			user.setSmsExpiredAt(smsExpiredAt);
+			user.setNickname(nickname);
+			user.setDeviceType(deviceType);
+			user.setDeviceToken(deviceToken);
+			user.setPassword(Md5Util.MD5Encode(password));
+			this.UserDao.insertUser(user);
+			smsToken = Constant.USER_REGISTER_OK;
+		}else {
+			if (userList.size() == 1){
+				// go to login login 
+				smsToken = Constant.USER_REGISTER_OK;
+			}else {
+				smsToken = Constant.USER_PHONE_DUPLICATE;
+			}
+		}
+		return smsToken;
+	}
 
 	@Override
 	public String createNewUserAndAssignSmsToken(String phone, String nickname, Integer deviceType, String deviceToken) {
 		// TODO Auto-generated method stub
+		if (StringUtil.phoneCheck(phone)){
+			return Constant.USER_PHONE_INVALID;
+		}
 		List<SbillitUser> userList = UserDao.findeUserByPhone(phone);
 		String smsToken = "0000";
 		//List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
@@ -93,6 +133,32 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 			}
 		}
 		return smsToken;
+	}
+	
+
+	@Override
+	public Map userLogin(String phone, String password) {
+		// TODO Auto-generated method stub
+		List<SbillitUser> userList = this.UserDao.findeUserByPhone(phone);
+		SbillitUser user = new SbillitUser();
+		Map<String, SbillitUser> returnMap = new HashMap<String, SbillitUser>();
+		if (userList == null || userList.size() == 0) {
+			returnMap.put(Constant.USER_PHONE_NOT_EXIST, user);
+		}else {
+			if (userList.size()>1){
+				returnMap.put(Constant.USER_PHONE_DUPLICATE, user);
+			}else{
+				user = userList.get(0);
+				Logger.debug(password);
+				if (user.getPassword().equals(Md5Util.MD5Encode(password.trim()))){
+					this.UserDao.saveUser(user); // update login time
+					returnMap.put(Constant.USER_LOGIN_OK, user);
+				}else {
+					returnMap.put(Constant.USER_PASSWORD_NOT_MATCH, user);
+				}
+			}
+		}
+		return returnMap;
 	}
 
 	@Override
@@ -164,19 +230,6 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 		}
 		
 		return userId;
-	}
-
-	@Override
-	public String createNewUserWithPassword(String phone, String nickname,
-			Integer deviceType, String deviceToken) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Map userLogin(String phone, String password) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

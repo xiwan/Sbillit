@@ -73,11 +73,9 @@ public class ModuleUser extends Filter {
 		}
 		String smsToken = sbillitUserService.createNewUserAndAssignSmsToken(phone, nickname, deviceType, deviceToken);
 		JsonNode js = null;
-		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE)) {
+		if (smsToken.equals(Constant.USER_PHONE_DUPLICATE) || smsToken.equals(Constant.USER_PHONE_INVALID)) {
 			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(smsToken));
-		}else if (smsToken.equals(Constant.USER_SMSTOKEN_INERNAL_ERROR)){
-			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
-		}else if (smsToken.equals(Constant.USER_SMSTOKEN_PROVIDER_ERROR)){
+		}else if (smsToken.equals(Constant.USER_SMSTOKEN_PROVIDER_ERROR) || smsToken.equals(Constant.USER_SMSTOKEN_INERNAL_ERROR)){
 			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, smsToken);
 		}else {
 			js = JsonUtil.toJson(Constant.ERROR_FREE, smsToken);
@@ -106,9 +104,15 @@ public class ModuleUser extends Filter {
 			
 		}
 		
-		System.out.println(phone + " " + password + " " + deviceType + " " + deviceToken);
-		
-		return ok("old register");
+		Logger.info(phone + " " + password + " " + deviceType + " " + deviceToken);
+		String smsToken = sbillitUserService.createNewUserWithPassword(phone, nickname, deviceType, deviceToken, password);
+		JsonNode js = null;
+		if (!smsToken.equals(Constant.USER_REGISTER_OK)) {
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(smsToken));
+		}else {
+			js = JsonUtil.toJson(Constant.ERROR_FREE,  AppProp.getPropertyi18n(smsToken));
+		}
+		return ok(js);
 	}
 	
 	public Result oldLogin(){
@@ -123,9 +127,25 @@ public class ModuleUser extends Filter {
 			return badRequest(JsonUtil.toJson(Constant.ERROR_INTERNAL, "not qualified parameters."));
 		}  
 		
-		System.out.println(phone + " " + password);
-		
-		return ok("old login");
+		Logger.info(phone + " " + password);
+		Map returnMap = sbillitUserService.userLogin(phone, password);
+		JsonNode js = null;
+		if (returnMap.get(Constant.USER_LOGIN_OK) != null) {
+			SbillitUser user = (SbillitUser) returnMap.get(Constant.USER_LOGIN_OK);
+			String session = sbillitSessionService.createSession(user.getId());
+			user.setSession(session);
+			js = JsonUtil.toJson(Constant.ERROR_FREE, user);
+		}else {
+			String key = "";
+			if (returnMap.get(Constant.USER_PHONE_DUPLICATE) != null){
+				key = Constant.USER_PHONE_DUPLICATE;
+			}
+			if (returnMap.get(Constant.USER_PHONE_NOT_EXIST) != null) {
+				key = Constant.USER_PHONE_NOT_EXIST;
+			}
+			js = JsonUtil.toJson(Constant.ERROR_INTERNAL, AppProp.getPropertyi18n(key));
+		}
+		return ok(js);
 	}
 	
 	public Result login(){

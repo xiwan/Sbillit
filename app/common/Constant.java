@@ -61,11 +61,16 @@ public class Constant {
 
 	public static String USER_PHONE_NOT_EXIST = "user.phone.not.exist";
 	public static String USER_PHONE_DUPLICATE = "user.phone.duplicate";
+	public static String USER_PHONE_INVALID = "user.phone.invalid";
+	public static String USER_PASSWORD_NOT_MATCH = "user.password.not.match";
+	public static String USER_PASSWORD_INVALID = "user.password.invalid";
 	public static String USER_SMSTOKEN_NOT_MATCH = "user.smstoken.not.match";
 	public static String USER_SMSTOKEN_EXPIRED = "user.smstoken.expired";
 	public static String USER_SMSTOKEN_INERNAL_ERROR = "user.smstoken.internal.error";
 	public static String USER_SMSTOKEN_PROVIDER_ERROR = "user.smstoken.provider.error";
 	public static String USER_NORMAL = "user.normal";
+	public static String USER_REGISTER_OK = "user.register.ok";
+	public static String USER_LOGIN_OK = "user.login.ok";
 	
 	public static String AVATAR_IMAGE_UPLOAD_SUCCESS="avatar.image.upload.success";
 	public static String AVATAR_IMAGE_UPLOAD_FAILDED="avatar.image.upload.failed";
