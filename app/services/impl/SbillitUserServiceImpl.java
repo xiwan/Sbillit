@@ -47,10 +47,10 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	public String createNewUserWithPassword(String phone, String nickname, Integer deviceType, String deviceToken, String password) {
 		// TODO Auto-generated method stub
 		// check the password 6-20 long no forbidden char
-		if (StringUtil.phoneCheck(phone)){
+		if (!StringUtil.phoneCheck(phone)){
 			return Constant.USER_PHONE_INVALID;
 		}
-		if (StringUtil.passwordCheck(password)){
+		if (!StringUtil.passwordCheck(password)){
 			return Constant.USER_PASSWORD_INVALID;
 		}
 		
@@ -82,7 +82,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 	@Override
 	public String createNewUserAndAssignSmsToken(String phone, String nickname, Integer deviceType, String deviceToken) {
 		// TODO Auto-generated method stub
-		if (StringUtil.phoneCheck(phone)){
+		if (!StringUtil.phoneCheck(phone)){
 			return Constant.USER_PHONE_INVALID;
 		}
 		List<SbillitUser> userList = UserDao.findeUserByPhone(phone);
