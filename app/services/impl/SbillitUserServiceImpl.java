@@ -98,6 +98,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 			user.setNickname(nickname);
 			user.setDeviceType(deviceType);
 			user.setDeviceToken(deviceToken);
+			user.setPassword("");
 			this.UserDao.insertUser(user);
 		}else {
 			if (userList.size() == 1){

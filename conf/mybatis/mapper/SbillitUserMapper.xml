@@ -69,9 +69,9 @@
     
     <insert id="insertUser" parameterType="SbillitUser">
     	INSERT INTO sbillit_user 
-    	(id, phone, banned, device_type, device_token, sms_token, sms_flag, sms_expired_at, nickname, created_at, updated_at) 
+    	(id, phone, banned, device_type, device_token, sms_token, sms_flag, sms_expired_at, nickname, password, created_at, updated_at) 
     	VALUES 
-    	(#{id}, #{phone}, #{banned}, #{deviceType}, #{deviceToken}, #{smsToken}, #{smsFlag}, #{smsExpiredAt}, #{nickname}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
+    	(#{id}, #{phone}, #{banned}, #{deviceType}, #{deviceToken}, #{smsToken}, #{smsFlag}, #{smsExpiredAt}, #{nickname}, #{password}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())   
     <selectKey keyProperty="id" resultType="java.lang.Long" order="BEFORE">
 	   SELECT id FROM seq_user
 	</selectKey>
