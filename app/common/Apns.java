@@ -52,7 +52,7 @@ public class Apns {
 		}
 	}
 	
-	public static void sendPush(String text, String deviceToken) {
+	public static void sendPush(String text, String deviceToken, String orderID) {
 		String keyPath = AppProp.getPropertyValue("ios.apns.cert.path");
 		String ksPassword = AppProp.getPropertyValue("ios.apns.cert.pass");
 		String serverHost = AppProp.getPropertyValue("ios.apns.server"); 
@@ -78,7 +78,7 @@ public class Apns {
             StringBuilder content = new StringBuilder();
 
             content.append("{\"aps\":");
-            content.append("{\"alert\":\"").append(text)
+            content.append("{\"orderID\":\"").append(orderID).append("\",\"alert\":\"").append(text)
                 .append("\",\"badge\":1,\"sound\":\"")
                 .append("ping1").append("\"}");
             content.append(",\"cpn\":{\"t0\":")

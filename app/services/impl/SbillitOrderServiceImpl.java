@@ -112,7 +112,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		owner.setPoint( owner.getPoint() + POINT_ORDER );
 		sbillitUserDao.saveUser(owner);
 		
-		long orderId = order.getId();
+		Long orderId = order.getId();
 		if (orderShareArry != null && orderShareArry.isArray()){
 			StringBuffer inUserIds = new StringBuffer();
 			
@@ -125,7 +125,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				SbillitUser user = sbillitUserDao.findUserById(userId);
 				String token = user.getDeviceToken();
 				if (token != null) {
-					Apns.sendPush(nickName + " shared an order with you.", token);
+					Apns.sendPush(nickName + " shared an order with you.", token, orderId.toString());
 				}
 				if (userId != ownerId){
 					inUserIds.append(" "+userId+",");
@@ -180,7 +180,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		order.setExpiredAt(expiredAt);
 		sbillitOrderDao.createOrder(order);
 		
-		long orderId = order.getId();
+		Long orderId = order.getId();
 		
 		SbillitUser owner = sbillitUserDao.findUserById(ownerId);
 		String nickName = owner.getNickname();
@@ -201,7 +201,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				SbillitUser user = sbillitUserDao.findUserById(userId);
 				String token = user.getDeviceToken();
 				if (token != null) {
-					Apns.sendPush(nickName + " shared an order with you.", token);
+					Apns.sendPush(nickName + " shared an order with you.", token, order.toString());
 				}
 				if (userId != ownerId){
 					inUserIds.append(" "+userId+",");
@@ -321,13 +321,13 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 			if (userId != _userId) {
 				inUserIds.append(" " + _userId + ",");
 				String token = sbillitUserDao.findUserById(_userId).getDeviceToken();
-				Apns.sendPush(nickName + " commented on the order.", token);
+				Apns.sendPush(nickName + " commented on the order.", token, orderId.toString());
 			}
 		}
 		if (userId != targetUserId){
 			inUserIds.append(" "+targetUserId+",");
 			String token = sbillitUserDao.findUserById(targetUserId).getDeviceToken();
-			Apns.sendPush(nickName + " commented on the order.", token);
+			Apns.sendPush(nickName + " commented on the order.", token, orderId.toString());
 		}
 
 		SbillitFeed feed = new SbillitFeed();
@@ -395,13 +395,13 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				Long _userId = so.getUserId();
 				inUserIds.append(" "+_userId+",");
 				String token = sbillitUserDao.findUserById(_userId).getDeviceToken();
-				Apns.sendPush(nickName + " responsed on the order.", token);
+				Apns.sendPush(nickName + " responsed on the order.", token, orderId.toString());
 			}
 		}
 		if (ownerId != targetUserId){
 			inUserIds.append(" "+targetUserId+",");
 			String token = sbillitUserDao.findUserById(targetUserId).getDeviceToken();
-			Apns.sendPush(nickName + " responsed on the order.", token);
+			Apns.sendPush(nickName + " responsed on the order.", token, orderId.toString());
 		}
 		
 		String inUserIdStr = inUserIds.toString();
