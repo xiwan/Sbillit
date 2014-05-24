@@ -51,7 +51,7 @@ public class StringUtil {
 	}
 	
 	public static void main(String[] args){
-		System.out.println(StringUtil.phoneCheck("(+86-182-2111-4531"));
+		System.out.println(StringUtil.phoneCheck("(13800001111"));
 	}
 
 }
