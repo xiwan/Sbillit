@@ -201,7 +201,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				SbillitUser user = sbillitUserDao.findUserById(userId);
 				String token = user.getDeviceToken();
 				if (token != null) {
-					Apns.sendPush(nickName + " shared an order with you.", token, order.toString());
+					Apns.sendPush(nickName + " shared an order with you.", token, orderId.toString());
 				}
 				if (userId != ownerId){
 					inUserIds.append(" "+userId+",");
