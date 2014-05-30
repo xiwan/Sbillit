@@ -244,15 +244,13 @@ public class ModuleUser extends Filter {
     	if (versionId<_versionId){
     		// get new master data
     		List<SbillitDice> dices = sbillitMasterService.getDice();
-    		masterData.put("version", version);
-    		masterData.put("versionUpdateLink", versionUpdateLink);
-    		masterData.put("DonateLink", DonateLink);
     		masterData.put("dices", dices);
     	}else{
-    		// no master data update
-    		masterData.put("version", version);
-    		
+    		// no master data update    		
     	}
+		masterData.put("version", version);
+		masterData.put("versionUpdateLink", versionUpdateLink);
+		masterData.put("DonateLink", DonateLink);
     	js = JsonUtil.toJson(Constant.ERROR_FREE, masterData);
     	return ok(js);
     }
