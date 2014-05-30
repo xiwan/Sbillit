@@ -151,7 +151,7 @@ public class SbillitUserServiceImpl implements SbillitUserService {
 			}else{
 				user = userList.get(0);
 				Logger.debug(password);
-				if (user.getPassword().equals(Md5Util.MD5Encode(password.trim()))){
+				if (user.getPassword().equalsIgnoreCase(Md5Util.MD5Encode(password.trim()))){
 					this.UserDao.saveUser(user); // update login time
 					returnMap.put(Constant.USER_LOGIN_OK, user);
 				}else {
