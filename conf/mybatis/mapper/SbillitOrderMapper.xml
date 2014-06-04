@@ -235,6 +235,20 @@
     	ORDER BY o.updated_at DESC
     </select>
     
+    <select id="findOrderShareExcludeByOrderId" parameterType="java.util.HashMap" resultMap="orderShare">
+    	SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order_share AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
+    	WHERE 1=1 
+    	<if test="userId != null">
+   			AND o.user_id = #{userId} 
+   		</if>
+   		AND o.orderId NOT IN
+    	<foreach item="item" index="index" collection="orderIds" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    	ORDER BY o.updated_at DESC
+    </select>
+    
     <select id="findOrderItemByUserIdAndOrderId" parameterType="java.util.HashMap" resultMap="orderItem">
     	SELECT o.*, u.nickname AS user_name 
         FROM sbillit_order_item AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id
