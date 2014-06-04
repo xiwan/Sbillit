@@ -137,6 +137,13 @@ public class SbillitOrderDao {
 		return this.sbillitOrderMapper.findOrderShareByUserIdAndOrderId(paraMap);
 	}
 	
+	public List<SbillitOrderShare> findOrderShareExcludeByOrderId (List<Long> orderIds, Long userId) {
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("userId", userId);
+		paraMap.put("orderIds", orderIds);
+		return this.sbillitOrderMapper.findOrderShareExcludeByOrderId(paraMap);
+	}
+	
 	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderId (Long userId, Long orderId) {
 		Map paraMap = new HashMap<String, Object>();
 		paraMap.put("userId", userId);

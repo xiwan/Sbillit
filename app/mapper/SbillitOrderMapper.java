@@ -47,6 +47,7 @@ public interface SbillitOrderMapper {
 	public void updateCommentSeq();
 	
 	public List<SbillitOrderShare> findOrderShareByUserIdAndOrderId (Map paraMap);
+	public List<SbillitOrderShare> findOrderShareExcludeByOrderId (Map paraMap);
 	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderId (Map paraMap);
 	public List<SbillitOrderItem> findOrderItemByUserIdAndOrderIdAndItem(Map paraMap);
 	public List<SbillitOrderThumbup> findOrderThumbupByUserIdAndOrderId (Map paraMap);

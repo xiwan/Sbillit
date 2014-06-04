@@ -77,8 +77,13 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		if (userSession.getSession().equals(session)){
 			orderList = sbillitOrderDao.findOrderHistoryByUserId(userId);
 		}
-		// here we have to append shared orders
-		List<SbillitOrderShare> tempOrderShareList = sbillitOrderDao.findOrderShareByUserIdAndOrderId(userId, null);
+		List<Long> excludeIds = new ArrayList<Long> ();
+		for (SbillitOrder order: orderList) {
+			excludeIds.add(order.getId());
+		}
+		
+		// here we have to append shared orders but excluded order already in former order list
+		List<SbillitOrderShare> tempOrderShareList = sbillitOrderDao.findOrderShareExcludeByOrderId(excludeIds, userId);
 		//List<SbillitOrder> tempOrderList = new ArrayList<SbillitOrder>();
 		for (SbillitOrderShare os: tempOrderShareList) {
 			orderList.add(sbillitOrderDao.findOrderbyId(os.getOrderId(), NA_ORDER));
