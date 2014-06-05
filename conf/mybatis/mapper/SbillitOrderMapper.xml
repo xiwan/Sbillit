@@ -242,7 +242,7 @@
     	<if test="userId != null">
    			AND o.user_id = #{userId} 
    		</if>
-   		AND o.orderId NOT IN
+   		AND o.order_id NOT IN
     	<foreach item="item" index="index" collection="orderIds" open="(" separator="," close=")">
 	        #{item}
 	    </foreach>
