@@ -435,7 +435,7 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 	}
 
 	@Override
-	public void closeExpiredOrder() {
+	public List<Long> closeExpiredOrder() {
 		// TODO Auto-generated method stub
 		List<SbillitOrder> orderList = sbillitOrderDao.findOpenOrder();
 		List<Long> closeIds = new ArrayList<Long> ();
@@ -444,9 +444,11 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				closeIds.add(os.getId());
 			}
 		}
+		if (closeIds.size()>0) {
+			sbillitOrderDao.closeExpiredOrder(closeIds);
+		}
 		
-		sbillitOrderDao.closeExpiredOrder(closeIds);
-		
+		return closeIds;
 		
 	}
 

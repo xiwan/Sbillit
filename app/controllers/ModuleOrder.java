@@ -241,8 +241,10 @@ public class ModuleOrder extends Filter {
 	public Result loop(){
 		logger.info("loop");
 		//java.util.Timer;
-		sbillitOrderService.closeExpiredOrder();
-		return ok("ok");
+		List<Long> closeIds = sbillitOrderService.closeExpiredOrder();
+		JsonNode js = null;
+		js = JsonUtil.toJson(Constant.ERROR_FREE, closeIds);
+		return ok(js);
 	}
 
 

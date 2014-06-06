@@ -20,7 +20,7 @@ public interface SbillitOrderMapper {
 	public SbillitOrder findClosedOrderbyId(long id);
 	public List<SbillitOrder> findOpenOrder();
 	
-	public void closeExpiredOrder();
+	public void closeExpiredOrder(Map paraMa);
 	
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId);
 	

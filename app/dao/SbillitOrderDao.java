@@ -190,7 +190,7 @@ public class SbillitOrderDao {
 	public void closeExpiredOrder(List<Long> orderIds){
 		Map paraMap = new HashMap<String, Object>();
 		paraMap.put("orderIds", orderIds);
-		this.sbillitOrderMapper.closeExpiredOrder();
+		this.sbillitOrderMapper.closeExpiredOrder(paraMap);
 	}
 	
 
