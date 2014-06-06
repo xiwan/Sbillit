@@ -7,7 +7,7 @@ import entity.SbillitDice;
 
 public interface SbillitMasterService {
 	
-	public String[] getMasterVersion();
+	public Map getMasterVersion();
 	
 	public List<SbillitDice> getDice();
 

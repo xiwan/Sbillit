@@ -22,31 +22,32 @@ public class SbillitMasterServiceImpl implements SbillitMasterService {
 	private static String KEY_DONATE_LINK = "DonateLink";
 
 	@Override
-	public String[] getMasterVersion() {
+	public Map getMasterVersion() {
 		// TODO Auto-generated method stub
 		//Map<String, Object> masterData = new HashMap<String, Object>();
 		String version = "0";
 		String versionUpdateLink = "";
 		String DonateLink = "";
-		
+		Map<String, String> configMap = new HashMap<String, String>();
 		List<SbillitConfig> configs = new ArrayList<SbillitConfig> ();
 		configs = sbillitMasterDao.getConfig();
 		for (SbillitConfig conf: configs) {
-			if (conf.getKey().equalsIgnoreCase(KEY_VERSION)){
-				version = conf.getValue();
-			}
-			if (conf.getKey().equalsIgnoreCase(KEY_VERSION_UPADTE_LINK)){
-				versionUpdateLink = conf.getValue();
-			}
-			if (conf.getKey().equalsIgnoreCase(KEY_DONATE_LINK)){
-				DonateLink = conf.getValue();
-			}
+			configMap.put(conf.getKey(), conf.getValue());
+//			if (conf.getKey().equalsIgnoreCase(KEY_VERSION)){
+//				version = conf.getValue();
+//			}
+//			if (conf.getKey().equalsIgnoreCase(KEY_VERSION_UPADTE_LINK)){
+//				versionUpdateLink = conf.getValue();
+//			}
+//			if (conf.getKey().equalsIgnoreCase(KEY_DONATE_LINK)){
+//				DonateLink = conf.getValue();
+//			}
 		}
 		String[] verArray = new String[3];
 		verArray[0] = version;
 		verArray[1] = versionUpdateLink;
 		verArray[2] = DonateLink;
-		return verArray;
+		return configMap;
 	}
 	
 	@Override

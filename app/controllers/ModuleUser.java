@@ -235,11 +235,11 @@ public class ModuleUser extends Filter {
     public Result version(Long versionId) {
     	Map<String, Object> masterData = new HashMap<String, Object>();
     	
-    	String[] verArray= sbillitMasterService.getMasterVersion();
-    	String version = verArray[0];
-		String versionUpdateLink = verArray[1];
-		String DonateLink = verArray[2];
-    	Long _versionId = Long.parseLong(version);
+    	Map<String, String> configMap= sbillitMasterService.getMasterVersion();
+//    	String version = verArray[0];
+//		String versionUpdateLink = verArray[1];
+//		String DonateLink = verArray[2];
+    	Long _versionId = Long.parseLong(configMap.get("version"));
     	JsonNode js = null;
     	if (versionId<_versionId){
     		// get new master data
@@ -248,9 +248,11 @@ public class ModuleUser extends Filter {
     	}else{
     		// no master data update    		
     	}
-		masterData.put("version", version);
-		masterData.put("versionUpdateLink", versionUpdateLink);
-		masterData.put("DonateLink", DonateLink);
+		
+		masterData.put("version", _versionId);
+		masterData.put("config", configMap);
+//		masterData.put("versionUpdateLink", versionUpdateLink);
+//		masterData.put("DonateLink", DonateLink);
     	js = JsonUtil.toJson(Constant.ERROR_FREE, masterData);
     	return ok(js);
     }
