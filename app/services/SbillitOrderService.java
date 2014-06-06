@@ -36,4 +36,6 @@ public interface SbillitOrderService {
 	
 	public long closeOrder(Long orderId, Long ownerId);
 	
+	public void closeExpiredOrder();
+	
 }

@@ -237,6 +237,13 @@ public class ModuleOrder extends Filter {
 		}
 		return ok(js);
 	}
+	
+	public Result loop(){
+		logger.info("loop");
+		//java.util.Timer;
+		sbillitOrderService.closeExpiredOrder();
+		return ok("ok");
+	}
 
 
 }

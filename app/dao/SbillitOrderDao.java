@@ -183,5 +183,15 @@ public class SbillitOrderDao {
 		this.sbillitOrderMapper.updateOrderItem(paraMap);
 	}
 	
+	public List<SbillitOrder> findOpenOrder(){
+		return this.sbillitOrderMapper.findOpenOrder();
+	}
+	
+	public void closeExpiredOrder(List<Long> orderIds){
+		Map paraMap = new HashMap<String, Object>();
+		paraMap.put("orderIds", orderIds);
+		this.sbillitOrderMapper.closeExpiredOrder();
+	}
+	
 
 }

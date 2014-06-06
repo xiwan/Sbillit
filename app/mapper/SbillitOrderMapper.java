@@ -18,6 +18,9 @@ public interface SbillitOrderMapper {
 	public SbillitOrder findExpiredOrderbyId(long id);
 	public SbillitOrder findFailedOrderbyId(long id);
 	public SbillitOrder findClosedOrderbyId(long id);
+	public List<SbillitOrder> findOpenOrder();
+	
+	public void closeExpiredOrder();
 	
 	public List<SbillitOrder> findOrderHistoryByUserId(long userId);
 	

@@ -98,6 +98,12 @@
         WHERE o.id=#{value} AND o.status = 7
     </select>
     
+    <select id="findOpenOrder" resultMap="order">
+        SELECT o.*, u.nickname AS user_name 
+        FROM sbillit_order AS o LEFT JOIN sbillit_user AS u ON o.user_id = u.id 
+        WHERE o.status != 7
+    </select>
+    
     <select id="findOrderInIds" parameterType="java.util.HashMap" resultMap="order">
     	<!-- SELECT * FROM sbillit_order WHERE id in -->
     	SELECT o.*, u.nickname AS user_name 
@@ -135,6 +141,14 @@
     	INSERT INTO sbillit_order_share (order_id, phone, user_id, status, created_at, updated_at)
     	VALUES (#{orderId}, #{phone}, #{userId}, #{status}, UNIX_TIMESTAMP(), UNIX_TIMESTAMP())
     </insert>
+    
+    <update id="closeExpiredOrder" parameterType="java.util.HashMap">
+    	UPDATE sbillit_order set status = 7
+    	WHERE id IN
+    	<foreach item="item" index="index" collection="orderIds" open="(" separator="," close=")">
+	        #{item}
+	    </foreach>
+    </update>
     
     <update id="updateOrder" parameterType="java.util.HashMap">
     UPDATE sbillit_order 

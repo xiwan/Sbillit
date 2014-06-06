@@ -434,4 +434,20 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 		return orderId;
 	}
 
+	@Override
+	public void closeExpiredOrder() {
+		// TODO Auto-generated method stub
+		List<SbillitOrder> orderList = sbillitOrderDao.findOpenOrder();
+		List<Long> closeIds = new ArrayList<Long> ();
+		for (SbillitOrder os: orderList) {
+			if (os.getExpiredAt() < DateUtil.GetCurrentTimeStamp()) {
+				closeIds.add(os.getId());
+			}
+		}
+		
+		sbillitOrderDao.closeExpiredOrder(closeIds);
+		
+		
+	}
+
 }

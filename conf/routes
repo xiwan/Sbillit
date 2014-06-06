@@ -47,7 +47,8 @@ GET     /1/order/favorite               @controllers.ModuleOrder.favorite()
 POST    /1/order/:orderid/modify        @controllers.ModuleOrder.modify(orderid: Long) 
 # close order
 POST    /1/order/:orderid/close         @controllers.ModuleOrder.close(orderid: Long) 
-
+# loop order and close some
+GET		/1/order/loop					 @controllers.ModuleOrder.loop();
 
 ## Combo module
 # get combo
@@ -70,6 +71,7 @@ POST    /1/sns/restore                     @controllers.ModuleSns.restore()
 POST    /1/sns/delete                     @controllers.ModuleSns.delete()
 # get friend
 GET    /1/sns/get/:friendid                      @controllers.ModuleSns.get(friendid: Long)
+
 
 
 
