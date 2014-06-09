@@ -15,17 +15,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import common.AppProp;
 import common.Apns;
 import common.Constant;
-
 import services.SbillitOrderService;
 import utils.DateUtil;
+import utils.Md5Util;
 import utils.StringUtil;
-
 import dao.SbillitComboDao;
 import dao.SbillitFeedDao;
 import dao.SbillitOrderDao;
 import dao.SbillitUserDao;
 import dao.SbillitUserSessionDao;
-
 import entity.SbillitCombo;
 import entity.SbillitFeed;
 import entity.SbillitOrder;
@@ -128,6 +126,23 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				
 				// through the userId, retrieve the device token and use apns
 				SbillitUser user = sbillitUserDao.findUserById(userId);
+				if (user == null) {
+					// not our client, we need to send a text message
+					List<SbillitUser> userList = sbillitUserDao.findeUserByPhone(phone);
+					if (userList==null || userList.size()==0) {
+						long smsExpiredAt = DateUtil.GetCurrentTimeStamp();
+						user = new SbillitUser();
+						user.setPhone(phone);
+						user.setSmsToken("0000");
+						user.setSmsExpiredAt(smsExpiredAt);
+						user.setNickname(phone);
+						user.setDeviceType(0);
+						user.setDeviceToken("");
+						user.setPassword(Md5Util.MD5Encode("123456"));
+						this.sbillitUserDao.insertUser(user);
+					}
+					continue;
+				}
 				String token = user.getDeviceToken();
 				if (token != null) {
 					Apns.sendPush(nickName + " shared an order with you.", token, orderId.toString());
@@ -204,6 +219,23 @@ public class SbillitOrderServiceImpl implements SbillitOrderService {
 				
 				// through the userId, retrieve the device token and use apns
 				SbillitUser user = sbillitUserDao.findUserById(userId);
+				if (user == null) {
+					// not our client, we need to send a text message
+					List<SbillitUser> userList = sbillitUserDao.findeUserByPhone(phone);
+					if (userList==null || userList.size()==0) {
+						long smsExpiredAt = DateUtil.GetCurrentTimeStamp();
+						user = new SbillitUser();
+						user.setPhone(phone);
+						user.setSmsToken("0000");
+						user.setSmsExpiredAt(smsExpiredAt);
+						user.setNickname(phone);
+						user.setDeviceType(0);
+						user.setDeviceToken("");
+						user.setPassword(Md5Util.MD5Encode("123456"));
+						this.sbillitUserDao.insertUser(user);
+					}
+					continue;
+				}
 				String token = user.getDeviceToken();
 				if (token != null) {
 					Apns.sendPush(nickName + " shared an order with you.", token, orderId.toString());
